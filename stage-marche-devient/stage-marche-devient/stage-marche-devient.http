@@ -1,0 +1,6 @@
+@stage_marche_devient_HostAddress = http://localhost:5001
+
+GET {{stage_marche_devient_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
