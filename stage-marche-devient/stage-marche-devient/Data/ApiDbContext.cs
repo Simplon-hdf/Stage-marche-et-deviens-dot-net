@@ -16,5 +16,7 @@ namespace stage_marche_devient.Data
         public virtual DbSet<Randonnee> Randonnee { get; set; }
         public virtual DbSet<Publication> Publication { get; set; }
         public virtual DbSet<Theme> Theme { get; set; }
+        public virtual DbSet<Session> Session { get; set; }
+
     }
 }
