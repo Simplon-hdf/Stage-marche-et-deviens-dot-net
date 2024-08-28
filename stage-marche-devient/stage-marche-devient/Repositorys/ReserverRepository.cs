@@ -1,97 +1,117 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 
 namespace stage_marche_devient.Repositorys
 {
-    public class ReserverRepository : IReserverRepository<ReserverModel, int , int>
+    public class ReserverRepository : IReserverRepository<ReserverModel, int, int>
     {
-        private readonly ApiDBContext _contexteDeBDD;   // intialisation d'une variable de type apiDBContext
-        public ReserverRepository(ApiDBContext context) => _contexteDeBDD = context;   // ajout du contexte de program.cs a l'initialisation de ce repository
+        private readonly ApiDBContext _contexteDeBDD; // Contexte de la base de données pour accéder aux données
 
+        // Constructeur : initialise le contexte de la base de données
+        public ReserverRepository(ApiDBContext context) => _contexteDeBDD = context;
+
+        #region Create (Création)
+        // Méthode pour ajouter une nouvelle réservation
         public async Task<bool> Add(ReserverModel model)
         {
+            // Ajoute le modèle de réservation au contexte
             _contexteDeBDD.Add(model);
-            int colonneAffecter = await _contexteDeBDD.SaveChangesAsync();
-            if (colonneAffecter > 0) 
+            // Sauvegarde les changements dans la base de données et récupère le nombre de lignes affectées
+            int colonnesAffectees = await _contexteDeBDD.SaveChangesAsync();
+            // Vérifie si au moins une ligne a été affectée
+            if (colonnesAffectees > 0)
             {
+                // Vérifie si la réservation a été ajoutée avec succès en cherchant dans la base
                 return await _contexteDeBDD.Reserver.AnyAsync(r =>
-                r.IdSession == model.IdSession &&
-                r.IdUtilisateur == model.IdUtilisateur);
+                    r.IdSession == model.IdSession &&
+                    r.IdUtilisateur == model.IdUtilisateur);
             }
-            return false;
+            return false; // Retourne false si l'ajout a échoué
         }
+        #endregion
 
-        public async Task<bool> Delete(int idUtilisateur, int idSession)
-        {
-            var bddReservationSupprimer = await _contexteDeBDD.Reserver
-            .Where(r =>
-                r.IdSession == idSession &&
-                r.IdUtilisateur == idUtilisateur)
-            .FirstOrDefaultAsync();
-
-            if (bddReservationSupprimer == null){ return false; }
-
-            _contexteDeBDD.Remove(bddReservationSupprimer);
-            await _contexteDeBDD.SaveChangesAsync();
-
-            var reservationExisteToujoursApresSupression = await _contexteDeBDD.Reserver
-            .Where(r =>
-                r.IdSession == idSession &&
-                r.IdUtilisateur == idUtilisateur)
-            .AnyAsync();
-
-            return !reservationExisteToujoursApresSupression;
-
-        }
-
+        #region Read (Lecture)
+        // Méthode pour récupérer toutes les réservations
         public async Task<IEnumerable<ReserverModel>> GetAll()
         {
-            IEnumerable<ReserverModel> listeReservation = await _contexteDeBDD.Reserver.ToArrayAsync();
-            return listeReservation;
+            // Récupère toutes les réservations et les retourne sous forme de liste
+            return await _contexteDeBDD.Reserver.ToListAsync();
         }
 
+        // Méthode pour récupérer une réservation par ID utilisateur et ID session
         public async Task<ReserverModel> GetById(int idUtilisateur, int idSession)
         {
-            ReserverModel reservationRecuperer = await _contexteDeBDD.Reserver.
-            Where(r =>
-                r.IdSession == idSession &&
-                r.IdUtilisateur == idUtilisateur)
-            .FirstOrDefaultAsync();
-            
-            return reservationRecuperer;
+            // Recherche et retourne la réservation correspondante
+            return await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
         }
+        #endregion
 
+        #region Update (Mise à jour)
+        // Méthode pour mettre à jour une réservation existante
         public async Task<bool> Update(ReserverModel model, int idUtilisateur, int idSession)
         {
-            var reservationUpdateEnBdd = await _contexteDeBDD.Reserver.
-            Where(r =>
-                r.IdSession == idSession &&
-                r.IdUtilisateur == idUtilisateur)
-            .FirstOrDefaultAsync();
-            reservationUpdateEnBdd.NbrActuelParticipant = model.NbrActuelParticipant;
-            reservationUpdateEnBdd.RefReservation = model.RefReservation;
-            reservationUpdateEnBdd.DatePaiement = model.DatePaiement;
-            reservationUpdateEnBdd.ValidationReservation = model.ValidationReservation;
-            reservationUpdateEnBdd.NbrParticipantsInscrits = model.NbrParticipantsInscrits;
-            
-            _contexteDeBDD.Reserver.Update(reservationUpdateEnBdd);
+            // Recherche la réservation à mettre à jour
+            var reservationAMettreAJour = await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
 
+            // Si aucune réservation n'est trouvée, retourne false
+            if (reservationAMettreAJour == null) return false;
+
+            // Met à jour les propriétés de la réservation avec les nouvelles valeurs
+            reservationAMettreAJour.NbrActuelParticipant = model.NbrActuelParticipant;
+            reservationAMettreAJour.RefReservation = model.RefReservation;
+            reservationAMettreAJour.DatePaiement = model.DatePaiement;
+            reservationAMettreAJour.ValidationReservation = model.ValidationReservation;
+            reservationAMettreAJour.NbrParticipantsInscrits = model.NbrParticipantsInscrits;
+
+            // Sauvegarde les changements dans la base de données
             await _contexteDeBDD.SaveChangesAsync();
-            var verifModifEnBdd = await _contexteDeBDD.Reserver.
-            Where(r =>
-                r.IdSession == idSession &&
-                r.IdUtilisateur == idUtilisateur)
-            .FirstOrDefaultAsync();
 
-            return verifModifEnBdd.NbrActuelParticipant == model.NbrActuelParticipant &&
-                   verifModifEnBdd.RefReservation == model.RefReservation &&
-                   verifModifEnBdd.DatePaiement == model.DatePaiement &&
-                   verifModifEnBdd.ValidationReservation == model.ValidationReservation &&
-                   verifModifEnBdd.NbrParticipantsInscrits == model.NbrParticipantsInscrits;
+            // Vérifie si la mise à jour a été effectuée avec succès
+            var reservationMiseAJour = await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
 
-
+            // Retourne true si toutes les propriétés mises à jour correspondent aux nouvelles valeurs
+            return reservationMiseAJour != null &&
+                   reservationMiseAJour.NbrActuelParticipant == model.NbrActuelParticipant &&
+                   reservationMiseAJour.RefReservation == model.RefReservation &&
+                   reservationMiseAJour.DatePaiement == model.DatePaiement &&
+                   reservationMiseAJour.ValidationReservation == model.ValidationReservation &&
+                   reservationMiseAJour.NbrParticipantsInscrits == model.NbrParticipantsInscrits;
         }
+        #endregion
+
+        #region Delete (Suppression)
+        // Méthode pour supprimer une réservation par ID utilisateur et ID session
+        public async Task<bool> Delete(int idUtilisateur, int idSession)
+        {
+            // Recherche la réservation à supprimer dans la base de données
+            var reservationASupprimer = await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
+
+            // Si aucune réservation n'est trouvée, retourne false
+            if (reservationASupprimer == null) return false;
+
+            // Supprime la réservation trouvée
+            _contexteDeBDD.Remove(reservationASupprimer);
+            // Sauvegarde les changements dans la base de données
+            await _contexteDeBDD.SaveChangesAsync();
+
+            // Vérifie si la réservation existe toujours après la suppression
+            return !await _contexteDeBDD.Reserver.AnyAsync(r =>
+                r.IdSession == idSession &&
+                r.IdUtilisateur == idUtilisateur);
+        }
+        #endregion
     }
 }
