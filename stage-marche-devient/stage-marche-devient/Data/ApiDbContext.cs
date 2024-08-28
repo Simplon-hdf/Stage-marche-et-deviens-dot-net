@@ -18,5 +18,6 @@ namespace stage_marche_devient.Data
         public virtual DbSet<Theme> Theme { get; set; }
         public virtual DbSet<Session> Session { get; set; }
 
+        public virtual DbSet<PossederModel> Posseder { get; set; }
     }
 }

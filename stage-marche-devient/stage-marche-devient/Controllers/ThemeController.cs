@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
-using stage_marche_devient.Repositorys;
+using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
 {
