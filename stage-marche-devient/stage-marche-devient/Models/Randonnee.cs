@@ -9,7 +9,8 @@ namespace stage_marche_devient.Models
     {
         [Column("id_randonee"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
         public int IdRandonnee { get; set; }
-
+        [Column("Nom_randonnee"), MaxLength(150), Required]
+        public int NomRandonnee { get; set; }
         [Column("description_randonnee"), MaxLength(150), Required]
         public string DescriptionRandonnee { get; set; }
 

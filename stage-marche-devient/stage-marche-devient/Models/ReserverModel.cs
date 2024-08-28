@@ -8,10 +8,10 @@ namespace stage_marche_devient.Models
     [Keyless]
     public class ReserverModel
     {
-        [Column("Id_utilisateur"), Required , SwaggerSchema(ReadOnly = true)]
+        [Column("Id_utilisateur"), Required , SwaggerSchema(ReadOnly = true) , ForeignKey("Utilisateur")]
         public int IdUtilisateur { get; set; }
 
-        [Column("Id_session"), Required , SwaggerSchema(ReadOnly = true)]
+        [Column("Id_session"), Required , SwaggerSchema(ReadOnly = true) , ForeignKey("Session")]
         public int IdSession { get; set; }
 
         [Column("Nbr_participants_inscrits"), Required]
