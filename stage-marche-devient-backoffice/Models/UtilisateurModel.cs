@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations; /*contient les attributs pour valid
 
 namespace MarcheEtDevient.Server.Models; /*Je  déclare l'espace de noms et la classe*/
 
-public partial class Utilisateur /* Je déclare la classe utilisateur avec partial qui indique que la classe peut être divisée en plusieurs fichiers*/
+public partial class UtilisateurModel /* Je déclare la classe utilisateur avec partial qui indique que la classe peut être divisée en plusieurs fichiers*/
 { /* je déclare les propriétés  qui sont des colonnes de la table Utilisateur dans bdd*/
 
     [Column("id_utilisateur"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required] /* key indique que la propriété "column"
