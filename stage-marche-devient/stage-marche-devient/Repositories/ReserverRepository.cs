@@ -64,6 +64,8 @@ namespace stage_marche_devient.Repositories
             if (reservationAMettreAJour == null) return false;
 
             // Met à jour les propriétés de la réservation avec les nouvelles valeurs
+            reservationAMettreAJour.IdUtilisateur = model.IdUtilisateur;
+            reservationAMettreAJour.IdSession = model.IdSession;
             reservationAMettreAJour.NbrActuelParticipant = model.NbrActuelParticipant;
             reservationAMettreAJour.RefReservation = model.RefReservation;
             reservationAMettreAJour.DatePaiement = model.DatePaiement;
@@ -81,6 +83,8 @@ namespace stage_marche_devient.Repositories
 
             // Retourne true si toutes les propriétés mises à jour correspondent aux nouvelles valeurs
             return reservationMiseAJour != null &&
+                   reservationMiseAJour.IdUtilisateur == model.IdUtilisateur &&
+                   reservationMiseAJour.IdSession == model.IdSession &&
                    reservationMiseAJour.NbrActuelParticipant == model.NbrActuelParticipant &&
                    reservationMiseAJour.RefReservation == model.RefReservation &&
                    reservationMiseAJour.DatePaiement == model.DatePaiement &&
