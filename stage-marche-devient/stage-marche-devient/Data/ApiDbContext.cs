@@ -3,17 +3,16 @@ using stage_marche_devient.Models;
 
 namespace stage_marche_devient.Data
 {
-    public class ApiDbContext : DbContext
+    public class ApiDBContext : DbContext
     {
-        public ApiDbContext()
+        public ApiDBContext()
         {
         }
 
-        public ApiDbContext(DbContextOptions<ApiDbContext> options)
-            : base(options)
+        public ApiDBContext(DbContextOptions<ApiDBContext> options) : base(options)
         {
         }
 
-        public virtual DbSet<Randonnee> Randonnee { get; set; }
+        public virtual DbSet<ReserverModel> Reserver { get; set; }
     }
 }
