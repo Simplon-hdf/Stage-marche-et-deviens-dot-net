@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
-using stage_marche_devient.Repositorys;
+using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
 {
@@ -9,11 +9,11 @@ namespace stage_marche_devient.Controllers
     [Route("api/[controller]")]
     public class ReserverController : Controller
     {
-        private readonly ApiDBContext _contexteBdd; // Contexte de la base de données
+        private readonly ApiDbContext _contexteBdd; // Contexte de la base de données
         private readonly ReserverRepository _repository; // Références au dépôt de réservations
 
         // Constructeur du contrôleur
-        public ReserverController(ApiDBContext context)
+        public ReserverController(ApiDbContext context)
         {
             _contexteBdd = context; // Initialisation du contexte de la base de données
             _repository = new ReserverRepository(context); // Création d'une instance du dépôt

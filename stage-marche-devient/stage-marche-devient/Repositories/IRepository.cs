@@ -1,4 +1,4 @@
-﻿namespace stage_marche_devient.Repositorys
+﻿namespace stage_marche_devient.Repositories
 {
     public interface IRepository<T, TKey>
     {

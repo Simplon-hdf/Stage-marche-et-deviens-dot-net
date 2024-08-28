@@ -2,7 +2,7 @@
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 
-namespace stage_marche_devient.Repositorys
+namespace stage_marche_devient.Repositories
 {
     public class ReserverRepository : IReserverRepository<ReserverModel, int, int>
     {
