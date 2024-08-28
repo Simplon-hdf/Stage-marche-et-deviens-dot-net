@@ -1,16 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace stage_marche_devient.Models
 {
     [Keyless]
-    public class Reserver
+    public class ReserverModel
     {
-        [Column("Id_utilisateur"), Required]
+        [Column("Id_utilisateur"), Required , SwaggerSchema(ReadOnly = true)]
         public int IdUtilisateur { get; set; }
 
-        [Column("Id_session"), Required]
+        [Column("Id_session"), Required , SwaggerSchema(ReadOnly = true)]
         public int IdSession { get; set; }
 
         [Column("Nbr_participants_inscrits"), Required]

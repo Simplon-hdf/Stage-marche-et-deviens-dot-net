@@ -13,6 +13,6 @@ namespace stage_marche_devient.Data
         {
         }
 
-        public virtual DbSet<ReserverModel> Reservers { get; set; }
+        public virtual DbSet<ReserverModel> Reserver { get; set; }
     }
 }
