@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Models;
 using stage_marche_devient.Data;
-using stage_marche_devient.Repositories;
 
-namespace stage_marche_devient.Repositorys
+namespace stage_marche_devient.Repositories
 {
     public class ThemeRepository : IRepository<Theme, int>
     {
