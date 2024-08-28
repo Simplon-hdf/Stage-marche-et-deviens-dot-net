@@ -6,10 +6,10 @@ namespace stage_marche_devient.Repositorys
 {
     public class ReserverRepository : IReserverRepository<ReserverModel, int, int>
     {
-        private readonly ApiDBContext _contexteDeBDD; // Contexte de la base de données pour accéder aux données
+        private readonly ApiDbContext _contexteDeBDD; // Contexte de la base de données pour accéder aux données
 
         // Constructeur : initialise le contexte de la base de données
-        public ReserverRepository(ApiDBContext context) => _contexteDeBDD = context;
+        public ReserverRepository(ApiDbContext context) => _contexteDeBDD = context;
 
         #region Create (Création)
         // Méthode pour ajouter une nouvelle réservation
