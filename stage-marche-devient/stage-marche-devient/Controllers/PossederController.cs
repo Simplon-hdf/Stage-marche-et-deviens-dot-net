@@ -32,7 +32,21 @@ namespace stage_marche_devient.Controllers
         [HttpGet("{idPublication},{idTagPublication}")] // Définit une route GET avec deux paramètres
         public async Task<ActionResult<PossederModel>> RecupererPosseder(int idPublication, int idTagPublication)
         {
-            PossederModel posseder = await _repository.GetById(idPublication, idTagPublication);
+            PossederModel posseder = await _repository.GetByIds(idPublication, idTagPublication);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+        [HttpGet("idPublication:{idPublication}")] // Définit une route GET avec deux paramètres
+        public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdPublication(int idPublication)
+        {
+            IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idPublication);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+        [HttpGet("idTagPublication:{idTagPublication}")]
+        public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdTag(int idTagPublication)
+        {
+            IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idTagPublication);
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
@@ -52,7 +66,7 @@ namespace stage_marche_devient.Controllers
         [HttpPut("{idPublication},{idTagPublication}")] // Définit une route PUT pour mettre à jour un Posseder
         public async Task<ActionResult> MiseAJourPosseder(PossederModel posseder, int idPublication, int idTagPublication)
         {
-            PossederModel possederAMettreAJour = await _repository.GetById(idPublication, idTagPublication);
+            PossederModel possederAMettreAJour = await _repository.GetByIds(idPublication, idTagPublication);
             if (possederAMettreAJour == null) { return NotFound(); } // Retourne 404 si non trouvé
             else
             {
@@ -67,7 +81,7 @@ namespace stage_marche_devient.Controllers
         [HttpDelete("{idPublication},{idTagPublication}")] // Définit une route DELETE pour supprimer un Posseder
         public async Task<ActionResult> SuppressionPosseder(int idPublication, int idTagPublication)
         {
-            PossederModel possederASupprimer = await _repository.GetById(idPublication, idTagPublication);
+            PossederModel possederASupprimer = await _repository.GetByIds(idPublication, idTagPublication);
             if (possederASupprimer == null) { return NotFound(); } // Retourne 404 si non trouvé
             else
             {

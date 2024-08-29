@@ -1,9 +1,11 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace stage_marche_devient.Models
 {
+    [Keyless]
     public class PossederModel
     {
         [Column("Id_publication"), Required, ForeignKey("Publication")]
