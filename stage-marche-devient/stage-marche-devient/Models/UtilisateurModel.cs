@@ -2,10 +2,13 @@
 using System.Collections.Generic;        /* contient des classes génériques pour manipuler les collections*/
 using System.ComponentModel.DataAnnotations.Schema; /* contient des attributs qui permettent de définir des métadonnéees pour le mapping*/
 using System.ComponentModel.DataAnnotations; /*contient les attributs pour valider les données comme required ou maxlenght*/
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
-namespace MarcheEtDevient.Server.Models; /*Je  déclare l'espace de noms et la classe*/
+namespace stage_marche_devient.Models; /*Je  déclare l'espace de noms et la classe*/
 
-public partial class UtilisateurModel /* Je déclare la classe utilisateur avec partial qui indique que la classe peut être divisée en plusieurs fichiers*/
+public class UtilisateurModel                                           /* Je déclare la classe utilisateur */
+
 { /* je déclare les propriétés  qui sont des colonnes de la table Utilisateur dans bdd*/
 
     [Column("id_utilisateur"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required] /* key indique que la propriété "column"
