@@ -35,7 +35,7 @@ public class UtilisateurModel                                           /* Je d�
     [Column("mdp_utilisateur"), MaxLength(35), Required, DataType(DataType.Password)] /*datatype spécifie que cette propriété est un password*/
     public string MdpUtilisateur { get; set; } = null!;
      
-    [Column("mail_utilisateur"), MaxLength(50), Required]
+    [Column("mail_utilisateur"), MaxLength(50), Required, DataType(DataType.EmailAddress)]
     public string MailUtilisateur { get; set; } = null!;
 
     [Column("total_distance_parcourue_utilisateur"), Required]
