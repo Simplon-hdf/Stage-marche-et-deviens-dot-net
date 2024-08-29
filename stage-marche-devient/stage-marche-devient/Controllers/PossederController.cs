@@ -36,14 +36,14 @@ namespace stage_marche_devient.Controllers
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
-        [HttpGet("{idPublication}")] // Définit une route GET avec deux paramètres
+        [HttpGet("idPublication:{idPublication}")] // Définit une route GET avec deux paramètres
         public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdPublication(int idPublication)
         {
             IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idPublication);
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
-        [HttpGet("{idTagPublication}")]
+        [HttpGet("idTagPublication:{idTagPublication}")]
         public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdTag(int idTagPublication)
         {
             IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idTagPublication);
