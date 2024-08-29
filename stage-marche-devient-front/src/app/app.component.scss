@@ -56,6 +56,26 @@ app-navbar {
     }
   }
   
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    button {
+      margin: 15px 50px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2B7D3B;
+      color: white;
+      font-size: 25px;
+      
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  
   .content {
     margin-top: 50px;
     width: 100%;
@@ -102,6 +122,13 @@ app-navbar {
         }
       }
     }
+    
+    .button {
+      button {
+        font-size: 20px;
+      }
+    }
+    
     .content {
       font-size: 18px;
     }
@@ -177,6 +204,12 @@ app-navbar {
       }
     }
 
+    .button {
+      button {
+        font-size: 15px;
+      }
+    }
+    
     .content {
       font-size: 14px;
       display: flex;
