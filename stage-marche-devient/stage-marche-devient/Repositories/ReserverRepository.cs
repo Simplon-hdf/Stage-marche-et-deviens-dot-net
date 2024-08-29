@@ -33,6 +33,14 @@ namespace stage_marche_devient.Repositories
 
         #region Read (Lecture)
         // Méthode pour récupérer toutes les réservations
+        public async Task<ReserverModel> GetByIds(int idUtilisateur, int idSession)
+        {
+            // Recherche et retourne la réservation correspondante
+            return await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
+        }
         public async Task<IEnumerable<ReserverModel>> GetAll()
         {
             // Récupère toutes les réservations et les retourne sous forme de liste

@@ -37,6 +37,15 @@ namespace stage_marche_devient.Repositories
         }
 
         // Méthodes pour récupérer une relation Posseder spécifique par ses IDs
+
+        public async Task<PossederModel> GetByIds(int idPublication, int idTagPublication)
+        {
+            return await _contexteDeBDD.Posseder
+                .FirstOrDefaultAsync(p =>
+                    p.idPublication == idPublication &&
+                    p.idTagPublication == idTagPublication);
+        }
+
         public async Task<IEnumerable<PossederModel>> GetByPublicationId(int idPublication)
         {
             return await _contexteDeBDD.Posseder.Where(p => p.idPublication == idPublication).ToListAsync();

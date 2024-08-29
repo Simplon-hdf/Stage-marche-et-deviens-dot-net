@@ -32,6 +32,16 @@ namespace stage_marche_devient.Controllers
         #endregion
 
         #region Récupération par id
+        // Méthode pour récupérer une réservation par ID utilisateur et ID session
+        [HttpGet("{idUtilisateur},{idSession}")]
+        public async Task<ActionResult<ReserverModel>> RecupererReservation(int idUtilisateur, int idSession)
+        {
+            // Récupération de la réservation spécifique
+            ReserverModel reservation = await _repository.GetByIds(idUtilisateur, idSession);
+            if (reservation == null) { return NotFound(); } // Si la réservation n'existe pas, retourne 404
+            return Ok(reservation); // Retourne la réservation trouvée
+        }
+
         [HttpGet("{idUtilisateur}")] // Définit une route GET 
         public async Task<ActionResult<IEnumerable<ReserverModel>>> RecupererPossederParIdPublication(int idUtilisateur)
         {
@@ -66,7 +76,7 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult> MiseAJourReservation(ReserverModel reservation, int idUtilisateur, int idSession)
         {
             // Récupération de la réservation à mettre à jour
-            ReserverModel reservationAMettreAJour = await _repository.GetById(idUtilisateur, idSession);
+            ReserverModel reservationAMettreAJour = await _repository.GetByIds(idUtilisateur, idSession);
             if (reservationAMettreAJour == null) { return NotFound(); } // Retourne 404 si la réservation n'existe pas
             else
             {
@@ -84,7 +94,7 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult> SuppressionReservation(int idUtilisateur, int idSession)
         {
             // Récupération de la réservation à supprimer
-            ReserverModel reservationASupprimer = await _repository.GetById(idUtilisateur, idSession);
+            ReserverModel reservationASupprimer = await _repository.GetByIds(idUtilisateur, idSession);
             if (reservationASupprimer == null) { return NotFound(); } // Retourne 404 si la réservation n'existe pas
             else
             {
