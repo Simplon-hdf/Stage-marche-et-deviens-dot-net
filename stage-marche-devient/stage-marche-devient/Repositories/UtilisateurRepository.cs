@@ -1,6 +1,7 @@
 ﻿using MarcheEtDevient.Server.Models;    /*Importation du namespace contenant le modèle Utilisateur défini précédemment.*/
 using Microsoft.EntityFrameworkCore;    /*Importation des classes nécessaires pour utiliser efc*/
-using MarcheEtDevient.Server.Data;      /*Importation du namespace où se trouve ma classe ApiDBContext, qui est la configuration de base de données. */
+using MarcheEtDevient.Server.Data;
+using stage_marche_devient.Repositories;      /*Importation du namespace où se trouve ma classe ApiDBContext, qui est la configuration de base de données. */
 
 namespace MarcheEtDevient.Server.Repository     /*je declare mon namespace et ma classe*/
 {
