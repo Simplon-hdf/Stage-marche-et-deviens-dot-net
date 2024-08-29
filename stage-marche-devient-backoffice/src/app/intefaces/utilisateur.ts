@@ -1,3 +1,9 @@
 export interface Utilisateur {
-    idUtilisateur: number
+    id : number|null,
+    prenom: string,
+    nom: string,
+    tel: string,
+    mdp: string,
+    mail: string,
+    totalDistanceParcourue: string|null,
 }
