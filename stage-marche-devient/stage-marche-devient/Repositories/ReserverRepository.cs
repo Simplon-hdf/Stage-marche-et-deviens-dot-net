@@ -40,13 +40,15 @@ namespace stage_marche_devient.Repositories
         }
 
         // Méthode pour récupérer une réservation par ID utilisateur et ID session
-        public async Task<ReserverModel> GetById(int idUtilisateur, int idSession)
+        public async Task<IEnumerable<ReserverModel>> GetByUtilisateurId(int idUtilisateur)
         {
             // Recherche et retourne la réservation correspondante
-            return await _contexteDeBDD.Reserver
-                .FirstOrDefaultAsync(r =>
-                    r.IdSession == idSession &&
-                    r.IdUtilisateur == idUtilisateur);
+            return await _contexteDeBDD.Reserver.Where(r => r.IdSession == idUtilisateur).ToListAsync();
+        }
+        public async Task<IEnumerable<ReserverModel>> GetBySessionId(int idSession)
+        {
+            // Recherche et retourne la réservation correspondante
+            return await _contexteDeBDD.Reserver.Where(r => r.IdUtilisateur == idSession).ToListAsync();
         }
         #endregion
 

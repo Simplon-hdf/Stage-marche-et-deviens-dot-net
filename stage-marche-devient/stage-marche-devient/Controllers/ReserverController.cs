@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 using stage_marche_devient.Repositories;
@@ -31,14 +32,19 @@ namespace stage_marche_devient.Controllers
         #endregion
 
         #region Récupération par id
-        // Méthode pour récupérer une réservation par ID utilisateur et ID session
-        [HttpGet("{idUtilisateur},{idSession}")]
-        public async Task<ActionResult<ReserverModel>> RecupererReservation(int idUtilisateur, int idSession)
+        [HttpGet("{idUtilisateur}")] // Définit une route GET 
+        public async Task<ActionResult<IEnumerable<ReserverModel>>> RecupererPossederParIdPublication(int idUtilisateur)
         {
-            // Récupération de la réservation spécifique
-            ReserverModel reservation = await _repository.GetById(idUtilisateur, idSession);
-            if (reservation == null) { return NotFound(); } // Si la réservation n'existe pas, retourne 404
-            return Ok(reservation); // Retourne la réservation trouvée
+            IEnumerable<ReserverModel> posseder = await _repository.GetByUtilisateurId(idUtilisateur);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+        [HttpGet("{idSession}")] // Définit une route GET 
+        public async Task<ActionResult<IEnumerable<ReserverModel>>> RecupererPossederParIdTag(int idSession)
+        {
+            IEnumerable<ReserverModel> posseder = await _repository.GetBySessionId(idSession);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
         #endregion
 

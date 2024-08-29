@@ -29,10 +29,17 @@ namespace stage_marche_devient.Controllers
         #endregion
 
         #region Récupération par id
-        [HttpGet("{idPublication},{idTagPublication}")] // Définit une route GET avec deux paramètres
-        public async Task<ActionResult<PossederModel>> RecupererPosseder(int idPublication, int idTagPublication)
+        [HttpGet("{idPublication}")] // Définit une route GET avec deux paramètres
+        public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdPublication(int idPublication)
         {
-            PossederModel posseder = await _repository.GetById(idPublication, idTagPublication);
+            IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idPublication);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+        [HttpGet("{idTagPublication}")]
+        public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdTag(int idTagPublication)
+        {
+            IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idTagPublication);
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }

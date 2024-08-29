@@ -36,13 +36,14 @@ namespace stage_marche_devient.Repositories
             return await _contexteDeBDD.Posseder.ToListAsync();
         }
 
-        // Méthode pour récupérer une relation Posseder spécifique par ses IDs
-        public async Task<PossederModel> GetById(int idPublication, int idTagPublication)
+        // Méthodes pour récupérer une relation Posseder spécifique par ses IDs
+        public async Task<IEnumerable<PossederModel>> GetByPublicationId(int idPublication)
         {
-            return await _contexteDeBDD.Posseder
-                .FirstOrDefaultAsync(p =>
-                    p.idPublication == idPublication &&
-                    p.idTagPublication == idTagPublication);
+            return await _contexteDeBDD.Posseder.Where(p => p.idPublication == idPublication).ToListAsync();
+        }
+        public async Task<IEnumerable<PossederModel>> GetByTagId(int idTagPublication)
+        {
+            return await _contexteDeBDD.Posseder.Where(p => p.idTagPublication == idTagPublication).ToListAsync();
         }
         #endregion
 
