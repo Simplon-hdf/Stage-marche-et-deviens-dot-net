@@ -1,4 +1,3 @@
-using MarcheEtDevient.Server.Models;
 using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Models;
 
