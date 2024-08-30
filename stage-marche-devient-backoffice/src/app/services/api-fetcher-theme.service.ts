@@ -8,7 +8,7 @@ import { Theme } from '../intefaces/theme';
 })
 export class ApiFetcherThemeService {
 
-  private endPointUrl: string = "https://localhost:7260/api/Theme"
+  private endPointUrl: string = "https://localhost:7092/api/Theme"
 
   httpClient = inject(HttpClient);
   
@@ -18,7 +18,8 @@ export class ApiFetcherThemeService {
       map(response => {
         console.log('Status:', response.status);
         console.log('Body:', response.body);
-        
+        // Retourne le corps de la réponse Http quand celle-ci a un code de succès, 
+        // ne retournant que le code en cas d'échec.
         if (response.status >= 200 && response.status < 300) {
           return response.body;
         } else {
@@ -38,7 +39,8 @@ export class ApiFetcherThemeService {
       map(response => {
         console.log('Status:', response.status);
         console.log('Body:', response.body);
-        
+        // Retourne le corps de la réponse Http quand celle-ci a un code de succès, 
+        // ne retournant que le code en cas d'échec.
         if (response.status >= 200 && response.status < 300) {
           return response.body;
         } else {
@@ -60,7 +62,8 @@ export class ApiFetcherThemeService {
       map(response => {
         console.log('Status:', response.status);
         console.log('Body:', response.body);
-        
+        // Retourne le corps de la réponse Http quand celle-ci a un code de succès, 
+        // ne retournant que le code en cas d'échec.
         if (response.status >= 200 && response.status < 300) {
           return response.body;
         } else {
@@ -80,7 +83,8 @@ export class ApiFetcherThemeService {
       map(response => {
         console.log('Status:', response.status);
         console.log('Body:', response.body);
-        
+        // Retourne le corps de la réponse Http quand celle-ci a un code de succès, 
+        // ne retournant que le code en cas d'échec.
         if (response.status >= 200 && response.status < 300) {
           return response.body;
         } else {
@@ -100,7 +104,8 @@ export class ApiFetcherThemeService {
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
-          
+          // Retourne le corps de la réponse Http quand celle-ci a un code de succès, 
+          // ne retournant que le code en cas d'échec.
           if (response.status >= 200 && response.status < 300) {
             return response.body;
           } else {
