@@ -1,7 +1,6 @@
 ﻿using stage_marche_devient.Models;
 
-namespace stage_marche_devient.Repositorys
-
+namespace stage_marche_devient.Repositories
 {
     public interface IAuthentificationRepository
     {
