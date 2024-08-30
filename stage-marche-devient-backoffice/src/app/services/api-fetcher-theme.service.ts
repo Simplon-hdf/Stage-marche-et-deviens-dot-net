@@ -12,55 +12,105 @@ export class ApiFetcherThemeService {
 
   httpClient = inject(HttpClient);
   
-  recupererThemeList(): Observable<Theme[]>{
-    let listfetched = this.httpClient.get<Theme[]>(`${this.endPointUrl}`);
-    return listfetched;
+  recupererThemeList(): Observable<any>{
+    return this.httpClient.get(`${this.endPointUrl}`, { observe: 'response' })
+    .pipe(
+      map(response => {
+        console.log('Status:', response.status);
+        console.log('Body:', response.body);
+        
+        if (response.status >= 200 && response.status < 300) {
+          return response.body;
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        return of(null);
+      })
+    );
   }
 
-  recupererThemeParId(id: number): Observable<Theme>{
-    return this.httpClient.get<Theme>(`${this.endPointUrl}/${id}`);
+  recupererThemeParId(id: number): Observable<any>{
+    return this.httpClient.get(`${this.endPointUrl}/${id}`, { observe: 'response' })
+    .pipe(
+      map(response => {
+        console.log('Status:', response.status);
+        console.log('Body:', response.body);
+        
+        if (response.status >= 200 && response.status < 300) {
+          return response.body;
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        return of(null);
+      })
+    );
   } 
 
   
   async ajoutTheme(theme: Theme) {
      
-    this.httpClient.post(`${this.endPointUrl}`, {
-      "nomTheme":  theme.nom
-    }).subscribe((res: any) => {
-      if (res.result) {
-        alert("Theme ajouter a l'appli")
-      } else {
-        alert(res.mess + "test")
-      }
-    })
-    //debugger;
+    this.httpClient.post(`${this.endPointUrl}`, { "nomTheme":  theme.nom }, { observe: 'response' })
+    .pipe(
+      map(response => {
+        console.log('Status:', response.status);
+        console.log('Body:', response.body);
+        
+        if (response.status >= 200 && response.status < 300) {
+          return response.body;
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        return of(null);
+      })
+    );
   }
 
   async supprimerTheme(id: number) {
-    await this.httpClient.delete(`${this.endPointUrl}/${id}`)
-        .subscribe((res: any) => {
-          if(res == null){
-            alert("supression reussie")
-          }
-          else{
-            alert("supression non resolu")
-          }
-        });
+    await this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' })
+    .pipe(
+      map(response => {
+        console.log('Status:', response.status);
+        console.log('Body:', response.body);
         
+        if (response.status >= 200 && response.status < 300) {
+          return response.body;
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      }),
+      catchError(error => {
+        console.error('Error:', error);
+        return of(null);
+      })
+    );  
   }
 
   majTheme(id: number,theme: Theme){
-      this.httpClient.put(`${this.endPointUrl}/${id}`,{
-        "nomTheme": theme.nom
-      }).subscribe((res: any) => {
-        if (res.result) {
-          alert("Theme modifier dans l'appli")
-        } else {
-          alert(res.message)
-        }
-      })
-  }
-  getData(): Observable<HttpResponse<any>> {
-    return this.httpClient.get<any>(this.endPointUrl, { observe: 'response' });
+      this.httpClient.put(`${this.endPointUrl}/${id}`,{ "nomTheme": theme.nom }, { observe: 'response' })
+      .pipe(
+        map(response => {
+          console.log('Status:', response.status);
+          console.log('Body:', response.body);
+          
+          if (response.status >= 200 && response.status < 300) {
+            return response.body;
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        }),
+        catchError(error => {
+          console.error('Error:', error);
+          return of(null);
+        })
+      );
   }
 }
