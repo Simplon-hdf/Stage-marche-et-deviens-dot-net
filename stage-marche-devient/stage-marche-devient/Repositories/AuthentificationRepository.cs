@@ -1,20 +1,21 @@
 ﻿using stage_marche_devient.Data;
+using stage_marche_devient.Models;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace stage_marche_devient.Repositorys
+namespace stage_marche_devient.Repositories
 {
     public class AuthentificationRepository : IAuthentificationRepository
     {
         private readonly ApiDbContext _context;
         public AuthentificationRepository(ApiDbContext context) => _context = context;
 
-        public Utilisateur Connexion(string mail, string password)
+        public UtilisateurModel Connexion(string mail, string password)
         {
             return _context.Utilisateur.FirstOrDefault(u => u.MailUtilisateur == mail && u.MdpUtilisateur == HashMdp(password));  
         }
 
-        public void InscriptionUtilisateur(Utilisateur user)
+        public void InscriptionUtilisateur(UtilisateurModel user)
         {
             _context.Utilisateur.Add(user);
             _context.SaveChanges();
