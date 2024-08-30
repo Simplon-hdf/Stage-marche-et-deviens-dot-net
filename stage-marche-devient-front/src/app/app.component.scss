@@ -152,6 +152,67 @@ app-navbar {
     }
   }
 }
+#banderole {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .container {
+    width: 1274px;
+    height: 150px;
+    background-color: #416548;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    
+    .title-desc {
+      width: fit-content;
+      margin-top: 20px;
+      margin-left: 15px;
+      color: white;
+      
+      h1 {
+        font-weight: 500;
+        font-size: 30px;
+      }
+      
+      p {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+    .button {
+      position: relative;
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 30px;
+      
+      button {
+        height: fit-content;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 12px;
+        background-color: white;
+        color: #4F4F4F;
+        
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+#séjours {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 1440px) {
   #concept {
