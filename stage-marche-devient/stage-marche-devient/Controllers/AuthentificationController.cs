@@ -1,15 +1,13 @@
-﻿using MarcheEtDevient.Server.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using stage_marche_devient.Data;
 using stage_marche_devient.ModelsDTO;
 using stage_marche_devient.Repositorys;
 using stage_marche_devient.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace stage_marche_devient.Controllers
 {
