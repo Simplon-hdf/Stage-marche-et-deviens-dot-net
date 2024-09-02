@@ -29,6 +29,7 @@ namespace stage_marche_devient.Controllers
         #endregion
 
         #region Récupération par id
+
         [HttpGet("{idPublication},{idTagPublication}")] // Définit une route GET avec deux paramètres
         public async Task<ActionResult<PossederModel>> RecupererPosseder(int idPublication, int idTagPublication)
         {
@@ -36,6 +37,7 @@ namespace stage_marche_devient.Controllers
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
+
         [HttpGet("idPublication:{idPublication}")] // Définit une route GET avec deux paramètres
         public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdPublication(int idPublication)
         {
@@ -43,10 +45,11 @@ namespace stage_marche_devient.Controllers
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
+
         [HttpGet("idTagPublication:{idTagPublication}")]
         public async Task<ActionResult<IEnumerable<PossederModel>>> RecupererPossederParIdTag(int idTagPublication)
         {
-            IEnumerable<PossederModel> posseder = await _repository.GetByPublicationId(idTagPublication);
+            IEnumerable<PossederModel> posseder = await _repository.GetByTagId(idTagPublication);
             if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
             return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
@@ -57,20 +60,20 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult<PossederModel>> CreationPosseder(PossederModel posseder)
         {
             bool result = await _repository.Add(posseder);
-            if (result) { return CreatedAtAction("Création de la relation Posseder :", new { posseder }); } // Retourne 201 Created si réussi
+            if (result) { return Created("possetion defini", posseder); } // Retourne 201 Created si réussi
             return BadRequest(); // Retourne 400 Bad Request si échec
         }
         #endregion
 
         #region Mise à jour posseder
-        [HttpPut("{idPublication},{idTagPublication}")] // Définit une route PUT pour mettre à jour un Posseder
-        public async Task<ActionResult> MiseAJourPosseder(PossederModel posseder, int idPublication, int idTagPublication)
+        [HttpPut("{idPosseder}")] // Définit une route PUT pour mettre à jour un Posseder
+        public async Task<ActionResult> MiseAJourPosseder(PossederModel posseder, int idPosseder)
         {
-            PossederModel possederAMettreAJour = await _repository.GetByIds(idPublication, idTagPublication);
+            PossederModel possederAMettreAJour = await _repository.GetById(idPosseder);
             if (possederAMettreAJour == null) { return NotFound(); } // Retourne 404 si non trouvé
             else
             {
-                bool aEteMisAJour = await _repository.Update(posseder, idPublication, idTagPublication);
+                bool aEteMisAJour = await _repository.Update(posseder, idPosseder);
                 if (!aEteMisAJour) { return BadRequest("Erreur : Mise à jour impossible"); } // Retourne 400 si échec
                 else { return Ok(); } // Retourne 200 OK si réussi
             }
@@ -78,14 +81,14 @@ namespace stage_marche_devient.Controllers
         #endregion
 
         #region Suppression posseder
-        [HttpDelete("{idPublication},{idTagPublication}")] // Définit une route DELETE pour supprimer un Posseder
-        public async Task<ActionResult> SuppressionPosseder(int idPublication, int idTagPublication)
+        [HttpDelete("{idPosseder}")] // Définit une route DELETE pour supprimer un Posseder
+        public async Task<ActionResult> SuppressionPosseder(int idPosseder)
         {
-            PossederModel possederASupprimer = await _repository.GetByIds(idPublication, idTagPublication);
+            PossederModel possederASupprimer = await _repository.GetById(idPosseder);
             if (possederASupprimer == null) { return NotFound(); } // Retourne 404 si non trouvé
             else
             {
-                bool aEteSupprime = await _repository.Delete(idPublication, idTagPublication);
+                bool aEteSupprime = await _repository.Delete(idPosseder);
                 if (!aEteSupprime) { return BadRequest("Erreur : Suppression impossible"); } // Retourne 400 si échec
                 else { return Ok(); } // Retourne 200 OK si réussi
             }

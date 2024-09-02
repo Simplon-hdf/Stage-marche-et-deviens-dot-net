@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ApiFetcherPossederService } from '../../services/api-fetcher-posseder.service';
+import { Posseder } from '../../intefaces/posseder';
 
 @Component({
   selector: 'app-index-back-office',
@@ -10,16 +11,5 @@ import { ApiFetcherPossederService } from '../../services/api-fetcher-posseder.s
 })
 export class IndexBackOfficeComponent {
   ApiFetcher = inject(ApiFetcherPossederService);
-  ngOnInit(){
-    this.ApiFetcher.RecupererListePossederParPublication(1).subscribe(
-      result => {
-        if (result) {
-          console.log('Données reçues:', result);
-        } else {
-          console.log('Aucune donnée ou erreur');
-        }
-      }
-    );
-  }
-  
+    
 }
