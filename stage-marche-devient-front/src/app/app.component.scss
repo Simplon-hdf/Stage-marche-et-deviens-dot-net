@@ -162,32 +162,31 @@ h1, p, a {
   align-items: center;
   
   .container {
-    width: 1274px;
-    height: 150px;
+    width: fit-content;
+    height: fit-content;
     background-color: #416548;
     border-radius: 15px;
-    padding: 10px;
+    padding: 40px;
     display: flex;
     
     .title-desc {
       width: fit-content;
-      margin-top: 20px;
       margin-left: 15px;
       color: white;
       
       h1 {
         font-weight: 500;
-        font-size: 30px;
+        font-size: 25px;
       }
       
       p {
-        font-size: 20px;
+        font-size: 15px;
         color: rgba(255, 255, 255, 0.6);
       }
     }
     .button {
       position: relative;
-      width: 200px;
+      width: fit-content;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -197,7 +196,7 @@ h1, p, a {
         height: fit-content;
         padding: 10px 15px;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         background-color: white;
         color: #4F4F4F;
         
