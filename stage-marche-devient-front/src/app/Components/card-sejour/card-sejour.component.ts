@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { FormsModule } from "@angular/forms";
 import {RandonneeService} from "../../Services/randonnee.service";
 import {Randonnee} from "../../Models/randonnee.model";
 import {NgForOf} from "@angular/common";
@@ -7,7 +8,8 @@ import {NgForOf} from "@angular/common";
   selector: 'app-card-sejour',
   standalone: true,
   imports: [
-    NgForOf
+    FormsModule,
+    NgForOf,
   ],
   templateUrl: './card-sejour.component.html',
   styleUrl: './card-sejour.component.scss'
