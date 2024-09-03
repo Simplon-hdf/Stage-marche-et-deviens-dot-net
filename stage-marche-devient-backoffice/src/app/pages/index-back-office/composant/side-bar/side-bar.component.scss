@@ -43,3 +43,19 @@ table {
 	border-spacing: 0;
 }
 /*fin du reset css*/
+.conteneur_side_bar{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+}
+.button_side_bar{
+    background-color: white;
+    border: solid 0.2px rgba(154, 154, 154, 0.448);
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px 0px rgb(154, 154, 154);
+    margin-top: 1vh;
+    padding: 0.5vh;
+    width: 8vw;
+}
