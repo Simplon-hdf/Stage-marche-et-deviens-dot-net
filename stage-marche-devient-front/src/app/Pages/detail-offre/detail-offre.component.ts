@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DetailsOffreService } from './details-offre.service';
+import { DetailsOffreService } from "../../Services/details-offre.service";
 
 @Component({
   selector: 'app-detail-offre',
