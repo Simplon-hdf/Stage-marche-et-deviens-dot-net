@@ -1,5 +1,5 @@
 export interface TagPublication {
-    id: number | null;
+    idTagPublication: number | null;
     nom: string;
     couleur: string;
 }
