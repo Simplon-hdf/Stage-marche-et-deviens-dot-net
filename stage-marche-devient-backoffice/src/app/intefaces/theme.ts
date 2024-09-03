@@ -1,4 +1,4 @@
 export interface Theme {
-    id: number | null;
+    id?: number;
     nom: string;
 }

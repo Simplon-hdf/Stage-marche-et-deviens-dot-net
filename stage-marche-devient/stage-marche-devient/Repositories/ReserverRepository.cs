@@ -51,12 +51,16 @@ namespace stage_marche_devient.Repositories
         public async Task<IEnumerable<ReserverModel>> GetByUtilisateurId(int idUtilisateur)
         {
             // Recherche et retourne la réservation correspondante
-            return await _contexteDeBDD.Reserver.Where(r => r.IdSession == idUtilisateur).ToListAsync();
+            var listDeRetour = await _contexteDeBDD.Reserver.Where(r => r.IdSession == idUtilisateur).ToListAsync();
+            if (listDeRetour.Count() < 1) { return null; }
+            else { return listDeRetour; }
         }
         public async Task<IEnumerable<ReserverModel>> GetBySessionId(int idSession)
         {
             // Recherche et retourne la réservation correspondante
-            return await _contexteDeBDD.Reserver.Where(r => r.IdUtilisateur == idSession).ToListAsync();
+            var listDeRetour = await _contexteDeBDD.Reserver.Where(r => r.IdUtilisateur == idSession).ToListAsync();
+            if (listDeRetour.Count() < 1) { return null; }
+            else { return listDeRetour; }
         }
         #endregion
 
