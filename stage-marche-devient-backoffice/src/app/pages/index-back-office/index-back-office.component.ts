@@ -7,6 +7,7 @@ import { BoiteGeneralComponent } from "./composant/boite-general/boite-general.c
 import { BoiteRandoneeComponent } from "./composant/boite-randonee/boite-randonee.component";
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ApiFetcherRandoneeService } from '../../services/api-fetcher-randonee.service';
+import { Randonnee } from '../../intefaces/randonnee';
 
 @Component({
   selector: 'app-index-back-office',
@@ -23,7 +24,20 @@ export class IndexBackOfficeComponent implements OnInit {
 
   ngOnInit() {
     this.boiteDeCommande.choixPanelCommande("general");
-    this.apiFetcher.RecupererListeRandonee().subscribe();
+    let randoAjout: Randonnee = {
+      id: null,
+      nom: "test",
+      description: "test",
+      lieu: "test",
+      image: "test",
+      prix: 100,
+      nbrNuit: 100,
+      minParticipant: 100,
+      maxParticipant: 100,
+      visibleFront: false,
+      DistanceEnKm: 100,
+    } 
+    this.apiFetcher.MiseAJourRandonnee(10,randoAjout).subscribe();
   }
 }
 
