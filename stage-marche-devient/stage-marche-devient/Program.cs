@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Data;
+using stage_marche_devient.Repositories;//implementation de mon IAR
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
     var serverVersion = ServerVersion.AutoDetect(connectionString);
     options.UseMySql(connectionString, serverVersion);
 });
+// Enregistrer le service IAuthentificationRepository
+builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
 
 var app = builder.Build();
 
