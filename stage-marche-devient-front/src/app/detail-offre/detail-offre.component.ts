@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DetailsOffreService } from './details-offre.service';
+import { ActivatedRoute } from '@angular/router';
+import { RandonneeService } from '../services/randonnee.service';
+import { Randonnee } from "../Models/randonnee.model";
 
 @Component({
   selector: 'app-detail-offre',
@@ -8,19 +10,18 @@ import { DetailsOffreService } from './details-offre.service';
   templateUrl: './detail-offre.component.html',
   styleUrl: './detail-offre.component.scss'
 })
-export class DetailOffreComponent  implements OnInit {
-  programData: any = {};
+export class DetailOffreComponent implements OnInit {
+  randonnee: Randonnee;
 
-  constructor(private detailsOffreService: DetailsOffreService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private randonneeService: RandonneeService
+  ) { }
 
   ngOnInit(): void {
-    this.detailsOffreService.getProgramData().subscribe(
-      data => {
-        this.programData = data;
-      },
-      error => {
-        console.error('Error fetching program data', error);
-      }
-    );
+    const id = + this.route.snapshot.paramMap.get('Id_randonnee');
+    this.randonneeService.getRandonnee(id).subscribe(randonnee => {
+      this.randonnee = randonnee;
+    });
   }
 }
