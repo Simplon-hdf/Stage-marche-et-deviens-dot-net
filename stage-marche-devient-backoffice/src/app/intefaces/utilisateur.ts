@@ -5,5 +5,6 @@ export interface Utilisateur {
     tel: string,
     mdp: string,
     mail: string,
-    totalDistanceParcourue: string|null,
+    totalDistanceParcourue: number|null,
+    dateCreation: string|null,
 }
