@@ -1,0 +1,85 @@
+/* forest-page.component.scss */
+
+.main-content {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  
+    .title-section {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+  
+    .theme {
+      color: #666;
+    }
+  
+    .image-section {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      .main-image {
+        img {
+          width: 70%;
+          border-radius: 10px;
+        }
+      }
+  
+      .thumbnail-images {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+  
+        img {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 10px;
+          border-radius: 5px;
+        }
+      }
+    }
+  
+    .program-section {
+      margin-bottom: 20px;
+    }
+  
+    .info-panels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+  
+      .info-panel {
+        width: 30%;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    }
+  
+    .last-advice {
+      background-color: #f7f7f7;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .footer-button {
+      text-align: center;
+    }
+  
+    .reserve-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+  
