@@ -1,3 +1,12 @@
+.container {
+  width: fit-content;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .card {
     width: fit-content;
     height: 358px;
@@ -5,6 +14,7 @@
     background-color: white;
     filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.2));
     padding: 10px;
+    margin: 15px;
     
     .img {
       border-radius: 15px;
