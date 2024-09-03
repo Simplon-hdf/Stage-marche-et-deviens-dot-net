@@ -1,19 +1,20 @@
+import { Injectable, inject } from '@angular/core';
+import { Observable, catchError, map, of  } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http'; // Importation des classes nécessaires pour faire des requêtes HTTP et gérer les erreurs HTTP.
-import { Injectable, inject } from '@angular/core'; // Importation des décorateurs et fonctions pour créer et injecter des services Angular.
-import { Observable, catchError, map, of } from 'rxjs'; // Importation des opérateurs RxJS pour travailler avec les Observables.
-import { Theme } from '../intefaces/theme';  // Importation de l'interface Theme qui définit la structure d'un thème.
+import { TagPublication } from '../intefaces/tag-publication';
+
 
 @Injectable({
-  providedIn: 'root' // Fournit ce service à la racine de l'application, le rendant disponible partout.
+  providedIn: 'root'
 })
-export class ApiFetcherThemeService {
-
-  private endPointUrl: string = "https://localhost:7092/api/Theme"; // URL de base pour l'API des thèmes.
+export class ApiFetcherTagPublicationService {
+  private endPointUrl: string = "https://localhost:7092/api/TagPublication"; // URL de base pour l'API des tags.
 
   httpClient = inject(HttpClient); // Injection du service HttpClient pour effectuer des requêtes HTTP.
 
-  // Méthode pour récupérer la liste des thèmes.
-  recupererThemeList(): Observable<any> {
+  constructor() { }
+
+  recupererTagPublicationList(): Observable<any> {
     return this.httpClient.get(`${this.endPointUrl}`, { observe: 'response' }) // Effectue une requête GET et observe la réponse complète.
       .pipe(
         map(response => {
@@ -33,9 +34,9 @@ export class ApiFetcherThemeService {
       );
   }
 
-  // Méthode pour récupérer un thème par son ID.
-  recupererThemeParId(id: number): Observable<any> {
-    return this.httpClient.get(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête GET pour un thème spécifique.
+   // Méthode pour récupérer un tag par son ID.
+   recupererTagPublicationParId(id: number): Observable<any> {
+    return this.httpClient.get(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête GET pour un tag spécifique.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -53,9 +54,9 @@ export class ApiFetcherThemeService {
       );
   }
 
-  // Méthode pour ajouter un nouveau thème.
-  async ajoutTheme(theme: Theme): Promise<Observable<any>> {
-    return this.httpClient.post(`${this.endPointUrl}`, { "nomTheme": theme.nom }, { observe: 'response' }) // Requête POST pour ajouter un thème.
+  // Méthode pour ajouter un nouveau tag.
+  async ajoutTagPublication(tagPublication: TagPublication): Promise<Observable<any>> {
+    return this.httpClient.post(`${this.endPointUrl}`, { "nom": tagPublication.nom, "couleur": tagPublication.couleur }, { observe: 'response' }) // Requête POST pour ajouter un tag.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -73,9 +74,9 @@ export class ApiFetcherThemeService {
       );
   }
 
-  // Méthode pour supprimer un thème par son ID.
-  async supprimerTheme(id: number): Promise<Observable<any>> {
-    return this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête DELETE pour supprimer un thème.
+  // Méthode pour supprimer un tag par son ID.
+  async supprimerTagPublication(id: number): Promise<Observable<any>> {
+    return this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête DELETE pour supprimer un tag.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -93,9 +94,9 @@ export class ApiFetcherThemeService {
       );
   }
 
-  // Méthode pour mettre à jour un thème par son ID.
-  majTheme(id: number, theme: Theme): Observable<any> {
-    return this.httpClient.put(`${this.endPointUrl}/${id}`, { "idTheme": id, "nomTheme": theme.nom }, { observe: 'response' }) // Requête PUT pour mettre à jour un thème.
+  // Méthode pour mettre à jour un tag par son ID.
+  majTagPublication(id: number, tagPublication: TagPublication): Observable<any> {
+    return this.httpClient.put(`${this.endPointUrl}/${id}`, tagPublication, { observe: 'response' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);

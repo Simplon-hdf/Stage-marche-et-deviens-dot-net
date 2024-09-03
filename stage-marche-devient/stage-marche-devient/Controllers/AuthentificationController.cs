@@ -1,4 +1,4 @@
-﻿using stage_marche_devient.Models;
+using stage_marche_devient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
