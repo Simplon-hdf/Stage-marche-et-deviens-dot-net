@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 app-navbar {
   position: fixed;
   z-index: 100000;
+}
+
+h1, p, a {
+  font-family: 'Poppins', sans-serif;
 }
 
 #home {
@@ -80,10 +86,6 @@ app-navbar {
       }
     }
 
-    .logo {
-
-    }
-
     .walker {
       margin-left: 15px;
     }
@@ -105,7 +107,7 @@ app-navbar {
       flex-wrap: wrap;
       justify-content: flex-start;
       gap: 10px;
-      margin-left: 200px;
+      margin-left: 400px;
       .card {
         width: 200px;
         height: 50px;
@@ -160,32 +162,31 @@ app-navbar {
   align-items: center;
   
   .container {
-    width: 1274px;
-    height: 150px;
+    width: fit-content;
+    height: fit-content;
     background-color: #416548;
     border-radius: 15px;
-    padding: 10px;
+    padding: 40px;
     display: flex;
     
     .title-desc {
       width: fit-content;
-      margin-top: 20px;
       margin-left: 15px;
       color: white;
       
       h1 {
         font-weight: 500;
-        font-size: 30px;
+        font-size: 25px;
       }
       
       p {
-        font-size: 20px;
+        font-size: 15px;
         color: rgba(255, 255, 255, 0.6);
       }
     }
     .button {
       position: relative;
-      width: 200px;
+      width: fit-content;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -195,7 +196,7 @@ app-navbar {
         height: fit-content;
         padding: 10px 15px;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         background-color: white;
         color: #4F4F4F;
         
@@ -206,9 +207,10 @@ app-navbar {
     }
   }
 }
-#séjours {
+#sejours {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
+  padding: 50px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -356,8 +358,6 @@ app-navbar {
       }
       .right {
         display: none;
-        .img {
-        }
       }
     }
   }
