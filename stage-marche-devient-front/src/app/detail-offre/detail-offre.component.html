@@ -1,14 +1,14 @@
 <div class="main-content">
     <!-- Title Section -->
     <section class="title-section">
-        <h1>{{ programData.title }}</h1>
+        <h1>{{ randonnee.idRandonnee }}</h1>
         <h2 class="theme">Thématique : {{ programData.theme }}</h2>
     </section>
 
     <!-- Image Section -->
     <section class="image-section">
-        <div class="main-image" *ngIf="programData.mainImage">
-            <img [src]="programData.mainImage" alt="Main Image" />
+        <div class="main-image" *ngIf="randonnee.imageRandonnee">
+            <img [src]="randonnee.imageRandonnee" alt="Main Image" />
         </div>
         <div class="thumbnail-images">
             <img src="path/to/thumbnail1.jpg" alt="Thumbnail 1" />
@@ -20,7 +20,7 @@
     <!-- Description Section -->
     <section class="description-section">
         <h3>Au programme</h3>
-        <p>{{ programData.description }}</p>
+        <p>{{ randonnee.descriptionRandonnee }}</p>
     </section>
     <p>
         Pour cette session la thématique proposée, sera la suivante : la notion d'identité et de rapport à celle-ci
