@@ -1,0 +1,68 @@
+<div class="main-content">
+    <!-- Title Section -->
+    <section class="title-section">
+        <h1>{{ programData.title }}</h1>
+        <h2 class="theme">Thématique : {{ programData.theme }}</h2>
+    </section>
+
+    <!-- Image Section -->
+    <section class="image-section">
+        <div class="main-image" *ngIf="programData.mainImage">
+            <img [src]="programData.mainImage" alt="Main Image" />
+        </div>
+        <div class="thumbnail-images">
+            <img src="path/to/thumbnail1.jpg" alt="Thumbnail 1" />
+            <img src="path/to/thumbnail2.jpg" alt="Thumbnail 2" />
+            <img src="path/to/thumbnail3.jpg" alt="Thumbnail 3" />
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    <section class="description-section">
+        <h3>Au programme</h3>
+        <p>{{ programData.description }}</p>
+    </section>
+    <p>
+        Pour cette session la thématique proposée, sera la suivante : la notion d'identité et de rapport à celle-ci
+        avec une question principale : Comment prendre des décisions alignées ?
+    </p>
+    </section>
+
+    <!-- Information Panels -->
+    <section class="info-panels">
+        <div class="info-panel">
+            <h4>Préparation physique</h4>
+            <p>
+                Pour cet effort pleinement vécu, nous vous invitons à une préparation...
+            </p>
+        </div>
+        <div class="info-panel">
+            <h4>Matériel à ne pas oublier</h4>
+            <p>
+                Chaussures (toutes conditions), vêtements...
+            </p>
+        </div>
+        <div class="info-panel">
+            <h4>Hébergement</h4>
+            <p>
+                Hébergement situé au gîte de... Maximum 2/4 personnes
+            </p>
+        </div>
+    </section>
+
+    <!-- Last Advice Section -->
+    <section class="last-advice">
+        <h4>Derniers conseils</h4>
+        <p>
+            La réussite de tout voyage...
+        </p>
+        <p>
+            L'objectif de ce séjour...
+        </p>
+    </section>
+
+    <!-- Footer Button -->
+    <div class="footer-button">
+        <button class="reserve-button">Je réserve mon séjour</button>
+    </div>
+</div>

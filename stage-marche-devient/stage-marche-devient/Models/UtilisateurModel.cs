@@ -39,6 +39,6 @@ public class UtilisateurModel                                           /* Je d�
     public string MailUtilisateur { get; set; } = null!;
 
     [Column("total_distance_parcourue_utilisateur"), Required]
-    public int? TotalDistanceParcourueUtilisateur { get; set; } /*int? veut dire que cette propriété peut etre null, obligatoire mais peut etre nullable*/
+    public int TotalDistanceParcourueUtilisateur { get; set; } 
 }
 
