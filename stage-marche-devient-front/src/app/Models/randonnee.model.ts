@@ -1,13 +1,13 @@
 export class Randonnee {
-  id?: number;
-  nom?: number = 0;
-  desc?: string = "";
-  lieu?: string = "";
-  image?: string = "";
-  prix?: number = 0;
-  nbr_nuit?: number = 0;
-  min_parti?: number = 0;
-  max_parti?: number = 0;
-  visible_font: boolean = true;
-  distance_kms?: number = 0;
+  id_randonee?: number;
+  Nom_randonnee?: number;
+  description_randonnee?: string;
+  lieu_randonnee?: string;
+  image_randonnee?: string;
+  prix_randonnee?: number;
+  nbr_nuit_randonnee?: number;
+  min_participant?: number;
+  max_participant?: number;
+  visible_front: boolean = true;
+  distance_kms_rando?: number;
 }

@@ -3,18 +3,21 @@ import { FormsModule } from "@angular/forms";
 import {RandonneeService} from "../../Services/randonnee.service";
 import {Randonnee} from "../../Models/randonnee.model";
 import {NgForOf} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-card-sejour',
+  selector: 'app-sejour',
   standalone: true,
   imports: [
     FormsModule,
     NgForOf,
+    RouterLink,
   ],
-  templateUrl: './card-sejour.component.html',
-  styleUrl: './card-sejour.component.scss'
+  templateUrl: './sejour.component.html',
+  styleUrl: './sejour.component.scss'
 })
-export class CardSejourComponent implements OnInit{
+
+export class SejourComponent implements OnInit{
   randos: Randonnee[] = [];
   error: string = " ";
 

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { ApiService } from "./api/api.service";
 import { Observable, catchError, throwError } from "rxjs";
 import { Randonnee } from "../Models/randonnee.model";
-import { environment } from '../Environment/environment';
+import { environment } from "../Environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RandonneeService {
-  private readonly RANDONNEE_ENDPOINT = 'api/Randonnee';
+  private readonly RANDONNEE_ENDPOINT = '/api/Randonnee';
 
   constructor(private api: ApiService) { }
 
