@@ -1,3 +1,4 @@
+// Model des Randonnées.
 export class Randonnee {
   idRandonnee?: number;
   nomRandonnee?: number;

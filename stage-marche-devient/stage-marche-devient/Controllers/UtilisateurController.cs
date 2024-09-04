@@ -109,7 +109,7 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
 
         public async Task<IActionResult> DeleteUtilisateurModel(int id) /*Déclare une méthode asynchrone qui supprime un utilisateur existant*/
         {
-            var result = await _repository.Delete(id);              /*Appelle la méthode Delete du repository pour supprimer l'utilisateur par son ID*/
+            bool result = await _repository.Delete(id);              /*Appelle la méthode Delete du repository pour supprimer l'utilisateur par son ID*/
 
             if (result)                                             /*Vérifie si la suppression a réussi*/
             {
