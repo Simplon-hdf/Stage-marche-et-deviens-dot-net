@@ -1,1 +1,13 @@
-<p>index-back-office works!</p>
+<section class="conteneur_principal">
+<section class="side_bar_display"><app-side-bar></app-side-bar></section>
+<section class="boite_commande">
+    <ng-container *ngIf="boiteSelectionnee$ | async as moduleSelectioner">
+        <app-boite-general *ngIf="moduleSelectioner === 'general'"></app-boite-general>
+        <app-boite-randonee *ngIf="moduleSelectioner === 'randonee'"></app-boite-randonee>
+      </ng-container>
+</section>
+
+
+
+
+</section>

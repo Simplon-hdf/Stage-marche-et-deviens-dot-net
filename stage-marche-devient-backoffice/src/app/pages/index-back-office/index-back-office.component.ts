@@ -1,15 +1,30 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ApiFetcherPossederService } from '../../services/api-fetcher-posseder.service';
-import { Posseder } from '../../intefaces/posseder';
+import { SelecteurBoiteCommandeAdminService } from './service/selecteur-boite-commande-admin.service';
+import { map, Observable } from 'rxjs';
+import { SideBarComponent } from "./composant/side-bar/side-bar.component";
+import { BoiteGeneralComponent } from "./composant/boite-general/boite-general.component";
+import { BoiteRandoneeComponent } from "./composant/boite-randonee/boite-randonee.component";
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { ApiFetcherUtilisateurService } from '../../services/api-fetcher-utilisateur.service';
+import { Utilisateur } from '../../intefaces/utilisateur';
+import test from 'node:test';
 
 @Component({
   selector: 'app-index-back-office',
   standalone: true,
-  imports: [],
+  imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent],
   templateUrl: './index-back-office.component.html',
-  styleUrl: './index-back-office.component.scss'
+  styleUrls: ['./index-back-office.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IndexBackOfficeComponent {
-  ApiFetcher = inject(ApiFetcherPossederService);
-    
+export class IndexBackOfficeComponent implements OnInit {
+  private apiFetcher = inject(ApiFetcherUtilisateurService);
+  private boiteDeCommande = inject(SelecteurBoiteCommandeAdminService);
+  boiteSelectionnee$: Observable<string> = this.boiteDeCommande.boiteSelectioner$;
+
+  ngOnInit() {
+    this.boiteDeCommande.choixPanelCommande("general");
+  }
 }
+
