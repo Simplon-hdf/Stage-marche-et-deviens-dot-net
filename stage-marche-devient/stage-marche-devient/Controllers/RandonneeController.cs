@@ -70,12 +70,36 @@ namespace stage_marche_devient.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRandonnee(int id)
         {
-            var result = await _repository.Delete(id);                                                          // envoi un requete de deletion vers le repository et stock le retour
-            if (result)                                                                                         // si le retour est positive
+            if (id <= 0)
             {
-                return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
+                return BadRequest("L'identifiant doit être un nombre positif.");
             }
-            return NotFound();                                                                                  // revoie un not found (code 404)
+
+            try
+            {
+                var existingRandonnee = await _repository.GetById(id);
+                if (existingRandonnee == null)
+                {
+                    return NotFound($"Aucune randonnée trouvée avec l'ID {id}.");
+                }
+
+                bool result = await _repository.Delete(id);
+                if (await _repository.GetById(id) == null)
+                {
+                    return Ok($"Suppression réussie de la randonnée avec l'ID {id}.");
+                }
+                else
+                {
+                    // Si la suppression échoue pour une raison quelconque
+                    return StatusCode(500, $"La suppression de la randonnée avec l'ID {id} a échoué pour une raison inconnue.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log l'exception
+                Console.WriteLine(ex.Message, $"Une erreur est survenue lors de la suppression de la randonnée avec l'ID {id}.");
+                return StatusCode(500, "Une erreur interne est survenue lors de la suppression. Veuillez réessayer plus tard.");
+            }
         }
 
     }

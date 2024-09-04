@@ -1,4 +1,4 @@
-export interface Randonee {
+export interface Randonnee {
     id: number|null,
     nom: string,
     description: string,
