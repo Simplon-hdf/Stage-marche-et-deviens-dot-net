@@ -21,14 +21,16 @@ export class SejourComponent implements OnInit{
   randos: Randonnee[] = [];
   error: string = " ";
 
-  constructor(private randonneeService: RandonneeService) {}
+  constructor(private randonneeService: RandonneeService) {} // Import de RandonneService.
 
+  // Permet de lancer la fonction loadRoandonnee() des le chargement de la page.
   ngOnInit(): void {
     this.loadRandonnee();
   }
 
+  // Fonction qui permet de récupérer les randos.
   loadRandonnee(): void {
-    this.randonneeService.getRandos().subscribe({
+    this.randonneeService.getRandos().subscribe({ // Appel de la fonction getRandos().
       next: (data) => {
         this.randos = data;
         console.log('Randonnées chargées:', this.randos);
