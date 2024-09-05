@@ -32,10 +32,10 @@ namespace stage_marche_devient.Controllers
         // Méthode pour dériver le salt à partir d'une donnée constante (par exemple, email)
         private string DeriveSalt(string email)
         {
-            using (SHA256 sha256 = SHA256.Create())
+            using (SHA512 sha512 = SHA512.Create())
             {
                 byte[] emailBytes = Encoding.UTF8.GetBytes(email);
-                byte[] hashBytes = sha256.ComputeHash(emailBytes);
+                byte[] hashBytes = sha512.ComputeHash(emailBytes);
                 return Convert.ToBase64String(hashBytes);
             }
         }
