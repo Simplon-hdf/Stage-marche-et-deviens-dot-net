@@ -20,7 +20,7 @@ namespace stage_marche_devient.Models
         [Column("contenu_texte"), MaxLength(50)]
         public string ContenuTexte { get; set; }
 
-        [Column("id_session"), MaxLength(3), Required]
+        [Column("id_session"), Required]
         public int IdSession { get; set; }
     }
 }
