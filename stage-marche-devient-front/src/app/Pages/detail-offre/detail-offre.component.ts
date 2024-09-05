@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DetailsOffreService } from './details-offre.service';
+import { DetailsOffreService } from '../../Services/details-offre.service';
+import { NavbarComponent } from "../../Components/navbar/navbar.component";
 
 @Component({
   selector: 'app-detail-offre',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './detail-offre.component.html',
   styleUrl: './detail-offre.component.scss'
 })
