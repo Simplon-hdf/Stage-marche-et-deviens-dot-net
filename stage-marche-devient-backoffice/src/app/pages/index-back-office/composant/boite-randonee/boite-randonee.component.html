@@ -1,1 +1,28 @@
-<p>boite-randonee works!</p>
+<section class="conteneur_principale_randonnee">
+
+    <h2 class="titre_boite_randonne">Tableau des Randonnée</h2>
+    <section class="titre_colonne">
+        <p class="1">Description</p>
+        <p class="2">Lieu</p>
+        <p class="3">Limite Participants</p>
+        <p class="5">Nuits</p>
+        <p class="6">Prix</p>
+        <p class="7">Action</p>
+    </section>
+    <ul>
+        <li *ngFor="let randonnee of messageRetourAPiListRando$ | async ">
+            <!--description-->
+            <p>{{randonnee.description}}</p>
+            <!--lieu de randonée-->
+            <p>{{randonnee.lieu}}</p>
+            <!--limite participants-->
+            <p>{{randonnee.maxParticipant}}</p>
+            <!--nuits-->
+            <p>{{randonnee.nbrNuit}}</p>
+            <!--prix-->
+            <p>{{randonnee.prix}}</p>
+            <button class="modif_randonnee">Modif</button>
+            <button class="supression_randonnee">Supprimer</button>
+        </li>
+    </ul>
+</section>
