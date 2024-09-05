@@ -34,11 +34,18 @@ namespace stage_marche_devient.Repositories     /*je declare mon namespace et ma
         public async Task<bool> Delete(int id) /*je declare la methode Delete publique asynchrone qui supprime 
                                                 * un utilisateur de la bdd par son ID, booleen idem true or false*/
         {
-            var bddUtilisateurSupprimer = await _context.Utilisateur.FindAsync(id);  /*recherche l'utilisateur par son Id*/  
-            if (bddUtilisateurSupprimer == null) { return false; }                          /*Si utilisateur n'existe pas, retourne false*/                     
-            _context.Utilisateur.Remove(bddUtilisateurSupprimer);     /*supprime l'utilisateur de l'ensemble 'utilisateur' du contexte*/            
+            var bddUtilisateurSupprimer = await _context.Utilisateur.FindAsync(id);  //recherche l’utilisateur dans la base de données par son id. 
+            if (bddUtilisateurSupprimer == null)    //détermine si l’utilisateur existe avant de tenter de le supprimer.
+            {
+                return false;                       //*Si utilisateur n'existe pas, retourne false*/ 
+            }                                              
+            
+            _context.Utilisateur.Remove(bddUtilisateurSupprimer);     //_context (c'est l'instance de context de bdd dérivé du DbContext) Utilisateur(fait réf au DbSet
+                                                                      //qui represente l'entité du meme nom dans la bdd)
+                                                                      //Remove(bddUtilisateurSupprimer)methode qui indique que je souhaite supprimer l'utilisateur            
             await _context.SaveChangesAsync();                        /*sauvegarde les modifs dans la BDD de manière asynchrone*/                                  
-            return await _context.Utilisateur.FindAsync(id) != null;   /*Verifie si l'utilisateur a été correctement supprimé 
+            
+            return true;                                             /*Verifie si l'utilisateur a été correctement supprimé 
                                                                               * en le recherchant par son ID. 
                                                                               * Retourne false si l'utilisateur a été supprimé 
                                                                               * (puisqu'il ne devrait plus exister). */             

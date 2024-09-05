@@ -36,6 +36,9 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 // Enregistrer le service IAuthentificationRepository
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
 
+// Ajouter les services de logging
+builder.Services.AddLogging();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
