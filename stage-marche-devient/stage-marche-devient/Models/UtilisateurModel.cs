@@ -2,10 +2,13 @@
 using System.Collections.Generic;        /* contient des classes génériques pour manipuler les collections*/
 using System.ComponentModel.DataAnnotations.Schema; /* contient des attributs qui permettent de définir des métadonnéees pour le mapping*/
 using System.ComponentModel.DataAnnotations; /*contient les attributs pour valider les données comme required ou maxlenght*/
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
-namespace MarcheEtDevient.Server.Models; /*Je  déclare l'espace de noms et la classe*/
+namespace stage_marche_devient.Models; /*Je  déclare l'espace de noms et la classe*/
 
-public partial class UtilisateurModel /* Je déclare la classe utilisateur avec partial qui indique que la classe peut être divisée en plusieurs fichiers*/
+public class UtilisateurModel                                           /* Je déclare la classe utilisateur */
+
 { /* je déclare les propriétés  qui sont des colonnes de la table Utilisateur dans bdd*/
 
     [Column("id_utilisateur"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required] /* key indique que la propriété "column"
@@ -32,10 +35,10 @@ public partial class UtilisateurModel /* Je déclare la classe utilisateur avec 
     [Column("mdp_utilisateur"), MaxLength(35), Required, DataType(DataType.Password)] /*datatype spécifie que cette propriété est un password*/
     public string MdpUtilisateur { get; set; } = null!;
      
-    [Column("mail_utilisateur"), MaxLength(50), Required]
+    [Column("mail_utilisateur"), MaxLength(50), Required, DataType(DataType.EmailAddress)]
     public string MailUtilisateur { get; set; } = null!;
 
     [Column("total_distance_parcourue_utilisateur"), Required]
-    public int? TotalDistanceParcourueUtilisateur { get; set; } /*int? veut dire que cette propriété peut etre null, obligatoire mais peut etre nullable*/
+    public int TotalDistanceParcourueUtilisateur { get; set; } 
 }
 

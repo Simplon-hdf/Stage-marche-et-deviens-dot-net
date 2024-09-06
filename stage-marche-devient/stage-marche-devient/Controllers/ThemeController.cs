@@ -11,11 +11,16 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly ThemeRepository _repository;
+        private readonly ILogger<ThemeController> _logger;
 
-        public ThemeController(ApiDbContext context)
+        public ThemeController(ApiDbContext context, ILogger<ThemeController> logger, ILogger<ThemeRepository> themeLogger)
         {
             _context = context;
-            _repository = new ThemeRepository(_context);
+            _repository = new ThemeRepository(_context, themeLogger);
+            _logger = logger;
+
+
+
         }
 
         [HttpGet]
@@ -75,6 +80,9 @@ namespace stage_marche_devient.Controllers
             {
                 return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
             }
+
+            _logger.LogError("Erreur lors de la suppression du thème avec ID {Id}", id);
+
             return NotFound();                                                                                  // revoie un not found (code 404)
         }
 

@@ -7,7 +7,15 @@ namespace stage_marche_devient.Repositories
     public class ThemeRepository : IRepository<Theme, int>
     {
         private readonly ApiDbContext _context;
-        public ThemeRepository(ApiDbContext context) => _context = context;
+        private readonly ILogger<ThemeRepository> _logger;
+
+        public ThemeRepository(ApiDbContext context, ILogger<ThemeRepository> logger) 
+        {
+            _context = context;
+            _logger = logger;
+
+        }
+  
 
         public async Task<IEnumerable<Theme>> GetAll()                                  //Fonction permettant le listing des themes
         {
@@ -28,13 +36,17 @@ namespace stage_marche_devient.Repositories
             return await _context.Theme.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
         }
 
-        public async Task<bool> Delete(int id)                                              //Fonction de suppression d'une theme à la base de données
+        public async Task<bool> Delete(int id)
         {
-            var bddRandonneSupprimer = await _context.Theme.FindAsync(id);              //On recupère l'Id de la theme qu'on souhaite supprimer
-            if (bddRandonneSupprimer == null) { return false; }                             //Si la theme n'existe pas on retourne une erreur
-            _context.Theme.Remove(bddRandonneSupprimer);                                //Sinon on supprime l'entité de la base de donnée
-            await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données     
-            return await _context.Theme.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
+            var theme = await _context.Theme.FindAsync(id);
+            if (theme == null)
+            {
+                return false;
+            }
+
+            _context.Theme.Remove(theme);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Update(Theme model, int id)                             //Fonction de mise-à-jour d'une theme dans la base de données

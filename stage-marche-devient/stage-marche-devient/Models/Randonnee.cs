@@ -7,35 +7,35 @@ namespace stage_marche_devient.Models
 {
     public class Randonnee
     {
-        [Column("id_randonee"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
+        [Column("Id_randonnee"), Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
         public int IdRandonnee { get; set; }
-        [Column("Nom_randonnee"), MaxLength(150), Required]
-        public int NomRandonnee { get; set; }
+        [Column("Nom_rando"), Required]
+        public string NomRandonnee { get; set; }
         [Column("description_randonnee"), MaxLength(150), Required]
         public string DescriptionRandonnee { get; set; }
 
-        [Column("lieu_randonnee"), MaxLength(40), Required]
+        [Column("lieu_rando"), MaxLength(40), Required]
         public string LieuRandonnee { get; set; }
 
-        [Column("image_randonnee"), MaxLength(50), Required]
+        [Column("Image_rando"), MaxLength(50), Required]
         public string ImageRandonnee { get; set; }
 
-        [Column("prix_randonnee"), MaxLength(6), Required]
-        public int PrixRandonnee { get; set; }
+        [Column("prix_rando"), Required]
+        public double PrixRandonnee { get; set; }
 
-        [Column("nbr_nuit_randonnee"), MaxLength(1), Required]
+        [Column("nbr_nuit_rando"), Required]
         public int NbrNuitRandonnee { get; set; }
 
-        [Column("min_participant"), MaxLength(2), Required]
+        [Column("min_participant"), Required]
         public int MinimumParticipant { get; set; }
 
-        [Column("max_participant"), MaxLength(2), Required]
+        [Column("max_participant"), Required]
         public int MaximumParticipant { get; set; }
 
         [Column("visible_front"), Required]
         public Boolean EstVisible { get; set; }
 
-        [Column("distance_kms_rando"), MaxLength(2), Required]
+        [Column("distance_kms_rando"), Required]
         public int DistanceKmRandonnee { get; set; }
     }
 }

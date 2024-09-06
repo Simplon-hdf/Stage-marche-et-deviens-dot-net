@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 using stage_marche_devient.Repositories;
@@ -36,9 +37,24 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult<ReserverModel>> RecupererReservation(int idUtilisateur, int idSession)
         {
             // Récupération de la réservation spécifique
-            ReserverModel reservation = await _repository.GetById(idUtilisateur, idSession);
+            ReserverModel reservation = await _repository.GetByIds(idUtilisateur, idSession);
             if (reservation == null) { return NotFound(); } // Si la réservation n'existe pas, retourne 404
             return Ok(reservation); // Retourne la réservation trouvée
+        }
+
+        [HttpGet("{idUtilisateur}")] // Définit une route GET 
+        public async Task<ActionResult<IEnumerable<ReserverModel>>> RecupererPossederParIdPublication(int idUtilisateur)
+        {
+            IEnumerable<ReserverModel> posseder = await _repository.GetByUtilisateurId(idUtilisateur);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+        [HttpGet("{idSession}")] // Définit une route GET 
+        public async Task<ActionResult<IEnumerable<ReserverModel>>> RecupererPossederParIdTag(int idSession)
+        {
+            IEnumerable<ReserverModel> posseder = await _repository.GetBySessionId(idSession);
+            if (posseder == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(posseder); // Retourne le Posseder trouvé avec un statut 200 OK
         }
         #endregion
 
@@ -60,7 +76,7 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult> MiseAJourReservation(ReserverModel reservation, int idUtilisateur, int idSession)
         {
             // Récupération de la réservation à mettre à jour
-            ReserverModel reservationAMettreAJour = await _repository.GetById(idUtilisateur, idSession);
+            ReserverModel reservationAMettreAJour = await _repository.GetByIds(idUtilisateur, idSession);
             if (reservationAMettreAJour == null) { return NotFound(); } // Retourne 404 si la réservation n'existe pas
             else
             {
@@ -78,7 +94,7 @@ namespace stage_marche_devient.Controllers
         public async Task<ActionResult> SuppressionReservation(int idUtilisateur, int idSession)
         {
             // Récupération de la réservation à supprimer
-            ReserverModel reservationASupprimer = await _repository.GetById(idUtilisateur, idSession);
+            ReserverModel reservationASupprimer = await _repository.GetByIds(idUtilisateur, idSession);
             if (reservationASupprimer == null) { return NotFound(); } // Retourne 404 si la réservation n'existe pas
             else
             {

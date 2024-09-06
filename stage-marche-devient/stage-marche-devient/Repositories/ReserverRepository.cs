@@ -33,6 +33,14 @@ namespace stage_marche_devient.Repositories
 
         #region Read (Lecture)
         // Méthode pour récupérer toutes les réservations
+        public async Task<ReserverModel> GetByIds(int idUtilisateur, int idSession)
+        {
+            // Recherche et retourne la réservation correspondante
+            return await _contexteDeBDD.Reserver
+                .FirstOrDefaultAsync(r =>
+                    r.IdSession == idSession &&
+                    r.IdUtilisateur == idUtilisateur);
+        }
         public async Task<IEnumerable<ReserverModel>> GetAll()
         {
             // Récupère toutes les réservations et les retourne sous forme de liste
@@ -40,13 +48,19 @@ namespace stage_marche_devient.Repositories
         }
 
         // Méthode pour récupérer une réservation par ID utilisateur et ID session
-        public async Task<ReserverModel> GetById(int idUtilisateur, int idSession)
+        public async Task<IEnumerable<ReserverModel>> GetByUtilisateurId(int idUtilisateur)
         {
             // Recherche et retourne la réservation correspondante
-            return await _contexteDeBDD.Reserver
-                .FirstOrDefaultAsync(r =>
-                    r.IdSession == idSession &&
-                    r.IdUtilisateur == idUtilisateur);
+            var listDeRetour = await _contexteDeBDD.Reserver.Where(r => r.IdSession == idUtilisateur).ToListAsync();
+            if (listDeRetour.Count() < 1) { return null; }
+            else { return listDeRetour; }
+        }
+        public async Task<IEnumerable<ReserverModel>> GetBySessionId(int idSession)
+        {
+            // Recherche et retourne la réservation correspondante
+            var listDeRetour = await _contexteDeBDD.Reserver.Where(r => r.IdUtilisateur == idSession).ToListAsync();
+            if (listDeRetour.Count() < 1) { return null; }
+            else { return listDeRetour; }
         }
         #endregion
 

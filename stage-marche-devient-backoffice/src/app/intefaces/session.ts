@@ -1,8 +1,8 @@
 export interface Session {
-    id: number|null,
-    lieuDepart: string,
-    dateDebut: Date,
-    dateFin: Date,
-    idTheme: number|null,
-    idRandonnee: number|null,
+    idSession: number|null,
+    lieu: string,
+    dateDebut: string,
+    dateFin: string,
+    randonneeId: number|null,
+    themeId: number|null,
 }
