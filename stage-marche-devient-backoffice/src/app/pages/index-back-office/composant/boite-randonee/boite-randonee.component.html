@@ -1,1 +1,63 @@
-<p>boite-randonee works!</p>
+<section class="conteneur_principale_randonnee" *ngIf="afficherComposant">
+
+  <section class="conteneur_filtre">
+    <button class="button_filtre">Lieu</button>
+    <input class="input_filtre" type="text" />
+  </section>
+  <h2 class="titre_boite_randonnee">Tableau des Randonnée</h2>
+
+  <section class="boite_listing_randonnee">
+    <section class="titre_colonne">
+      <p class="titre_1">Nom</p>
+      <p class="titre_2">Description</p>
+      <p class="titre_3">Lieu</p>
+      <p class="titre_4">Limite Participants</p>
+      <p class="titre_5">Nuits</p>
+      <p class="titre_6">Prix</p>
+      <p class="titre_7">Action</p>
+
+    </section>
+    <ul *ngIf="listRandonnee$ | async as randonnees" class="Conteneur_list_randonnee">
+      <li *ngFor="let randonnee of randonnees" class="item_list_randonnee"
+        style="display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: 1fr; grid-column-gap: 0px; grid-row-gap: 0px;">
+
+        <!--Nom-->
+        <p class="nom_randonnee section_1">{{randonnee?.nomRandonnee}}</p>
+        <!--description-->
+        <p class="description-randonnee section_2">{{randonnee?.descriptionRandonnee}}</p>
+
+        <!--lieu de randonée-->
+        <p class="lieu_randonnee section_3">{{randonnee?.lieuRandonnee}}</p>
+
+        <div class="limite_participant section_4">
+          <!--limite participants-->
+          <p>{{randonnee?.maximumParticipant}}</p>
+          <!--min participants-->
+          <p>{{randonnee?.minimumParticipant}}</p>
+        </div>
+
+        <!--nuits-->
+        <p class="nbr_nuit_randonnee section_5">{{randonnee?.nbrNuitRandonnee}}</p>
+
+        <!--prix-->
+        <p class="prix_randonnee section_6">{{randonnee?.prixRandonnee}}</p>
+
+        <!--action-->
+        <section class="conteneur_button section_7">
+          <button class="modif_randonnee">Modif</button>
+          <button class="supression_randonnee"
+            (click)="suppressiont(randonnee.idRandonnee!,randonnee.nomRandonnee)">Supprimer</button>
+        </section>
+      </li>
+    </ul>
+  </section>
+</section>
+
+<button class="button_ajout_randonnee" (click)="switchAfficherAjour()">Ajout Randonnee</button>
+<button class="quitter_ajout_randonnee" (click)=" switchAfficherAjour()" *ngIf="afficherAjout">X</button>
+
+<ng-container *ngIf="afficherAjout == true">
+  <div class="view_screen">
+    <app-ajout-randonnee class="boit_ajout_randonnee"></app-ajout-randonnee>
+  </div>
+</ng-container>
