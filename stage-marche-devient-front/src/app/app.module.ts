@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { CardSejourComponent  } from './Components/card-sejour/card-sejour.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { JwtInterceptor } from './Services/jwt.interceptor';
 
 
 @NgModule({
