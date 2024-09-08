@@ -1,7 +1,7 @@
 // Model des Randonnées.
 export class Randonnee {
   idRandonnee?: number;
-  nomRandonnee?: number;
+  nomRandonnee?: string;
   descriptionRandonnee?: string;
   lieuRandonnee?: string;
   imageRandonnee?: string;

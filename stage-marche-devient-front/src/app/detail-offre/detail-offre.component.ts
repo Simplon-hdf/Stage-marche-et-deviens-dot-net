@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RandonneeService } from '../Services/randonnee.service';
 import { Randonnee } from "../Models/randonnee.model";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-detail-offre',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './detail-offre.component.html',
   styleUrl: './detail-offre.component.scss'
 })

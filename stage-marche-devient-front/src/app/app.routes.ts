@@ -6,7 +6,7 @@ import { DetailOffreComponent } from './detail-offre/detail-offre.component';
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/home', pathMatch: 'full' },//
   { path: 'home', component: AppComponent },
   { path: 'concept', component: ConceptComponent },
   { path: 'randonnee/:id', component : DetailOffreComponent},
@@ -16,4 +16,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutesModule { }
