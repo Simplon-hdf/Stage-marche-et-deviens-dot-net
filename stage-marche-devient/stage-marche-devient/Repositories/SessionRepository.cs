@@ -1,15 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Models;
 using stage_marche_devient.Data;
-using stage_marche_devient.Repositories;
 
-namespace stage_marche_devient.Repositorys
+namespace stage_marche_devient.Repositories
 {
     public class SessionRepository : IRepository<Session, int>
     {
         private readonly ApiDbContext _context;
-        public SessionRepository(ApiDbContext context) => _context = context;
+        private readonly ILogger<SessionRepository> _logger;
+        public SessionRepository(ApiDbContext context, ILogger<SessionRepository> logger)
+        {
 
+            _context = context;
+            _logger = logger;
+        }
+            
         public async Task<IEnumerable<Session>> GetAll()                                  //Fonction permettant le listing des randonnées
         {
             IEnumerable<Session> session = await _context.Session.ToArrayAsync();     //On créé une liste de randonnée
@@ -74,15 +79,29 @@ namespace stage_marche_devient.Repositorys
         public async Task<bool> Update(Session model, int id)                             //Fonction de mise-à-jour d'une randonnée dans la base de données
         {
             var dbSession = await _context.Session.FindAsync(id);                       //On récupère l'Id de la randonnée à laquelle on souhaite apporter des modifications
+
+            if (dbSession == null)                                                       /* Si la session n'existe pas, retourne false*/
+            {
+                return false;
+            }
+
+            /*Les lignes suivantes : Met à jour les propriétés de la session avec les nouvelles valeurs du modèle.*/
             dbSession.Lieu = model.Lieu;                                //On change la valeur du lieu de la randonnée par celle rentrée par l'utilisateur               
             dbSession.DateDebut = model.DateDebut;                          //On change la valeur du nombre de nuit de la randonnée par celle rentrée par l'utilisateur
             dbSession.DateFin = model.DateFin;
             dbSession.Theme = model.Theme;
+            dbSession.Randonnee = model.Randonnee;
+            
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données   
             var dbVerifAction = await _context.Session.FindAsync(id);
-            return dbVerifAction.Lieu == model.Lieu &&                      //On verifie les changements apportés par l'utilisateur
+
+            return dbVerifAction != null &&
+
+
+                    dbVerifAction.Lieu == model.Lieu &&                      //On verifie les changements apportés par l'utilisateur
                     dbVerifAction.DateDebut == model.DateDebut &&
                     dbVerifAction.DateFin == model.DateFin &&
+                    dbVerifAction.Randonnee == model.Randonnee &&
                     dbVerifAction.Theme == model.Theme;
         }
     }
