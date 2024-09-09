@@ -11,16 +11,17 @@ namespace stage_marche_devient.Models
         [Column("nom_publication"), MaxLength(50), Required]
         public string NomPublication { get; set; }
 
-        [Column("date_publication"), MaxLength(10), Required]
+        [Column("date_publication"), MaxLength(50), Required]
         public string DatePublication { get; set; }
 
-        [Column("lien_media"), MaxLength(40)]
+        [Column("lien_media"), MaxLength(200),Required]
         public string LienMedia { get; set; }
 
-        [Column("contenu_texte"), MaxLength(50)]
+        [Column("contenu_texte"), MaxLength(2000),Required]
         public string ContenuTexte { get; set; }
 
-        [Column("id_session"), MaxLength(3), Required]
+        [Column("id_session"), ForeignKey(nameof(Session))]
         public int IdSession { get; set; }
+
     }
 }

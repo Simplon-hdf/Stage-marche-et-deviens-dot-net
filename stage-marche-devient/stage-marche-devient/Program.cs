@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Data;
 using stage_marche_devient.Repositories;
-using stage_marche_devient.Repositorys;//implementation de mon IAR
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +37,7 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
+builder.Services.AddScoped<PublicationRepository>();
 
 
 

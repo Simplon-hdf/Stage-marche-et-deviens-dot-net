@@ -32,8 +32,9 @@ namespace stage_marche_devient.Data
                 .HasOne(s => s.Randonnee)
                 .WithMany()
                 .HasForeignKey(s => s.RandonneeId);
-        }
-        
+
+
+        }    
 
     }
 }
