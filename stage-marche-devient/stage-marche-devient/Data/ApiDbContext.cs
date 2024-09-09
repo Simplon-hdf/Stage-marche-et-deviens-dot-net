@@ -20,5 +20,20 @@ namespace stage_marche_devient.Data
         public virtual DbSet<UtilisateurModel> Utilisateur { get; set; }
         public virtual DbSet<PossederModel> Posseder { get; set; }
         public virtual DbSet<TagPublicationModel> Tag_Publication { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Session>()
+                .HasOne(s => s.Theme)
+                .WithMany()
+                .HasForeignKey(s => s.ThemeId);
+
+            modelBuilder.Entity<Session>()
+                .HasOne(s => s.Randonnee)
+                .WithMany()
+                .HasForeignKey(s => s.RandonneeId);
+        }
+        
+
     }
 }
