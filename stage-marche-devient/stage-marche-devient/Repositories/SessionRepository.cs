@@ -89,9 +89,11 @@ namespace stage_marche_devient.Repositories
             dbSession.Lieu = model.Lieu;                                //On change la valeur du lieu de la randonnée par celle rentrée par l'utilisateur               
             dbSession.DateDebut = model.DateDebut;                          //On change la valeur du nombre de nuit de la randonnée par celle rentrée par l'utilisateur
             dbSession.DateFin = model.DateFin;
+
             dbSession.Theme = model.Theme;
             dbSession.Randonnee = model.Randonnee;
             
+
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données   
             var dbVerifAction = await _context.Session.FindAsync(id);
 
@@ -103,6 +105,7 @@ namespace stage_marche_devient.Repositories
                     dbVerifAction.DateFin == model.DateFin &&
                     dbVerifAction.Randonnee == model.Randonnee &&
                     dbVerifAction.Theme == model.Theme;
+
         }
     }
 }

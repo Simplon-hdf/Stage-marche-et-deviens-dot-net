@@ -21,6 +21,9 @@ namespace stage_marche_devient.Models
         public string ContenuTexte { get; set; }
 
         [Column("id_session"), ForeignKey(nameof(Session))]
+
+        public int Session { get; set; }
+
         public int IdSession { get; set; }
 
     }
