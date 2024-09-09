@@ -85,7 +85,6 @@ h1, p, a {
         font-weight: 600;
       }
     }
-
     .walker {
       margin-left: 15px;
     }
@@ -214,6 +213,50 @@ h1, p, a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#temoignages {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #416548;
+
+  .container {
+    position: relative;
+    left: -30%;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title-desc {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 30px;
+      color: white;
+    }
+  }
+  .cards {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-direction: row;
+
+    .card {
+      width: 350px;
+      height: 531.42px;
+      background-color: white;
+    }
+  }
 }
 
 @media screen and (max-width: 1440px) {
