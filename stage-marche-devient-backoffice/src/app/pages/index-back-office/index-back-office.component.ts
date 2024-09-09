@@ -7,8 +7,6 @@ import { BoiteGeneralComponent } from "./composant/boite-general/boite-general.c
 import { BoiteRandoneeComponent } from "./composant/boite-randonee/boite-randonee.component";
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ApiFetcherUtilisateurService } from '../../services/api-fetcher-utilisateur.service';
-import { Utilisateur } from '../../intefaces/utilisateur';
-import test from 'node:test';
 
 @Component({
   selector: 'app-index-back-office',
