@@ -141,7 +141,7 @@ namespace stage_marche_devient.Controllers
                 new Claim(ClaimTypes.Role, "Utilisateur")
             };
             // génération du token
-            var secretKey = _configuration.GetValue<string>("Token");
+            var secretKey = _configuration.GetValue<string>("JwtSettings:Token");
             // vérification si token est existant
             if (string.IsNullOrEmpty(secretKey))
             {
