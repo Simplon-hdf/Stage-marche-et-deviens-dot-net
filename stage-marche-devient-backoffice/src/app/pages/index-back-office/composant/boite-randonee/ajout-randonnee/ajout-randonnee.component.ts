@@ -43,5 +43,6 @@ export class AjoutRandonneeComponent {
   
     }
     this.appeleAPI.AjouterRandonnee(randonneeAAJouter).subscribe();
+    alert(`randonnée du non de ${randonneeAAJouter.nomRandonnee} a été crée`)
   }
 }

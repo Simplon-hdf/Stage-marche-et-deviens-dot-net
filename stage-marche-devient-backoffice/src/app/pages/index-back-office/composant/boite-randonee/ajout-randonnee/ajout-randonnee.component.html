@@ -1,5 +1,6 @@
-<h3 class="titre_boite_ajout">Ajout de randonnee</h3>
+
 <section class="conteneur_principale_ajout_randonnee">
+    <h3 class="titre_boite_ajout">Ajout de randonnee</h3>
     <section class="conteneur nom">
         <p>nom</p>
         <input type="text" [(ngModel)]="nomRandonne" />
@@ -49,5 +50,5 @@
         <p>Est elle visible dans sur le site web</p>
         <input type="checkbox" [(ngModel)]="estVisibl" />
     </section>
+    <button class="button_envoi_ajout_randonnee" (click)="EnvoieAjout()">Ajout</button>
 </section>
-<button class="button_envoi_ajout_randonnee" (click)="EnvoieAjout()">Ajout</button>

@@ -102,14 +102,14 @@ export class ApiFetcherRandoneeService {
       "minimumParticipant": randonneeModif.minimumParticipant,
       "maximumParticipant": randonneeModif.maximumParticipant,
       "estVisible": randonneeModif.estVisible,
-      "distanceKmRandonnee": randonneeModif.distanceKmRandonnee}, { observe: 'response' })
+      "distanceKmRandonnee": randonneeModif.distanceKmRandonnee}, { observe: 'response' , responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
 
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
