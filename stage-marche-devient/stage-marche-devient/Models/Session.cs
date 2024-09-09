@@ -20,10 +20,10 @@ namespace stage_marche_devient.Models
         [Column("date_fin_session")]
         public string DateFin { get; set; }
 
-        [Column("randonnee_id"), ForeignKey(nameof(Randonnee))]
+        [Column("id_randonnee"), ForeignKey(nameof(Randonnee))]
         public int RandonneeId { get; set; }
 
-        [Column("theme_id"), ForeignKey(nameof(Theme))]
+        [Column("id_theme"), ForeignKey(nameof(Theme))]
         public int ThemeId { get; set; }
         #endregion
 

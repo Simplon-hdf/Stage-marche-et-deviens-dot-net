@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
+using stage_marche_devient.Repositories;
 using stage_marche_devient.Repositorys;
 
 namespace stage_marche_devient.Controllers
@@ -11,11 +12,13 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly SessionRepository _repository;
+        private readonly ILogger<SessionController> _logger;
 
-        public SessionController(ApiDbContext context)
+        public SessionController(ApiDbContext context, ILogger<SessionController> logger, ILogger<SessionRepository> sessionLogger)
         {
             _context = context;
-            _repository = new SessionRepository(_context);
+            _repository = new SessionRepository(_context, sessionLogger);
+            _logger = logger;
         }
 
         [HttpGet]
