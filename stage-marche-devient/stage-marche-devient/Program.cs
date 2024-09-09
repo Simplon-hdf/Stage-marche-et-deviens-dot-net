@@ -7,6 +7,7 @@ using stage_marche_devient.Repositories;
 using System.Text;//implementation de mon IAR
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -39,6 +40,12 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 });
 // Enregistrer le service IAuthentificationRepository
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
+builder.Services.AddScoped<SessionRepository>();
+builder.Services.AddScoped<ThemeRepository>();
+builder.Services.AddScoped<PublicationRepository>();
+
+
+
 
 // Ajouter les services de logging
 builder.Services.AddLogging();

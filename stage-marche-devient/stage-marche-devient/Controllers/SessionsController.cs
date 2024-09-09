@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
-using stage_marche_devient.Repositorys;
+using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
 {
@@ -11,11 +11,13 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly SessionRepository _repository;
+        private readonly ILogger<SessionController> _logger;
 
-        public SessionController(ApiDbContext context)
+        public SessionController(ApiDbContext context, ILogger<SessionController> logger, ILogger<SessionRepository> sessionLogger)
         {
             _context = context;
-            _repository = new SessionRepository(_context);
+            _repository = new SessionRepository(_context, sessionLogger);
+            _logger = logger;
         }
 
         [HttpGet]
@@ -38,14 +40,37 @@ namespace stage_marche_devient.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<Session>> CreateSession(Session session)
+        public async Task<ActionResult<Session>> CreateSession([FromBody] Session model)
         {
-            var result = await _repository.Add(session);                                                      //envoie vers le repo l'objet et stock le boolean de retour
-            if (result)                                                                                         //si le boolean de retour est true
+            if (ModelState.IsValid)
             {
-                return CreatedAtAction(nameof(GetSession), new { id = session.IdSession }, session);    // renvoi vers le endpoint l'objet qui vient d'être crée
+                try
+                {
+                    bool result = await _repository.Add(model);
+                    if (result)
+                    {
+                        return Ok(model);
+                    }
+                    else
+                    {
+                        return BadRequest("Erreur lors de l'ajout de la session.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
             }
-            return BadRequest();                                                                                // envoi un badresquest (code 400)
+
+                return BadRequest(ModelState);
+
+                /*var result = await _repository.Add(session);                                                      //envoie vers le repo l'objet et stock le boolean de retour
+                if (result)                                                                                         //si le boolean de retour est true
+                {
+                    return CreatedAtAction(nameof(GetSession), new { id = session.IdSession }, session);    // renvoi vers le endpoint l'objet qui vient d'être crée
+                }
+                return BadRequest();   */                                                                           // envoi un badresquest (code 400)
         }
 
         [HttpPut("{id}")]
@@ -68,13 +93,17 @@ namespace stage_marche_devient.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSession(int id)
+        public async Task<IActionResult> DeleteSession(int id,Session session)
         {
+            
             var result = await _repository.Delete(id);                                                          // envoi un requete de deletion vers le repository et stock le retour
             if (result)                                                                                         // si le retour est positive
             {
                 return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
             }
+
+            _logger.LogError("Erreur lors de la suppression du thème avec ID {Id}", id);
+
             return NotFound();                                                                                  // revoie un not found (code 404)
         }
 

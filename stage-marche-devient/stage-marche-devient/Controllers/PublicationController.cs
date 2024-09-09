@@ -11,11 +11,14 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly PublicationRepository _repository;
+        private readonly ILogger<PublicationController> _logger;
 
-        public PublicationController(ApiDbContext context)
+
+        public PublicationController(ApiDbContext context, ILogger<PublicationController> logger, ILogger<PublicationRepository> publicationLogger)
         {
             _context = context;
-            _repository = new PublicationRepository(_context);
+            _repository = new PublicationRepository(_context,publicationLogger);
+            _logger = logger;
         }
 
         [HttpGet]
