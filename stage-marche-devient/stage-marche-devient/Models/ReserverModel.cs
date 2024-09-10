@@ -8,6 +8,9 @@ namespace stage_marche_devient.Models
     [Keyless]
     public class ReserverModel
     {
+        [Column("Id_reserver") ,Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
+        public int idReserver { get; set; }
+
         [Column("Id_utilisateur"), Required , ForeignKey("Utilisateur")]
         public int IdUtilisateur { get; set; }
 
