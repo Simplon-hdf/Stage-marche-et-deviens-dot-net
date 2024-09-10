@@ -23,6 +23,12 @@ builder => {
 });
 });
 
+// Configurer le serveur pour utiliser HTTPS
+builder.WebHost.UseKestrel(options =>
+{
+    options.AddServerHeader = false; // Optionnel : masquer l'en-tête serveur
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
