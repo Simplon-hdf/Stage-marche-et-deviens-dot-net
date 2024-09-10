@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using stage_marche_devient.Data;
 using stage_marche_devient.Repositories;
 using System.Text;//implementation de mon IAR
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 
@@ -43,8 +43,6 @@ builder.Services.AddScoped<IAuthentificationRepository, AuthentificationReposito
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
-
-
 
 
 // Ajouter les services de logging
