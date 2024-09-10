@@ -1,0 +1,57 @@
+
+<form (ngSubmit)="EnvoieModif()">
+    <section class="conteneur_principale_modif_randonnee">
+        <h3 class="titre_boite_modif">modif de randonnee</h3>
+        <section class="conteneur nom">
+            <p>nom</p>
+            <input type="text" name="nomRandonne" [(ngModel)]="nomRandonne"/>
+        </section>
+
+        <section class="conteneur description">
+            <p>Description</p>
+            <input type="text" name="descriptionRandonne" [(ngModel)]="descriptionRandonne"/>
+        </section>
+
+        <section class="conteneur lieu">
+            <p>Lieu</p>
+            <input type="text" name="lieuRandonne" [(ngModel)]="lieuRandonne"/>
+        </section>
+
+        <section class="conteneur image">
+            <p>Nom de l'image</p>
+            <input type="text" name="imageRandonne" [(ngModel)]="imageRandonne"/>
+        </section>
+
+        <section class="conteneur prix">
+            <p>Prix</p>
+            <input type="number" name="prixRandonne" [(ngModel)]="prixRandonne"/>
+        </section>
+
+        <section class="conteneur nbr_nuits">
+            <p>Nombre de nuits</p>
+            <input type="number" name="nbrNuitRandonne" [(ngModel)]="nbrNuitRandonne"/>
+        </section>
+
+        <section class="conteneur nim_participants">
+            <p>Minimum participants</p>
+            <input type="number" name="minimumParticipan" [(ngModel)]="minimumParticipan"/>
+        </section>
+
+        <section class="conteneur max_participants">
+            <p>Maximum participants</p>
+            <input type="number" name="maximumParticipan" [(ngModel)]="maximumParticipan"/>
+        </section>
+
+        <section class="conteneur distance_randonnee">
+            <p>Distance de la Randonnée</p>
+            <input type="number" name="distanceKmRandonne" [(ngModel)]="distanceKmRandonne"/>
+        </section>
+
+        <section class="conteneur visible_front">
+            <p>Est elle visible dans sur le site web</p>
+            <input type="checkbox" name="estVisibl" [(ngModel)]="estVisibl"/>
+        </section>
+        <button class="button_envoi_modif_randonnee" type="submit">Modification</button>
+    </section>
+    
+</form>

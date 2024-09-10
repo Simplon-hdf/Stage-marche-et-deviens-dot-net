@@ -1,0 +1,54 @@
+
+<section class="conteneur_principale_ajout_randonnee">
+    <h3 class="titre_boite_ajout">Ajout de randonnee</h3>
+    <section class="conteneur nom">
+        <p>nom</p>
+        <input type="text" [(ngModel)]="nomRandonne" />
+    </section>
+
+    <section class="conteneur description">
+        <p>Description</p>
+        <input type="text" [(ngModel)]="descriptionRandonne" />
+    </section>
+
+    <section class="conteneur lieu">
+        <p>Lieu</p>
+        <input type="text" [(ngModel)]="lieuRandonne" />
+    </section>
+
+    <section class="conteneur image">
+        <p>Nom de l'image</p>
+        <input type="text" [(ngModel)]="imageRandonne" />
+    </section>
+
+    <section class="conteneur prix">
+        <p>Prix</p>
+        <input type="number" [(ngModel)]="prixRandonne" />
+    </section>
+
+    <section class="conteneur nbr_nuits">
+        <p>Nombre de nuits</p>
+        <input type="number" [(ngModel)]="nbrNuitRandonne" />
+    </section>
+
+    <section class="conteneur nim_participants">
+        <p>Minimum participants</p>
+        <input type="number" [(ngModel)]="minimumParticipan" />
+    </section>
+
+    <section class="conteneur max_participants">
+        <p>Maximum participants</p>
+        <input type="number" [(ngModel)]="maximumParticipan" />
+    </section>
+
+    <section class="conteneur distance_randonnee">
+        <p>Distance de la Randonnée</p>
+        <input type="number" [(ngModel)]="distanceKmRandonne" />
+    </section>
+
+    <section class="conteneur visible_front">
+        <p>Est elle visible dans sur le site web</p>
+        <input type="checkbox" [(ngModel)]="estVisibl" />
+    </section>
+    <button class="button_envoi_ajout_randonnee" (click)="EnvoieAjout()">Ajout</button>
+</section>

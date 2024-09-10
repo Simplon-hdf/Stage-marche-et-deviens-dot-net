@@ -41,16 +41,16 @@ export class ApiFetcherRandoneeService {
   // Méthode pour ajouter un nouveau Posseder
   AjouterRandonnee(randoneeAAjouter : Randonnee): Observable<any> {
     return this.httpClient.post(this.endPointUrl, { 
-      "nomRandonnee": randoneeAAjouter.nom,
-      "descriptionRandonnee":randoneeAAjouter.description,
-      "lieuRandonnee": randoneeAAjouter.lieu,
-      "imageRandonnee": randoneeAAjouter.image,
-      "prixRandonnee": randoneeAAjouter.prix,
-      "nbrNuitRandonnee": randoneeAAjouter.nbrNuit,
-      "minimumParticipant": randoneeAAjouter.minParticipant,
-      "maximumParticipant": randoneeAAjouter.maxParticipant,
-      "estVisible": randoneeAAjouter.visibleFront,
-      "distanceKmRandonnee": randoneeAAjouter.DistanceEnKm}, { observe: 'response' })
+      "nomRandonnee": randoneeAAjouter.nomRandonnee,
+      "descriptionRandonnee":randoneeAAjouter.descriptionRandonnee,
+      "lieuRandonnee": randoneeAAjouter.lieuRandonnee,
+      "imageRandonnee": randoneeAAjouter.imageRandonnee,
+      "prixRandonnee": randoneeAAjouter.prixRandonnee,
+      "nbrNuitRandonnee": randoneeAAjouter.nbrNuitRandonnee,
+      "minimumParticipant": randoneeAAjouter.minimumParticipant,
+      "maximumParticipant": randoneeAAjouter.maximumParticipant,
+      "estVisible": randoneeAAjouter.estVisible,
+      "distanceKmRandonnee": randoneeAAjouter.distanceKmRandonnee}, { observe: 'response' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -93,23 +93,23 @@ export class ApiFetcherRandoneeService {
   MiseAJourRandonnee(idRandonnee: number, randonneeModif: Randonnee): Observable<any> {
     return this.httpClient.put(this.endPointUrl + "/" + idRandonnee, { 
       "idRandonnee": idRandonnee,
-      "nomRandonnee": randonneeModif.nom,
-      "descriptionRandonnee":randonneeModif.description,
-      "lieuRandonnee": randonneeModif.lieu,
-      "imageRandonnee": randonneeModif.image,
-      "prixRandonnee": randonneeModif.prix,
-      "nbrNuitRandonnee": randonneeModif.nbrNuit,
-      "minimumParticipant": randonneeModif.minParticipant,
-      "maximumParticipant": randonneeModif.maxParticipant,
-      "estVisible": randonneeModif.visibleFront,
-      "distanceKmRandonnee": randonneeModif.DistanceEnKm}, { observe: 'response' })
+      "nomRandonnee": randonneeModif.nomRandonnee,
+      "descriptionRandonnee":randonneeModif.descriptionRandonnee,
+      "lieuRandonnee": randonneeModif.lieuRandonnee,
+      "imageRandonnee": randonneeModif.imageRandonnee,
+      "prixRandonnee": randonneeModif.prixRandonnee,
+      "nbrNuitRandonnee": randonneeModif.nbrNuitRandonnee,
+      "minimumParticipant": randonneeModif.minimumParticipant,
+      "maximumParticipant": randonneeModif.maximumParticipant,
+      "estVisible": randonneeModif.estVisible,
+      "distanceKmRandonnee": randonneeModif.distanceKmRandonnee}, { observe: 'response' , responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
 
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }

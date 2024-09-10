@@ -44,7 +44,6 @@ builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
 
-
 // Ajouter les services de logging
 builder.Services.AddLogging();
 
