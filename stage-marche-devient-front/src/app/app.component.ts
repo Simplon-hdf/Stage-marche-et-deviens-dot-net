@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import {NavbarComponent} from "./Components/navbar/navbar.component";
 import { SejourComponent } from './Components/sejour/sejour.component';
 import { ConceptComponent } from './concept/concept.component'; 
 import { CommonModule } from '@angular/common';
+import { CsrfService } from './Services/api/csrf.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'stage-marche-devient-front';
+  constructor(private csrfService: CsrfService) {}
+  ngOnInit() {
+    // Récupération et stockage du token CSRF lors du démarrage de l'application
+    this.csrfService.getCsrfToken().subscribe((response: any) => {
+      localStorage.setItem('XSRF-TOKEN', response.token); // Stocker le token dans localStorage
+    });
+  }
 }
