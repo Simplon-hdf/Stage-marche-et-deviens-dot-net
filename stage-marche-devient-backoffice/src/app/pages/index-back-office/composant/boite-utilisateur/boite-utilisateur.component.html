@@ -1,0 +1,52 @@
+<section class="conteneur_principale_utilisateur" *ngIf="afficherComposant">
+
+    <section class="conteneur_filtre">
+      <input class="input_filtre"
+      type="text" 
+      placeholder="Rechercher un utilisateur" 
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    >
+    </section>
+    <h2 class="titre_boite_utilisateur">Tableau des Utilisateurs</h2>
+  
+    <section class="boite_listing_utilisateur">
+      <section class="titre_colonne">
+        <p class="titre_1">Prenom</p>
+        <p class="titre_2">Nom</p>
+        <p class="titre_3">Tel</p>
+        <p class="titre_4">Mail</p>
+        <p class="titre_5">Distance Parcourue</p>
+        <p class="titre_6">Date de Creation</p>
+  
+      </section>
+      <ul *ngIf="utilisateursFiltres$ | async as utilisateurs" class="Conteneur_list_utilisateur">
+        <li *ngFor="let utilisateur of utilisateurs" class="item_list_utilisateur"
+          style="display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: 1fr; grid-column-gap: 0px; grid-row-gap: 0px;">
+      
+          <!--Prenom-->
+          <p class="prenom_utilisateur section_1">{{utilisateur?.prenomUtilisateur}}</p>
+          <!--Nom-->
+          <p class="nom-utilisateur section_2">{{utilisateur?.nomUtilisateur}}</p>
+      
+          <!--Tel de randonée-->
+          <p class="tek_utilisateur section_3">{{utilisateur?.telUtilisateur}}</p>
+      
+          <!--Mail-->
+          <p class="mail_utilisateur section_4">{{utilisateur?.mailUtilisateur}}</p>
+      
+          <!--distance-->
+          <p class="distance_utilisateur section_5">{{utilisateur?.totalDistanceParcourueUtilisateur}}</p>
+      
+          <!--creation-->
+          <p class="creation_utilisateur section_6">{{utilisateur?.dateCreationUtilisateur}}</p>
+      
+          <!--action-->
+          <section class="conteneur_button section_7">
+            <button class="supression_utilisateur"
+              (click)="suppression(utilisateur.idUtilisateur!,utilisateur.nomUtilisateur)">Supprimer</button>
+          </section>
+        </li>
+      </ul>
+    </section>
+  </section>
