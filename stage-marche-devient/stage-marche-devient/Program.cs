@@ -41,7 +41,7 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
-
+builder.Services.AddScoped<PublicationRepository>();
 
 
 

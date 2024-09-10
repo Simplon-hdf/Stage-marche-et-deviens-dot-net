@@ -7,7 +7,13 @@ namespace stage_marche_devient.Repositories
     public class PublicationRepository : IRepository<Publication, int>
     {
         private readonly ApiDbContext _context;
-        public PublicationRepository(ApiDbContext context) => _context = context;
+        private readonly ILogger<PublicationRepository> _logger;
+
+        public PublicationRepository(ApiDbContext context, ILogger<PublicationRepository> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
 
         public async Task<IEnumerable<Publication>> GetAll()                                    //Fonction permettant le listing des publications
         {

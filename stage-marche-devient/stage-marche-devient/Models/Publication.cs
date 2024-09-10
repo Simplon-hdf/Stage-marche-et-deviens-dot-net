@@ -14,10 +14,10 @@ namespace stage_marche_devient.Models
         [Column("date_publication"), MaxLength(10), Required]
         public string DatePublication { get; set; }
 
-        [Column("lien_media"), MaxLength(40)]
+        [Column("lien_media"), MaxLength(40),Required]
         public string LienMedia { get; set; }
 
-        [Column("contenu_texte"), MaxLength(50)]
+        [Column("contenu_texte"), MaxLength(2000),Required]
         public string ContenuTexte { get; set; }
 
         [Column("id_session"), Required]
