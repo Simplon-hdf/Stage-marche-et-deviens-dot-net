@@ -45,7 +45,9 @@ namespace stage_marche_devient.Repositories
             }
 
             _context.Theme.Remove(theme);
+
             await _context.SaveChangesAsync();
+
             return true;
         }
 

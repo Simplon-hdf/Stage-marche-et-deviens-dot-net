@@ -32,6 +32,11 @@ namespace stage_marche_devient.Controllers
         // Méthode pour dériver le salt à partir d'une donnée constante (par exemple, email)
         private string DeriveSalt(string email)
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentNullException(nameof(email), "L'email ne peut pas être null ou vide.");
+            }
+
             using (SHA512 sha512 = SHA512.Create())
             {
                 byte[] emailBytes = Encoding.UTF8.GetBytes(email);
@@ -43,6 +48,10 @@ namespace stage_marche_devient.Controllers
         // fonction de creation du hash et salt du mdp en sha512 et retour du salt et hash 
         private string CreerMdpHash(string password, string salt, string pepper)
         {
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(pepper))
+            {
+                throw new ArgumentNullException("Les paramètres password, salt et pepper ne peuvent pas être null ou vides.");
+            }
             // Combiner le mot de passe avec le salt et le pepper
             string combined = password + salt + pepper;
 
@@ -86,35 +95,37 @@ namespace stage_marche_devient.Controllers
         [HttpPost("Connexion")]
         public async Task<ActionResult<UtilisateurModel>> Connexion(LoginDTO requete)
         {
-            string Salt = DeriveSalt(requete.mailUtilisateur);
-            //si requête est vide ou un champs vide, envoie d'une erreur
+            // Vérification des champs du formulaire
             if (requete == null || string.IsNullOrEmpty(requete.mailUtilisateur) || string.IsNullOrEmpty(requete.motDePasse))
             {
-                return BadRequest("formulaire incomplet");
+                return BadRequest("Formulaire incomplet");
             }
 
-            // recherche du mail dans la bdd et assignation à la variable Utilisateur
+            // Deriver le salt à partir de l'email
+            string Salt = DeriveSalt(requete.mailUtilisateur);
+
+            // Rechercher l'utilisateur dans la base de données
             var utilisateur = await _dataContext.Utilisateur.FirstOrDefaultAsync(r => r.MailUtilisateur == requete.mailUtilisateur);
 
-            // si Utilisateur n'est pas trouvé ou si le mdp est incorrect, renvoie d'un message
             if (utilisateur == null)
             {
-
-                return BadRequest("Mail ou Mot de passe incorrect");
+                return BadRequest("Mail ou mot de passe incorrect");
             }
+
             try
             {
+                // Comparer le hash du mot de passe fourni avec celui stocké en BDD
                 if (CreerMdpHash(requete.motDePasse, Salt, Pepper) == utilisateur.MdpUtilisateur)
-                { //retour d'un Utilisateur
-                    return Ok(new { Utilisateur = utilisateur });
+                {
+                    // Retourner un utilisateur avec le token
+                    string token = CreationToken(utilisateur);
+                    return Ok(new { Utilisateur = utilisateur, Token = token });
                 }
                 else
                 {
-                    return BadRequest("Mot de passe éronné");
+                    return BadRequest("Mot de passe erroné");
                 }
-
             }
-            // si "try" à échouer, envoie d'une erreur  
             catch (Exception ex)
             {
                 return StatusCode(500, $"Erreur du serveur : {ex.Message} - {ex.StackTrace}");
@@ -130,7 +141,7 @@ namespace stage_marche_devient.Controllers
                 new Claim(ClaimTypes.Role, "Utilisateur")
             };
             // génération du token
-            var secretKey = _configuration.GetValue<string>("Token");
+            var secretKey = _configuration.GetValue<string>("JwtSettings:Token");
             // vérification si token est existant
             if (string.IsNullOrEmpty(secretKey))
             {

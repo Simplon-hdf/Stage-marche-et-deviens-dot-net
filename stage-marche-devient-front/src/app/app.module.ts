@@ -12,6 +12,7 @@ import { SejourComponent  } from './Components/sejour/sejour.component';
 import { DetailOffreComponent } from './detail-offre/detail-offre.component';
 
 
+
 @NgModule({
   declarations: [
      
