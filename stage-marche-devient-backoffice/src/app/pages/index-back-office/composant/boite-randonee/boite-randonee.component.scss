@@ -1,7 +1,11 @@
-.conteneur_principale_randonnee{
+*{
+    font-family: "JetBrains Mono",monospace;
+}
+
+.conteneur_principale_randonnee {
 
     height: 100vh;
-    background-color: azure;
+    background-color: rgba(229, 236, 255, 0.998);
 
     display: grid;
     grid-template-columns: 1fr;
@@ -9,7 +13,7 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 
-    .conteneur_filtre{
+    .conteneur_filtre {
 
         grid-area: 1 / 1 / 3 / 2;
         display: flex;
@@ -17,26 +21,29 @@
         justify-content: center;
         align-items: center;
 
-        .button_filtre{
+        .button_filtre {
             width: 10vw;
             margin-bottom: 2vh;
         }
-        .input_filtre{
+
+        .input_filtre {
             width: 50%;
         }
 
     }
 
-    .titre_boite_randonnee{
+    .titre_boite_randonnee {
         grid-area: 3 / 1 / 4 / 2;
         justify-self: center;
         font-size: 2vw;
+        text-align:center;
+        text-transform:uppercase;
+
     }
-
-
-    .boite_listing_randonnee{
+    .boite_listing_randonnee {
         grid-area: 4 / 1 / 8 / 2;
-        .titre_colonne{
+
+        .titre_colonne {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: 1fr;
@@ -45,108 +52,132 @@
             border-bottom: 4px green solid;
             padding-left: 1vw;
             padding-right: 1vw;
-            p.titre_1{
-                grid-area: 1 / 1 / 2 / 2;                
+
+            p.titre_1 {
+                grid-area: 1 / 1 / 2 / 2;
             }
-            p.titre_2{
-                grid-area: 1 / 2 / 2 / 3;                
+
+            p.titre_2 {
+                grid-area: 1 / 2 / 2 / 3;
             }
-            p.titre_3{
-                grid-area: 1 / 3 / 2 / 4;                
+
+            p.titre_3 {
+                grid-area: 1 / 3 / 2 / 4;
             }
-            p.titre_4{
-                grid-area: 1 / 4 / 2 / 5;               
-            }  
-            p.titre_5{
-                grid-area: 1 / 5 / 2 / 6;                
+
+            p.titre_4 {
+                grid-area: 1 / 4 / 2 / 5;
             }
-            p.titre_6{
-                grid-area: 1 / 6 / 2 / 7;                
+
+            p.titre_5 {
+                grid-area: 1 / 5 / 2 / 6;
+            }
+
+            p.titre_6 {
+                grid-area: 1 / 6 / 2 / 7;
             }
         }
     }
-    .Conteneur_list_randonnee{
+
+    .Conteneur_list_randonnee {
         grid-area: 2 / 1 / 9 / 8;
         padding-top: 1vh;
         padding-bottom: 1vh;
         overflow-y: auto;
         max-height: 100%;
-        li:nth-child(even){
-            background-color: gainsboro;
+
+        li:nth-child(even) {
+            background-color: rgb(191, 191, 191);
         }
-        .item_list_randonnee{
+
+        .item_list_randonnee {
             padding-left: 1vw;
             padding-right: 1vw;
-            p{
-                padding-right: 1vw;
+            
+            p {
+                padding-right: 0.20vw;
+                padding-left: 0.25vw;
+                border-right: dotted black 1px;
             }
-            button{
+
+            button {
                 width: 8vw;
                 margin-top: 0.5vh;
                 margin-bottom: 0.5;
             }
-            .nom_randonnee{
-                
-            }
-            .description-randonnee{
+
+            .nom_randonnee {}
+
+            .description-randonnee {
                 grid-area: 1 / 2 / 2 / 3;
                 white-space: nowrap;
                 overflow: hidden;
-                text-overflow: ellipsis;                
+                text-overflow: ellipsis;
             }
 
-            .lieu_randonnee{
-                               
-            }
+            .lieu_randonnee {}
 
-            .limite_participant{
-                             
-            }
-
-            .nbr_nuit_randonnee{
-                               
-            }
-
-            .prix_randonnee{
-                               
-            }
-
-            .conteneur_button{
-                
-                
-                button.modif_randonnee{
-                    color: darkkhaki;
+            .limite_participant {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                p{
+                    border: none;
                 }
-                button.supression_randonnee{
-                    color: red;
+                :last-child{
+                    border-right: dotted black 1px;
                 }
             }
-            .section_1{
-                grid-area: 1 / 1 / 2 / 2;                
+
+            .nbr_nuit_randonnee {}
+
+            .prix_randonnee {}
+
+            .conteneur_button {
+                border: none;
+                button.modif_randonnee {
+                    background-image: radial-gradient(100% 100% at 100% 0, #e9ff5a 0, #ffe254 100%);
+                    color: black;
+                }
+
+                button.supression_randonnee {
+                    background-image: radial-gradient(100% 100% at 100% 0, #ffafaf 0, #ff5454 100%);
+                }
             }
-            .section_2{
+
+            .section_1 {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .section_2 {
                 grid-area: 1 / 2 / 2 / 3;
             }
-            .section_3{
+
+            .section_3 {
                 grid-area: 1 / 3 / 2 / 4;
             }
-            .section_4{
+
+            .section_4 {
                 grid-area: 1 / 4 / 2 / 5;
             }
-            .section_5{
+
+            .section_5 {
                 grid-area: 1 / 5 / 2 / 6;
             }
-            .section_6{
+
+            .section_6 {
                 grid-area: 1 / 6 / 2 / 7;
             }
-            .section_7{
+
+            .section_7 {
                 grid-area: 1 / 7 / 2 / 8;
 
             }
         }
     }
 }
-.boit_ajout_randonnee{
+
+.boite_ajout_randonnee {
     position: fixed;
     top: 10vh;
     left: 10vw;
@@ -154,25 +185,70 @@
     height: 70vh;
     z-index: 3;
 }
-.button_ajout_randonnee{
+
+.boite_modif_randonnee {
     position: fixed;
-    bottom: 20vh;
+    top: 10vh;
+    left: 10vw;
+    width: 70vw;
+    height: 70vh;
+    z-index: 3;
+}
+
+.button_ajout_randonnee {
+    position: fixed;
+    bottom: 5vh;
     left: 50vw;
     z-index: 1;
-    
+
 }
-.quitter_ajout_randonnee{
+
+.quitter_ajout_randonnee {
     position: fixed;
-    right: 10vw;
-    top: 6.5vw;
+    right: 5vw;
+    top: 5vh;
     z-index: 4;
 }
-.view_screen{
+
+.quitter_modif_randonnee {
+    position: fixed;
+    right: 5vw;
+    top: 5vh;
+    z-index: 4;
+}
+button{
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    padding: 0.35vh 0.60vw;
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    color: #fff;
+    cursor: pointer;
+    transition: box-shadow .15s,transform .15s;
+    touch-action: manipulation;
+}
+button:focus{
+    box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+button:hover{
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+button:active{
+    box-shadow: #3c4fe0 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+.view_screen_shadow_background {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0%;
     left: 0%;
     z-index: 2;
-    background-color: rgb(62, 62, 62);
+    background-color: rgba(62, 62, 62, 0.765);
+    
 }

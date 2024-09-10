@@ -1,0 +1,16 @@
+2024-09-05 14:35:05.528 +02:00 [INF] This is a test log message
+2024-09-05 14:35:05.564 +02:00 [WRN] This is a test warning message
+2024-09-05 14:35:05.565 +02:00 [ERR] This is a test error message
+2024-09-05 14:35:05.909 +02:00 [INF] Now listening on: https://localhost:7092
+2024-09-05 14:35:05.913 +02:00 [INF] Now listening on: http://localhost:5001
+2024-09-05 14:35:05.916 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-09-05 14:35:05.917 +02:00 [INF] Hosting environment: Development
+2024-09-05 14:35:05.918 +02:00 [INF] Content root path: C:\Users\fborg\Documents\stage-MarcheDeviens\Stage-marche-et-deviens-dot-net\stage-marche-devient\stage-marche-devient
+2024-09-05 14:35:06.877 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7092/swagger/index.html - null null
+2024-09-05 14:35:07.177 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7092/swagger/index.html - 200 null text/html;charset=utf-8 309.9198ms
+2024-09-05 14:35:07.187 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7092/_framework/aspnetcore-browser-refresh.js - null null
+2024-09-05 14:35:07.196 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7092/_framework/aspnetcore-browser-refresh.js - 200 13776 application/javascript; charset=utf-8 12.928ms
+2024-09-05 14:35:07.235 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7092/_vs/browserLink - null null
+2024-09-05 14:35:07.278 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7092/_vs/browserLink - 200 null text/javascript; charset=UTF-8 43.3581ms
+2024-09-05 14:35:07.397 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7092/swagger/v1/swagger.json - null null
+2024-09-05 14:35:07.629 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7092/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 232.8766ms

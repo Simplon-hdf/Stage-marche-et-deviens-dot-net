@@ -2,7 +2,7 @@
     <!-- Title Section -->
     <section class="title-section">
         <h1>{{ randonnee.idRandonnee }}</h1>
-        <h2 class="theme">Thématique : {{ programData.theme }}</h2>
+        <h2 class="theme">Thématique : {{ randonnee.nomRandonnee }}</h2> <!--correction sur l'erreur programData.theme car programdata n'existe pas sur le type detail offre -->
         <p  class="prix"> Prix : {{ randonnee.prixRandonnee }}</p>
     </section>
 
@@ -23,6 +23,7 @@
         <h3>Au programme</h3>
         <p>{{ randonnee.descriptionRandonnee }}</p>
     </section>
+    <section>
     <p>
         Pour cette session la thématique proposée, sera la suivante : la notion d'identité et de rapport à celle-ci
         avec une question principale : Comment prendre des décisions alignées ?

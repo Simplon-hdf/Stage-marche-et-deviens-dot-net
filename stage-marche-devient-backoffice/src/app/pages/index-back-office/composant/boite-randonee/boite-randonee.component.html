@@ -31,9 +31,10 @@
 
         <div class="limite_participant section_4">
           <!--limite participants-->
-          <p>{{randonnee?.maximumParticipant}}</p>
+          <p>Max :{{randonnee?.maximumParticipant}}</p>
+          <p>/</p>
           <!--min participants-->
-          <p>{{randonnee?.minimumParticipant}}</p>
+          <p>Min :{{randonnee?.minimumParticipant}}</p>
         </div>
 
         <!--nuits-->
@@ -44,7 +45,7 @@
 
         <!--action-->
         <section class="conteneur_button section_7">
-          <button class="modif_randonnee">Modif</button>
+          <button class="modif_randonnee" (click)="switchAfficherModif(randonnee)">Modif</button>
           <button class="supression_randonnee"
             (click)="suppressiont(randonnee.idRandonnee!,randonnee.nomRandonnee)">Supprimer</button>
         </section>
@@ -53,11 +54,18 @@
   </section>
 </section>
 
-<button class="button_ajout_randonnee" (click)="switchAfficherAjour()">Ajout Randonnee</button>
-<button class="quitter_ajout_randonnee" (click)=" switchAfficherAjour()" *ngIf="afficherAjout">X</button>
+<button class="button_ajout_randonnee" (click)="switchAfficherAjout()">Ajout Randonnee</button>
+<button class="quitter_ajout_randonnee" (click)=" switchAfficherAjout()" *ngIf="afficherAjout">X</button>
+
+<button class="quitter_modif_randonnee" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
 
 <ng-container *ngIf="afficherAjout == true">
-  <div class="view_screen">
-    <app-ajout-randonnee class="boit_ajout_randonnee"></app-ajout-randonnee>
+  <div class="view_screen_shadow_background">
+    <app-ajout-randonnee class="boite_ajout_randonnee"></app-ajout-randonnee>
+  </div>
+</ng-container>
+<ng-container *ngIf="afficherModif == true">
+  <div class="view_screen_shadow_background">
+    <app-modif-randonnee class="boite_modif_randonnee"></app-modif-randonnee>
   </div>
 </ng-container>

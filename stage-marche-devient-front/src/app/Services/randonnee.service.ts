@@ -23,4 +23,16 @@ export class RandonneeService {
       })
     );
   }
+
+  // Fonction qui permet de récupérer une randonnée par son ID.
+  getRandonnee(id: number): Observable<Randonnee> {
+    const url = `${environment.apiBaseUrl}${this.RANDONNEE_ENDPOINT}/${id}`; // URL spécifique à la randonnée avec l'ID, ensuite  elle utilise le service ApiService pour faire un appel GET à l'API pour récupérer les détails de cette randonnée.
+                                                          // L'URL est formée en ajoutant l'id à la fin de l'URL de l'API (${this.RANDONNEE_ENDPOINT}/${id})//
+    return this.api.get<Randonnee>(url).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la récupération de la randonnée:', error);
+        return throwError(() => new Error(`Échec de la récupération de la randonnée: ${error.message}`));
+      })  //Si  erreur =elle est capturée et un message est retourné via throwError.
+    );
+  }
 }
