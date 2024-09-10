@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Antiforgery;
 
 namespace stage_marche_devient.Controllers
 {
@@ -18,12 +19,14 @@ namespace stage_marche_devient.Controllers
         private readonly ApiDbContext _dataContext;
         private readonly IConfiguration _configuration;
         UtilisateurModel utilisateurModel = new UtilisateurModel();
+        private readonly IAntiforgery _antiforgery;
 
-        public AuthentificationController(ApiDbContext dataContext, IAuthentificationRepository authconfig, IConfiguration configuration)
+        public AuthentificationController(ApiDbContext dataContext, IAuthentificationRepository authconfig, IConfiguration configuration, IAntiforgery antiforgery)
         {
             _authRepository = authconfig;
             _dataContext = dataContext;
             _configuration = configuration;
+            _antiforgery = antiforgery;
         }
 
         // Clé Pepper secrète (Ne jamais stocker en base de données, gardez-la sécurisée)
@@ -165,6 +168,13 @@ namespace stage_marche_devient.Controllers
 
             //renvoie du token
             return jwt;
+        }
+
+        [HttpGet("csrf-token")]
+        public IActionResult GetCsrfToken()
+        {
+            var token = _antiforgery.GetAndStoreTokens(HttpContext);
+            return Ok(new { token = token.RequestToken });
         }
     }
 }
