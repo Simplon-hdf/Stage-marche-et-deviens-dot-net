@@ -34,7 +34,7 @@ namespace stage_marche_devient.Repositories
             if (bddRandonneSupprimer == null) { return false; }                             //Si la randonnée n'existe pas on retourne une erreur
             _context.Randonnee.Remove(bddRandonneSupprimer);                                //Sinon on supprime l'entité de la base de donnée
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données     
-            return await _context.Randonnee.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
+            return await _context.Randonnee.FindAsync(id) == null;                          //On verifie que l'ajout a bien été réalisé
         }
 
         public async Task<bool> Update(Randonnee model, int id)                             //Fonction de mise-à-jour d'une randonnée dans la base de données

@@ -71,9 +71,9 @@ namespace stage_marche_devient.Repositories
             
             _context.Session.Remove(bddSessionSupprimer);                                //Sinon on supprime l'entité de la base de donnée
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données     
-            return  true;
+            return await _context.Session.FindAsync(id) == null;
                 
-                //await _context.Session.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
+                                                                                          //On verifie que l'ajout a bien été réalisé
         }
 
         public async Task<bool> Update(Session model, int id)                             //Fonction de mise-à-jour d'une randonnée dans la base de données
