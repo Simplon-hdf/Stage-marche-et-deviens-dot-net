@@ -93,7 +93,7 @@ namespace stage_marche_devient.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSession(int id,Session session)
+        public async Task<IActionResult> DeleteSession(int id)
         {
             
             var result = await _repository.Delete(id);                                                          // envoi un requete de deletion vers le repository et stock le retour
