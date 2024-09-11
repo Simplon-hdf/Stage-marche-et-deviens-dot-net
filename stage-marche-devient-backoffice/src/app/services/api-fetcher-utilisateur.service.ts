@@ -43,11 +43,11 @@ export class ApiFetcherUtilisateurService {
     let heureDeCreation: string = new Date().toString();
     return this.httpClient.post(this.endPointUrl, { 
       "dateCreationUtilisateur": heureDeCreation,
-      "prenomUtilisateur": utilisateurAAjouter.prenom,
-      "nomUtilisateur": utilisateurAAjouter.nom,
-      "telUtilisateur": utilisateurAAjouter.tel,
-      "mdpUtilisateur": utilisateurAAjouter.mdp,
-      "mailUtilisateur": utilisateurAAjouter.mail,
+      "prenomUtilisateur": utilisateurAAjouter.prenomUtilisateur,
+      "nomUtilisateur": utilisateurAAjouter.nomUtilisateur,
+      "telUtilisateur": utilisateurAAjouter.telUtilisateur,
+      "mdpUtilisateur": utilisateurAAjouter.mdpUtilisateur,
+      "mailUtilisateur": utilisateurAAjouter.mailUtilisateur,
       "totalDistanceParcourueUtilisateur": 0,},
        { observe: 'response' , responseType: 'text' })
       .pipe(
@@ -92,12 +92,12 @@ export class ApiFetcherUtilisateurService {
   MiseAJourUtilisitateur(idUtilisateur: number, utilisateurModif: Utilisateur): Observable<any> {
     return this.httpClient.put(this.endPointUrl + "/" + idUtilisateur, { 
       "idUtilisateur": idUtilisateur, 
-      "dateCreationUtilisateur": utilisateurModif.dateCreation,
-      "prenomUtilisateur": utilisateurModif.prenom,
-      "nomUtilisateur": utilisateurModif.nom,
-      "telUtilisateur": utilisateurModif.tel,
-      "mdpUtilisateur": utilisateurModif.mdp,
-      "mailUtilisateur": utilisateurModif.mail,
+      "dateCreationUtilisateur": utilisateurModif.dateCreationUtilisateur,
+      "prenomUtilisateur": utilisateurModif.prenomUtilisateur,
+      "nomUtilisateur": utilisateurModif.nomUtilisateur,
+      "telUtilisateur": utilisateurModif.telUtilisateur,
+      "mdpUtilisateur": utilisateurModif.mdpUtilisateur,
+      "mailUtilisateur": utilisateurModif.mailUtilisateur,
       "totalDistanceParcourueUtilisateur": 0,}, { observe: 'response' , responseType: 'text' })
       .pipe(
         map(response => {
