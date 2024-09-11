@@ -17,6 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.scss'
 })
+
 export class InscriptionComponent implements OnDestroy {
   private formBuilder = inject(FormBuilder);
   private registerService = inject(RegisterService);
@@ -24,17 +25,17 @@ export class InscriptionComponent implements OnDestroy {
   private router = inject(Router);
 
   registerFormGroup = this.formBuilder.group({
-    nomUtilisateur: ['', Validators.required],
-    prenomUtilisateur: ['', Validators.required],
-    telUtilisateur: ['', Validators.required],
-    mailUtilisateur: ['', Validators.required],
-    mdpUtilisateur: ['', Validators.required],
-  });
+    Nom: ['', Validators.required],
+    Prenom: ['', Validators.required],
+    Telephone: ['', Validators.required],
+    Mail: ['', Validators.required],
+    Mdp: ['', Validators.required],
+});
 
   register() {
     if (this.registerFormGroup.valid) {
       const userRegister: UserRegister = this.registerFormGroup.value as UserRegister;
-      if (!userRegister.mailUtilisateur || userRegister.mailUtilisateur.trim() === '') {
+      if (!userRegister.Mail || userRegister.Mail.trim() === '') {
         console.error('L\'email ne peut pas être vide');
         // Afficher un message d'erreur à l'utilisateur
         return;
