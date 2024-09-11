@@ -76,6 +76,9 @@ namespace stage_marche_devient.Controllers
             {
                 return Ok("Supression reussie");                                                                        // revoi un ok (code ~200) 
             }
+            
+            _logger.LogError("Erreur lors de la suppression du thème avec ID {Id}", id);
+
             return NotFound();                                                                                          // revoie un not found (code 404)
         }
     }
