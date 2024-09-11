@@ -1,8 +1,8 @@
 export class UserRegister {
-    nomUtilisateur?: string;
-    prenomUtilisateur?: string;
-    mailUtilisateur?: string;
-    telUtilisateur?: string;
-    mdpUtilisateur?: string;
+    Nom?: string;
+    Prenom?: string;
+    Mail?: string;
+    Telephone?: string;
+    Mdp?: string;
     totalDistanceParcourueUtilisateur: number = 0;
 }
