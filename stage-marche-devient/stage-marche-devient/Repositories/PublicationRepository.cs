@@ -47,8 +47,8 @@ namespace stage_marche_devient.Repositories
             }                                                                                 //Si la publication n'existe pas on retourne une erreur
             _context.Publication.Remove(bddPublicationSupprimer);                            //Sinon on supprime l'entité de la base de donnée
             await _context.SaveChangesAsync();                                               //On sauvegarde les changements apportés à la base de données     
-            
-            return true;                                                                        //On verifie que l'ajout a bien été réalisé
+
+            return await _context.Publication.FindAsync(id) == null;                                                                        //On verifie que l'ajout a bien été réalisé
 
         }
 

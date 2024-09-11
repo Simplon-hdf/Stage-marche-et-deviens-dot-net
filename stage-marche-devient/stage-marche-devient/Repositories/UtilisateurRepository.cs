@@ -43,12 +43,12 @@ namespace stage_marche_devient.Repositories     /*je declare mon namespace et ma
             _context.Utilisateur.Remove(bddUtilisateurSupprimer);     //_context (c'est l'instance de context de bdd dérivé du DbContext) Utilisateur(fait réf au DbSet
                                                                       //qui represente l'entité du meme nom dans la bdd)
                                                                       //Remove(bddUtilisateurSupprimer)methode qui indique que je souhaite supprimer l'utilisateur            
-            await _context.SaveChangesAsync();                        /*sauvegarde les modifs dans la BDD de manière asynchrone*/                                  
-            
-            return true;                                             /*Verifie si l'utilisateur a été correctement supprimé 
+            await _context.SaveChangesAsync();                        /*sauvegarde les modifs dans la BDD de manière asynchrone*/
+
+            return await _context.Session.FindAsync(id) == null;                                            /*Verifie si l'utilisateur a été correctement supprimé 
                                                                               * en le recherchant par son ID. 
                                                                               * Retourne false si l'utilisateur a été supprimé 
-                                                                              * (puisqu'il ne devrait plus exister). */             
+                                                                              * (puisqu'il ne devrait plus exister). */
         }
 
         
