@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -43,6 +44,9 @@ builder.Services.AddScoped<IAuthentificationRepository, AuthentificationReposito
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
+
+
+
 
 // Ajouter les services de logging
 builder.Services.AddLogging();
@@ -94,7 +98,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-XSRF-TOKEN"; // Nom de l'en-tête pour le token CSRF
+});
+
 var app = builder.Build();
+
 
 // Middleware pour ajouter les en-têtes CSP
 app.Use(async (context, next) =>
@@ -102,7 +112,7 @@ app.Use(async (context, next) =>
     // Si Swagger est demandé, on ajuste les directives CSP
     if (context.Request.Path.StartsWithSegments("/swagger"))
     {
-        context.Response.Headers.Add("Content-Security-Policy",
+        context.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self'; " +
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://unpkg.com; " +
             "style-src 'self' 'unsafe-inline'; " +
@@ -113,13 +123,19 @@ app.Use(async (context, next) =>
     else
     {
         // Pour le reste de l'application Angular, applique une CSP plus restrictive
-        context.Response.Headers.Add("Content-Security-Policy",
+        context.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self'; " +
             "script-src 'self'; " +
             "style-src 'self' 'unsafe-inline'; " +
             "img-src 'self' data:; " +
             "font-src 'self'; " +
             "connect-src 'self';");
+    }
+    if (context.Request.Path.StartsWithSegments("/swagger"))
+    {
+        // Désactiver la protection CSRF uniquement pour les requêtes Swagger
+        var antiforgeryService = context.RequestServices.GetRequiredService<IAntiforgery>();
+        var tokenSet = antiforgeryService.GetAndStoreTokens(context);
     }
 
     await next();
@@ -139,6 +155,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/api/csrf-token", (IAntiforgery antiforgery, HttpContext context) =>
+{
+    var tokens = antiforgery.GetAndStoreTokens(context);
+    return Results.Ok(new { token = tokens.RequestToken });
+});
 
 app.MapControllers();
 
