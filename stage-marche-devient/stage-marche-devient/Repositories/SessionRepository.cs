@@ -21,6 +21,12 @@ namespace stage_marche_devient.Repositorys
             return await _context.Session.FindAsync(id);                                  //Recherche dans la base de donnée l'élément Randonnée auquel est associé l'Id
         }
 
+        public async Task<IEnumerable<Session>> GetByRandonneeId(int idRandonnee)
+        {
+            var listDeRetour = await _context.Session.Where(p => p.RandonneeId == idRandonnee).ToListAsync();
+            return listDeRetour.Any() ? listDeRetour : null;
+        }
+
         public async Task<bool> Add(Session model)                                        //Fonction d'ajout d'une randonnée à la base de donées
         {
             _context.Session.Add(model);                                                  //Le type de donnée ajoutée est issus du model Session
@@ -35,7 +41,7 @@ namespace stage_marche_devient.Repositorys
             if (bddRandonneSupprimer == null) { return false; }                             //Si la randonnée n'existe pas on retourne une erreur
             _context.Session.Remove(bddRandonneSupprimer);                                //Sinon on supprime l'entité de la base de donnée
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données     
-            return await _context.Session.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
+            return await _context.Session.FindAsync(id) == null;                          //On verifie que l'ajout a bien été réalisé
         }
 
         public async Task<bool> Update(Session model, int id)                             //Fonction de mise-à-jour d'une randonnée dans la base de données
@@ -44,6 +50,7 @@ namespace stage_marche_devient.Repositorys
             dbSession.Lieu = model.Lieu;                                //On change la valeur du lieu de la randonnée par celle rentrée par l'utilisateur               
             dbSession.DateDebut = model.DateDebut;                          //On change la valeur du nombre de nuit de la randonnée par celle rentrée par l'utilisateur
             dbSession.DateFin = model.DateFin;
+            dbSession.ThemeId = model.ThemeId;
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données   
             var dbVerifAction = await _context.Session.FindAsync(id);
             return dbVerifAction.Lieu == model.Lieu &&                      //On verifie les changements apportés par l'utilisateur
