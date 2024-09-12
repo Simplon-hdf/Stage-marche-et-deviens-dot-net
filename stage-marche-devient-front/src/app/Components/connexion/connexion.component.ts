@@ -3,9 +3,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ConnexionService } from "../../Services/connexion.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { UserCredentials } from "../../Models/con.model";
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { UserCredentials } from "../../Models/auth.model";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
   selector: "app-connexion",

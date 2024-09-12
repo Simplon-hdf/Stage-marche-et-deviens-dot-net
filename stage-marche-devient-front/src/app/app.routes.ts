@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'home', component: AppComponent },
   { path: 'concept', component: ConceptComponent },
   { path: 'randonnee/:id', component : DetailOffreComponent},
-  { path: 'connexion', component: ConnexionComponent }
+  { path: 'connexion', component: ConnexionComponent },
   { path: 'inscription', component: InscriptionComponent }
 ];
 
