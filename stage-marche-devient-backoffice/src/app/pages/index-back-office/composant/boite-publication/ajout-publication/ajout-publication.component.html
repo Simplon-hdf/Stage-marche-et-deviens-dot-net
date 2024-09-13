@@ -1,0 +1,30 @@
+
+<section class="conteneur_principale_ajout_randonnee">
+    <h3 class="titre_boite_ajout">Ajout de publication</h3>
+    <section class="conteneur nom">
+        <p>nom</p>
+        <input type="text" [(ngModel)]="nomPublication" />
+    </section>
+
+    <section class="conteneur description">
+        <p>date de publication</p>
+        <input type="text" [(ngModel)]="datePublication" />
+    </section>
+
+    <section class="conteneur lieu">
+        <p>lien media</p>
+        <input type="text" [(ngModel)]="lienMedia" />
+    </section>
+
+    <section class="conteneur image">
+        <p>contenu textuel</p>
+        <input type="text" [(ngModel)]="contenuTexte" />
+    </section>
+
+    <section class="conteneur prix">
+        <p>session</p>
+        <input type="number" [(ngModel)]="idSession" />
+    </section>
+
+    <button class="button_envoi_ajout_randonnee" (click)="EnvoieAjout()">Ajout</button>
+</section>

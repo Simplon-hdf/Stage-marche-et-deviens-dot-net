@@ -22,4 +22,8 @@ export class SideBarComponent {
   SelectionBoiteUtilisateur(){
     this.selecteurBoite.choixPanelCommande("utilisateur");
   }
+
+  SelectionBoitePublication(){
+    this.selecteurBoite.choixPanelCommande("publication");
+  }
 }

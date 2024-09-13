@@ -1,0 +1,56 @@
+<section class="conteneur_principale_publication" *ngIf="afficherComposant">
+
+  <section class="conteneur_filtre">
+    <button class="button_filtre">Lieu</button>
+    <input class="input_filtre" type="text" />
+  </section>
+  <h2 class="titre_boite_publication">Tableau des Randonnée</h2>
+
+  <section class="boite_listing_publication">
+    <section class="titre_colonne">
+        <p class="titre_1">Nom</p>
+        <p class="titre_2">Date de Publication</p>
+        <p class="titre_3">Lien Media</p>
+        <p class="titre_4">Contenu Textuel</p>
+        <p class="titre_5">Action</p>
+    </section>
+    <ul *ngIf="listPublication$ | async as publications" class="Conteneur_list_publication">
+      <li *ngFor="let publication of publications" class="item_list_publication">
+
+        <!--Nom-->
+        <p class="nom_publication section_1">{{publication?.nomPublication}}</p>
+        <!--description-->
+        <p class="description-publication section_2">{{publication?.datePublication}}</p>
+
+        <!--lieu de randonée-->
+        <p class="lieu_publication section_3">{{publication?.lienMedia}}</p>
+
+        <!--nuits-->
+        <p class="nbr_nuit_publication section_4">{{publication?.contenuTexte}}</p>
+
+        <!--action-->
+        <section class="conteneur_button section_5">
+          <button class="modif_publication" (click)="switchAfficherModif(publication)">Modif</button>
+          <button class="supression_publication"
+            (click)="suppression(publication.idPublication!,publication.nomPublication)">Supprimer</button>
+        </section>
+      </li>
+    </ul>
+  </section>
+</section>
+
+<button class="button_ajout_publication" (click)="switchAfficherAjout()">Ajout publication</button>
+<button class="quitter_ajout_publication" (click)=" switchAfficherAjout()" *ngIf="afficherAjout">X</button>
+
+<button class="quitter_modif_publication" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
+
+<ng-container *ngIf="afficherAjout == true">
+  <div class="view_screen_shadow_background">
+    <app-ajout-publication class="boite_ajout_publication"></app-ajout-publication>
+  </div>
+</ng-container>
+<ng-container *ngIf="afficherModif == true">
+  <div class="view_screen_shadow_background">
+    <app-modif-publication class="boite_modif_publication"></app-modif-publication>
+  </div>
+</ng-container>

@@ -54,9 +54,17 @@ export class ApiFetcherPublicationService {
       );
   }
 
-  // Méthode pour ajouter un nouveau Publication
-  AjouterPublication( nomPublication: string, datePublication: string, lienMedia: string, contenuTexte: string, idSession: number): Observable<any> {
-    return this.httpClient.post(this.endPointUrl, { "nomPublication": nomPublication, "datePublication": datePublication, "lienMedia": lienMedia, "contenuTexte": contenuTexte, "idSession": idSession }, { observe: 'response' })
+  // Méthode pour ajouter une nouvelle Publication
+  AjouterPublication(publicationAAjouter : Publication): Observable<any> {
+    let heureDeCreation: string = new Date().toString();
+    return this.httpClient.post(this.endPointUrl, { 
+      "nomPublication": publicationAAjouter.nomPublication,
+      "datePublication": publicationAAjouter.datePublication,
+      "lienMedia": publicationAAjouter.lienMedia,
+      "contenuTexte": publicationAAjouter.contenuTexte,
+      "idSession": publicationAAjouter.idSession  
+    },
+       { observe: 'response' , responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
