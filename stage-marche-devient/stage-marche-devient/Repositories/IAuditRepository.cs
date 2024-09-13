@@ -2,6 +2,6 @@
 {
     public interface IAuditRepository
     {
-        Task LogAsync(string userName, string action, string entityName, string details = null);
+        Task CreationLog(string userName, string action, string entityName, string details = null);
     }
 }
