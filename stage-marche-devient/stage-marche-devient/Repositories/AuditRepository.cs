@@ -4,7 +4,7 @@ using stage_marche_devient.Models;
 
 namespace stage_marche_devient.Repositories
 {
-    public class AuditRepository : IAuditRepository
+    public class AuditRepository : IAuditRepository<AuditLog>
     {
         private readonly ApiDbContext _dbContext;
 
