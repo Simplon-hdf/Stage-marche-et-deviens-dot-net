@@ -24,6 +24,7 @@ namespace stage_marche_devient.Controllers
         private readonly IAuthentificationRepository _authRepository;
         private readonly ApiDbContext _dataContext;
         private readonly IConfiguration _configuration;
+        private readonly IAuditRepository _auditRepository;
         private readonly IAntiforgery _antiforgery;
         private readonly ILogger<AuthentificationController> _logger;
         private static readonly string Pepper = "Tl*KnfIaz&!bMlV$6z3hJ$i-mwfaE^BO+Hg%6kn0eyc5n%nl$kJEzT7Sw1Nn+XHs";
@@ -32,6 +33,7 @@ namespace stage_marche_devient.Controllers
             ApiDbContext dataContext,
             IAuthentificationRepository authconfig,
             IConfiguration configuration,
+            IAuditRepository auditRepository,
             IAntiforgery antiforgery,
             ILogger<AuthentificationController> logger)
         {
@@ -40,6 +42,7 @@ namespace stage_marche_devient.Controllers
             _configuration = configuration;
             _antiforgery = antiforgery;
             _logger = logger;
+            _auditRepository = auditRepository;
         }
 
         private string DeriveSalt(string email)
@@ -97,12 +100,17 @@ namespace stage_marche_devient.Controllers
                 _dataContext.Utilisateur.Add(utilisateur);
                 await _dataContext.SaveChangesAsync();
 
+                // Log d'audit pour l'inscription réussie
+                await _auditRepository.CreationLog(requete.Mail, "Inscription", "Utilisateur", "Nouvel utilisateur inscrit.");
+
                 _logger.LogInformation("Inscription réussie.");
                 return Ok(utilisateur);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erreur lors de l'inscription.");
+                // Log d'audit pour l'échec de l'inscription
+                await _auditRepository.CreationLog(requete.Mail, "Inscription", "Utilisateur", $"Erreur lors de l'inscription : {ex.Message}");
                 return StatusCode(500, "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");
             }
         }
