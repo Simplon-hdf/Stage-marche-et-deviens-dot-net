@@ -55,7 +55,7 @@ export class ApiFetcherThemeService {
 
   // Méthode pour ajouter un nouveau thème.
   async ajoutTheme(theme: Theme): Promise<Observable<any>> {
-    return this.httpClient.post(`${this.endPointUrl}`, { "nomTheme": theme.nom }, { observe: 'response' }) // Requête POST pour ajouter un thème.
+    return this.httpClient.post(`${this.endPointUrl}`, { "nomTheme": theme.nomTheme }, { observe: 'response' }) // Requête POST pour ajouter un thème.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -95,7 +95,7 @@ export class ApiFetcherThemeService {
 
   // Méthode pour mettre à jour un thème par son ID.
   majTheme(id: number, theme: Theme): Observable<any> {
-    return this.httpClient.put(`${this.endPointUrl}/${id}`, { "idTheme": id, "nomTheme": theme.nom }, { observe: 'response' }) // Requête PUT pour mettre à jour un thème.
+    return this.httpClient.put(`${this.endPointUrl}/${id}`, { "idTheme": id, "nomTheme": theme.nomTheme }, { observe: 'response' }) // Requête PUT pour mettre à jour un thème.
       .pipe(
         map(response => {
           console.log('Status:', response.status);

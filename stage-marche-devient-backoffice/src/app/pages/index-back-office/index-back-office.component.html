@@ -4,6 +4,7 @@
     <ng-container *ngIf="boiteSelectionnee$ | async as moduleSelectioner">
         <app-boite-general *ngIf="moduleSelectioner === 'general'"></app-boite-general>
         <app-boite-randonee *ngIf="moduleSelectioner === 'randonee'"></app-boite-randonee>
+        <app-boite-utilisateur *ngIf="moduleSelectioner === 'utilisateur'"></app-boite-utilisateur>
       </ng-container>
 </section>
 

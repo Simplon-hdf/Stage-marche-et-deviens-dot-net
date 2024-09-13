@@ -1,0 +1,31 @@
+<section class="conteneur_principale_ajout_session">
+    
+    <section class="conteneur_input">
+        <p>Date debut</p>
+        <input type="datetime-local" name="dateDebut" id="dateDebut" [(ngModel)]="dateDebutSession">
+    </section>
+
+    <section class="conteneur_input">
+        <p>Date Fin</p>
+        <input type="datetime-local" name="dateFin" id="dateFin" [(ngModel)]="dateFinSession">
+    </section>
+
+    <section class="conteneur_input">
+        <p>Lieu de la session (un lien google map)</p>
+        <input type="text" name="lieu" id="lieu" [(ngModel)]="lieuSession">
+    </section>
+
+    <section class="conteneur_input">
+        <p>Le theme de la session</p>
+        <select name="theme" id="theme" [(ngModel)]="themeSession" class="selecteur_theme">
+            <option value="null">Sans theme</option>
+            <ng-container *ngIf="themes$ | async as themes;">
+              <option [value]="themeSession" *ngFor="let theme of themes">{{theme.nomTheme}}</option>
+            </ng-container>
+          </select>
+    </section>
+    <button class="envoie_session_button" (click)="envoieFormSession()">Creation session</button>
+    <section class="conteneur_input">
+        <p></p>
+    </section>
+</section>

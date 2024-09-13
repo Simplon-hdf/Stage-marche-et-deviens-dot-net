@@ -19,7 +19,7 @@
     </section>
     <ul *ngIf="listRandonnee$ | async as randonnees" class="Conteneur_list_randonnee">
       <li *ngFor="let randonnee of randonnees" class="item_list_randonnee"
-        style="display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: 1fr; grid-column-gap: 0px; grid-row-gap: 0px;">
+        style="display: grid; grid-template-columns: repeat(4, 1fr) 0.15fr 0.5fr 1fr; grid-template-rows: 1fr; grid-column-gap: 0px; grid-row-gap: 0px;">
 
         <!--Nom-->
         <p class="nom_randonnee section_1">{{randonnee?.nomRandonnee}}</p>
@@ -46,26 +46,65 @@
         <!--action-->
         <section class="conteneur_button section_7">
           <button class="modif_randonnee" (click)="switchAfficherModif(randonnee)">Modif</button>
-          <button class="supression_randonnee"
-            (click)="suppressiont(randonnee.idRandonnee!,randonnee.nomRandonnee)">Supprimer</button>
+          <button class="supression_randonnee" (click)="suppressiont(randonnee.idRandonnee!,randonnee.nomRandonnee)">Supprimer</button>
+          <button class="ajout_session" (click)="switchAfficherAjoutSession(randonnee.idRandonnee!)"> ajout de session</button>
         </section>
+
+        <!--afficher les session-->
+        <ng-container *ngIf="(afficherSession(randonnee.idRandonnee!) | async) as sessions" >
+          <section *ngIf="sessions && sessions.length > 0" class="session_dispo_container">
+            <h4>Sessions disponibles :</h4>
+            <div *ngFor="let session of sessions" class="item_des_session">
+
+              <p>ID session : {{session.idSession}}</p>
+
+              <p><a [href]="session.lieu">Lieu de départ</a></p>
+
+              <p>Se déroule du {{session.dateDebut | date:'shortDate'}} au {{session.dateFin | date:'shortDate'}}</p>
+
+              <!--theme-->
+              <section class="conteneur_theme">
+
+                <label for="theme">avec pour theme choisi: </label>
+                <select name="theme" id="theme" [(ngModel)]="session.themeId" class="selecteur_theme" (ngModelChange)="miseAJourThemeSession(session)">
+                  <option value="null">Sans theme</option>
+                  <option [value]="theme.idTheme" *ngFor="let theme of themes$ | async">{{theme.nomTheme}}</option>
+                </select>
+
+              </section>
+
+              <!--supression-->
+
+              <section class="conteneur_supression_session">
+                <button (click)="supressionSession(session.idSession!)">supprimer</button>
+              </section>
+            </div>
+          </section>
+        </ng-container>
       </li>
     </ul>
   </section>
 </section>
 
-<button class="button_ajout_randonnee" (click)="switchAfficherAjout()">Ajout Randonnee</button>
-<button class="quitter_ajout_randonnee" (click)=" switchAfficherAjout()" *ngIf="afficherAjout">X</button>
-
-<button class="quitter_modif_randonnee" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
+<button class="button_ajout_randonnee" (click)="switchAfficherAjoutRandonnee(true)">Ajout Randonnee</button>
+<button class="quitter_view_box_button" (click)=" switchAfficherAjoutRandonnee(false)" *ngIf="afficherAjout">X</button>
+<button class="quitter_view_box_button" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
+<button class="quitter_view_box_button" (click)="switchAfficherAjoutSession()" *ngIf="afficherAjoutSession">X</button>
 
 <ng-container *ngIf="afficherAjout == true">
   <div class="view_screen_shadow_background">
     <app-ajout-randonnee class="boite_ajout_randonnee"></app-ajout-randonnee>
   </div>
 </ng-container>
+
 <ng-container *ngIf="afficherModif == true">
   <div class="view_screen_shadow_background">
     <app-modif-randonnee class="boite_modif_randonnee"></app-modif-randonnee>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="afficherAjoutSession">
+  <div class="view_screen_shadow_background">
+    <app-ajout-session [idRandonnee]="idRandonneSessionAAjouter" class="boit_ajout_session"></app-ajout-session>
   </div>
 </ng-container>

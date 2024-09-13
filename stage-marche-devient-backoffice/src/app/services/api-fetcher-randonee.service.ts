@@ -20,8 +20,8 @@ export class ApiFetcherRandoneeService {
       .pipe(
         // Traitement de la réponse
         map(response => {
-          console.log('Status:', response.status);
-          console.log('Body:', response.body);
+          //ligne de test console.log('Status:', response.status);
+          //ligne de test console.log('Body:', response.body);
           
           // Vérification du statut de la réponse
           if (response.status >= 200 && response.status < 300) {
