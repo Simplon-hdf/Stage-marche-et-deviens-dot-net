@@ -1,4 +1,5 @@
-﻿using stage_marche_devient.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 
 namespace stage_marche_devient.Repositories
@@ -25,6 +26,14 @@ namespace stage_marche_devient.Repositories
 
             _dbContext.AuditLogs.Add(auditLog);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AuditLog>> GetAll()                             /* Je déclare une méthode publique asynchrone qui retourne 
+                                                                                       * une liste de tous les logs.*/
+        {
+            IEnumerable<AuditLog> logs = await _dbContext.AuditLogs.ToArrayAsync();   /*Récupère tous les logs de la base de données 
+                                                                                                        * sous forme de tableau asynchrone.*/
+            return logs;                                                              /*     Retourne la liste des logs*/
         }
     }
 }
