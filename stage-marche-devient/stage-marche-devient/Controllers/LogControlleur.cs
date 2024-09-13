@@ -6,6 +6,8 @@ using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
 {
+    [ApiController]
+    [Route("Logs")]
     public class LogControlleur : ControllerBase
     {
         private readonly ApiDbContext _contexteBdd;
