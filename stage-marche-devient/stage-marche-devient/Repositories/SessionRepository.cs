@@ -26,6 +26,12 @@ namespace stage_marche_devient.Repositories
             return await _context.Session.FindAsync(id);                                  //Recherche dans la base de donnée l'élément Randonnée auquel est associé l'Id
         }
 
+        public async Task<IEnumerable<Session>> GetByRandonneeId(int idRandonnee)
+        {
+            var listDeRetour = await _context.Session.Where(p => p.RandonneeId == idRandonnee).ToListAsync();
+            return listDeRetour.Any() ? listDeRetour : null;
+        }
+
         public async Task<bool> Add(Session model)                                        //Fonction d'ajout d'une randonnée à la base de donées
         {
             /*_context.Session.Add(model);                                                  //Le type de donnée ajoutée est issus du model Session
@@ -71,9 +77,7 @@ namespace stage_marche_devient.Repositories
             
             _context.Session.Remove(bddSessionSupprimer);                                //Sinon on supprime l'entité de la base de donnée
             await _context.SaveChangesAsync();                                              //On sauvegarde les changements apportés à la base de données     
-            return  true;
-                
-                //await _context.Session.FindAsync(id) != null;                          //On verifie que l'ajout a bien été réalisé
+            return await _context.Session.FindAsync(id) == null;                          //On verifie que l'ajout a bien été réalisé
         }
 
         public async Task<bool> Update(Session model, int id)                             //Fonction de mise-à-jour d'une randonnée dans la base de données

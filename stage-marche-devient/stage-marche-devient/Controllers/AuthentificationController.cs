@@ -1,38 +1,47 @@
-using stage_marche_devient.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using stage_marche_devient.Data;
-using stage_marche_devient.ModelsDTO;
-using stage_marche_devient.Repositories;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using stage_marche_devient.Data;
+using stage_marche_devient.Models;
+using stage_marche_devient.ModelsDTO;
+using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
 {
+    [ApiController]
+    [Route("Auth")]
     public class AuthentificationController : ControllerBase
     {
         private readonly IAuthentificationRepository _authRepository;
         private readonly ApiDbContext _dataContext;
         private readonly IConfiguration _configuration;
-        UtilisateurModel utilisateurModel = new UtilisateurModel();
         private readonly IAntiforgery _antiforgery;
+        private readonly ILogger<AuthentificationController> _logger;
+        private static readonly string Pepper = "Tl*KnfIaz&!bMlV$6z3hJ$i-mwfaE^BO+Hg%6kn0eyc5n%nl$kJEzT7Sw1Nn+XHs";
 
-        public AuthentificationController(ApiDbContext dataContext, IAuthentificationRepository authconfig, IConfiguration configuration, IAntiforgery antiforgery)
+        public AuthentificationController(
+            ApiDbContext dataContext,
+            IAuthentificationRepository authconfig,
+            IConfiguration configuration,
+            IAntiforgery antiforgery,
+            ILogger<AuthentificationController> logger)
         {
             _authRepository = authconfig;
             _dataContext = dataContext;
             _configuration = configuration;
             _antiforgery = antiforgery;
+            _logger = logger;
         }
 
-        // Clé Pepper secrète (Ne jamais stocker en base de données, gardez-la sécurisée)
-        private static readonly string Pepper = "Tl*KnfIaz&!bMlV$6z3hJ$i-mwfaE^BO+Hg%6kn0eyc5n%nl$kJEzT7Sw1Nn+XHs";
-
-        // Méthode pour dériver le salt à partir d'une donnée constante (par exemple, email)
         private string DeriveSalt(string email)
         {
             if (string.IsNullOrEmpty(email))
@@ -40,87 +49,84 @@ namespace stage_marche_devient.Controllers
                 throw new ArgumentNullException(nameof(email), "L'email ne peut pas être null ou vide.");
             }
 
-            using (SHA512 sha512 = SHA512.Create())
-            {
-                byte[] emailBytes = Encoding.UTF8.GetBytes(email);
-                byte[] hashBytes = sha512.ComputeHash(emailBytes);
-                return Convert.ToBase64String(hashBytes);
-            }
+            using var sha512 = SHA512.Create();
+            byte[] emailBytes = Encoding.UTF8.GetBytes(email);
+            byte[] hashBytes = sha512.ComputeHash(emailBytes);
+            return Convert.ToBase64String(hashBytes);
         }
 
-        // fonction de creation du hash et salt du mdp en sha512 et retour du salt et hash 
         private string CreerMdpHash(string password, string salt, string pepper)
         {
             if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt) || string.IsNullOrEmpty(pepper))
             {
                 throw new ArgumentNullException("Les paramètres password, salt et pepper ne peuvent pas être null ou vides.");
             }
-            // Combiner le mot de passe avec le salt et le pepper
             string combined = password + salt + pepper;
 
-            using (SHA512 sha512 = SHA512.Create())
-            {
-                byte[] combinedBytes = Encoding.UTF8.GetBytes(combined);
-                byte[] hashBytes = sha512.ComputeHash(combinedBytes);
-                return Convert.ToBase64String(hashBytes);
-            }
+            using var sha512 = SHA512.Create();
+            byte[] combinedBytes = Encoding.UTF8.GetBytes(combined);
+            byte[] hashBytes = sha512.ComputeHash(combinedBytes);
+            return Convert.ToBase64String(hashBytes);
         }
-
-        // methode d'enregistrement d'un Utilisateur
 
         [HttpPost("Inscription")]
         public async Task<ActionResult<UtilisateurModel>> Enregistrer(UtilisateurDTO requete)
         {
-            string Salt = DeriveSalt(requete.Mail);
+            _logger.LogInformation($"Tentative d'inscription pour l'email: {requete.Mail}");
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                // hash et salt du mdp
+                string Salt = DeriveSalt(requete.Mail);
                 string mdpHash = CreerMdpHash(requete.Mdp, Salt, Pepper);
 
-                // creation d'un nouvel utilisateur avec un id,nom,prenom,mail et tel ainsi que les hash et salt+pepper du mdp
-                utilisateurModel.DateCreationUtilisateur = Convert.ToString(DateOnly.FromDateTime(DateTime.Now));
-                utilisateurModel.MailUtilisateur = requete.Mail;
-                utilisateurModel.NomUtilisateur = requete.Nom;
-                utilisateurModel.PrenomUtilisateur = requete.Prenom;
-                utilisateurModel.MdpUtilisateur = mdpHash;
-                utilisateurModel.TelUtilisateur = requete.Telephone;
-                _dataContext.Utilisateur.Add(utilisateurModel);
-                _dataContext.SaveChanges();
-                return Ok(utilisateurModel);
+                var utilisateur = new UtilisateurModel
+                {
+                    DateCreationUtilisateur = DateOnly.FromDateTime(DateTime.Now).ToString(),
+                    MailUtilisateur = requete.Mail,
+                    NomUtilisateur = requete.Nom,
+                    PrenomUtilisateur = requete.Prenom,
+                    MdpUtilisateur = mdpHash,
+                    TelUtilisateur = requete.Telephone
+                };
+
+                _dataContext.Utilisateur.Add(utilisateur);
+                await _dataContext.SaveChangesAsync();
+
+                _logger.LogInformation("Inscription réussie.");
+                return Ok(utilisateur);
             }
-            // si échec, gestion de l'erreur avec un message
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erreur du serveur : {ex.Message}");
+                _logger.LogError(ex, "Erreur lors de l'inscription.");
+                return StatusCode(500, "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");
             }
         }
 
         [HttpPost("Connexion")]
         public async Task<ActionResult<UtilisateurModel>> Connexion(LoginDTO requete)
         {
-            // Vérification des champs du formulaire
-            if (requete == null || string.IsNullOrEmpty(requete.mailUtilisateur) || string.IsNullOrEmpty(requete.motDePasse))
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Formulaire incomplet");
-            }
-
-            // Deriver le salt à partir de l'email
-            string Salt = DeriveSalt(requete.mailUtilisateur);
-
-            // Rechercher l'utilisateur dans la base de données
-            var utilisateur = await _dataContext.Utilisateur.FirstOrDefaultAsync(r => r.MailUtilisateur == requete.mailUtilisateur);
-
-            if (utilisateur == null)
-            {
-                return BadRequest("Mail ou mot de passe incorrect");
+                return BadRequest(ModelState);
             }
 
             try
             {
-                // Comparer le hash du mot de passe fourni avec celui stocké en BDD
+                var utilisateur = await _dataContext.Utilisateur.FirstOrDefaultAsync(r => r.MailUtilisateur == requete.mailUtilisateur);
+
+                if (utilisateur == null)
+                {
+                    return BadRequest("Mail ou mot de passe incorrect");
+                }
+
+                string Salt = DeriveSalt(requete.mailUtilisateur);
                 if (CreerMdpHash(requete.motDePasse, Salt, Pepper) == utilisateur.MdpUtilisateur)
                 {
-                    // Retourner un utilisateur avec le token
                     string token = CreationToken(utilisateur);
                     return Ok(new { Utilisateur = utilisateur, Token = token });
                 }
@@ -131,43 +137,35 @@ namespace stage_marche_devient.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erreur du serveur : {ex.Message} - {ex.StackTrace}");
+                _logger.LogError(ex, "Erreur lors de la connexion.");
+                return StatusCode(500, "Une erreur est survenue lors de la connexion. Veuillez réessayer plus tard.");
             }
         }
 
-        // fonction de creation de token
         private string CreationToken(UtilisateurModel utilisateur)
         {
-            // création de claim
-            List<Claim> claims = new List<Claim> {
+            var claims = new List<Claim>
+            {
                 new Claim(ClaimTypes.Email, utilisateur.MailUtilisateur),
                 new Claim(ClaimTypes.Role, "Utilisateur")
             };
-            // génération du token
-            var secretKey = _configuration.GetValue<string>("JwtSettings:Token");
-            // vérification si token est existant
+
+            var secretKey = _configuration["JwtSettings:Token"];
             if (string.IsNullOrEmpty(secretKey))
             {
                 throw new InvalidOperationException("La clé secrète du token n'est pas configurée.");
             }
-            // génération de la clé pour le token
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
-            // génération de la signature pour le token
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            // génération de la structure token avec les claims, credentials et la date d'expiration
             var token = new JwtSecurityToken(
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1),
-                    signingCredentials: creds
-                );
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+            );
 
-            // création du token
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            //renvoie du token
-            return jwt;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [HttpGet("csrf-token")]
