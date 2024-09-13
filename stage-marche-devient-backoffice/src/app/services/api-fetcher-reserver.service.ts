@@ -34,7 +34,7 @@ export class ApiFetcherReserverService {
   }
 
   RecupererListeReserverParUtilisateur(idUtilisateur: number): Observable<any> {
-    return this.httpClient.get(this.endPointUrl + "/idUtilisateur:" + idUtilisateur, { observe: 'response' })
+    return this.httpClient.get(this.endPointUrl + "/idUtilisateur:" + idUtilisateur, { observe: 'response' ,responseType: 'text'})
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -54,7 +54,7 @@ export class ApiFetcherReserverService {
   }
 
   RecupererListeReserverParSession(idSession: number): Observable<any> {
-    return this.httpClient.get(this.endPointUrl + "/idSession:" + idSession, { observe: 'response' })
+    return this.httpClient.get(this.endPointUrl + "/idSession:" + idSession, { observe: 'response' ,responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -74,7 +74,7 @@ export class ApiFetcherReserverService {
   }
 
   RecupererReserverParId(idReserver: number): Observable<any> {
-    return this.httpClient.get(this.endPointUrl + "/" + idReserver, { observe: 'response' })
+    return this.httpClient.get(this.endPointUrl + "/" + idReserver, { observe: 'response',responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);

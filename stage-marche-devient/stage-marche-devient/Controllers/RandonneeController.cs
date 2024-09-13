@@ -84,6 +84,7 @@ namespace stage_marche_devient.Controllers
                 }
 
                 await _repository.Delete(id);
+
                 if (await _repository.GetById(id) == null)
                 {
                     return Ok($"Suppression réussie de la randonnée avec l'ID {id}.");
