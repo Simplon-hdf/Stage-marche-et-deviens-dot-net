@@ -24,7 +24,7 @@ namespace stage_marche_devient.Controllers
         private readonly IAuthentificationRepository _authRepository;
         private readonly ApiDbContext _dataContext;
         private readonly IConfiguration _configuration;
-        private readonly IAuditRepository _auditRepository;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
         private readonly IAntiforgery _antiforgery;
         private readonly ILogger<AuthentificationController> _logger;
         private static readonly string Pepper = "Tl*KnfIaz&!bMlV$6z3hJ$i-mwfaE^BO+Hg%6kn0eyc5n%nl$kJEzT7Sw1Nn+XHs";
@@ -33,7 +33,7 @@ namespace stage_marche_devient.Controllers
             ApiDbContext dataContext,
             IAuthentificationRepository authconfig,
             IConfiguration configuration,
-            IAuditRepository auditRepository,
+            IAuditRepository<AuditLog> auditRepository,
             IAntiforgery antiforgery,
             ILogger<AuthentificationController> logger)
         {
