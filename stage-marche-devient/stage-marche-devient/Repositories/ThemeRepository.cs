@@ -45,8 +45,10 @@ namespace stage_marche_devient.Repositories
             }
 
             _context.Theme.Remove(theme);
+
             await _context.SaveChangesAsync();
-            return true;
+
+            return await _context.Session.FindAsync(id) == null;
         }
 
         public async Task<bool> Update(Theme model, int id)                             //Fonction de mise-à-jour d'une theme dans la base de données

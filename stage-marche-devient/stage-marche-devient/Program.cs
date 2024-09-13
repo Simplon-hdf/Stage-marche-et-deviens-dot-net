@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -7,18 +8,25 @@ using stage_marche_devient.Repositories;
 using System.Text;//implementation de mon IAR
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configuration des services, y compris CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalHost",
-builder => {
-    builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+    options.AddPolicy("DevelopmentCorsPolicy", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:4200") // Remplacer par le port utilisé par votre application Angular
+            .WithMethods("GET", "POST", "DELETE") // Limiter aux méthodes nécessaires
+            .AllowAnyHeader(); // Vous pouvez restreindre aux en-têtes nécessaires
+    });
 });
+
+// Configurer le serveur pour utiliser HTTPS
+builder.WebHost.UseKestrel(options =>
+{
+    options.AddServerHeader = false; // Optionnel : masquer l'en-tête serveur
 });
 
 builder.Services.AddControllers();
@@ -39,6 +47,12 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 });
 // Enregistrer le service IAuthentificationRepository
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
+builder.Services.AddScoped<SessionRepository>();
+builder.Services.AddScoped<ThemeRepository>();
+builder.Services.AddScoped<PublicationRepository>();
+
+
+
 
 // Ajouter les services de logging
 builder.Services.AddLogging();
@@ -90,7 +104,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-XSRF-TOKEN"; // Nom de l'en-tête pour le token CSRF
+});
+
 var app = builder.Build();
+
 
 // Middleware pour ajouter les en-têtes CSP
 app.Use(async (context, next) =>
@@ -98,7 +118,7 @@ app.Use(async (context, next) =>
     // Si Swagger est demandé, on ajuste les directives CSP
     if (context.Request.Path.StartsWithSegments("/swagger"))
     {
-        context.Response.Headers.Add("Content-Security-Policy",
+        context.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self'; " +
             "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://unpkg.com; " +
             "style-src 'self' 'unsafe-inline'; " +
@@ -109,7 +129,7 @@ app.Use(async (context, next) =>
     else
     {
         // Pour le reste de l'application Angular, applique une CSP plus restrictive
-        context.Response.Headers.Add("Content-Security-Policy",
+        context.Response.Headers.Append("Content-Security-Policy",
             "default-src 'self'; " +
             "script-src 'self'; " +
             "style-src 'self' 'unsafe-inline'; " +
@@ -117,24 +137,43 @@ app.Use(async (context, next) =>
             "font-src 'self'; " +
             "connect-src 'self';");
     }
+    if (context.Request.Path.StartsWithSegments("/swagger"))
+    {
+        // Désactiver la protection CSRF uniquement pour les requêtes Swagger
+        var antiforgeryService = context.RequestServices.GetRequiredService<IAntiforgery>();
+        var tokenSet = antiforgeryService.GetAndStoreTokens(context);
+    }
 
     await next();
 });
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts(); // Active HSTS en production
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("DevelopmentCorsPolicy");
 }
 
-app.UseCors("AllowLocalHost");
+// Utiliser la politique CORS
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/api/csrf-token", (IAntiforgery antiforgery, HttpContext context) =>
+{
+    var tokens = antiforgery.GetAndStoreTokens(context);
+    return Results.Ok(new { token = tokens.RequestToken });
+});
 
 app.MapControllers();
 
