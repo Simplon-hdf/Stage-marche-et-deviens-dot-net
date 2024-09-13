@@ -38,6 +38,14 @@ namespace stage_marche_devient.Controllers
             return Ok(session);                                                                               //retourne vers le front les données récupéree(code 200)
         }
 
+        [HttpGet("idRandonnee:{idRandonnee}")] // Définit une route GET par une clef etrangére
+        public async Task<ActionResult<IEnumerable<Session>>> RecupererSessionParIdRandonnee(int idRandonnee)
+        {
+            IEnumerable<Session> session = await _repository.GetByRandonneeId(idRandonnee);
+            if (session == null) { return NotFound(); } // Retourne 404 si non trouvé
+            return Ok(session); // Retourne le Posseder trouvé avec un statut 200 OK
+        }
+
         [HttpPost]
 
         public async Task<ActionResult<Session>> CreateSession([FromBody] Session model)
