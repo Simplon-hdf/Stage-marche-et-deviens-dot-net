@@ -44,6 +44,7 @@ builder.Services.AddScoped<IAuthentificationRepository, AuthentificationReposito
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
+builder.Services.AddScoped<RandonneeRepository>();
 
 
 

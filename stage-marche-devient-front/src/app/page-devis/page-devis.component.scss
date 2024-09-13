@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
+*{
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Pathway Gothic One", sans-serif;
+
+}
+.navbar
+{
+position: fixed;
+top: 0;
+width: 100%;
+margin: 0;
+z-index: 1000;
+}
+
+h1
+{
+    font-size: 50px;
+    text-align: center;
+    margin-top: 150px;
+    color: #3d4d32;
+}
+
+.formulaireUn 
+{
+    display: flex;
+    width: 630px;
+    margin: auto;
+    
+    flex-wrap: wrap;
+
+}
+
+input, select
+{
+    background-color: #deb260;
+    border-radius: 5px;
+    border: 2px solid #3d4d32;
+    color: black;
+    width: 250px;
+    height: 50px;
+
+}
+
+textarea
+{
+    background-color: #deb260;
+    border-radius: 5px;
+    border: 2px solid #3d4d32;
+    color: black;
+    width: 400px;
+    height: 150px;
+    
+}
+

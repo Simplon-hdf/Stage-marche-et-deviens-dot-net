@@ -11,11 +11,14 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly RandonneeRepository _repository;
+        private readonly ILogger<RandonneeController> _logger;
 
-        public RandonneeController(ApiDbContext context)
+
+        public RandonneeController(ApiDbContext context, ILogger<RandonneeController> logger, ILogger<RandonneeRepository> randonneeLogger)
         {
             _context = context;
-            _repository = new RandonneeRepository(_context);
+            _repository = new RandonneeRepository(_context,randonneeLogger);
+            _logger = logger;
         }
 
         [HttpGet]
@@ -78,12 +81,12 @@ namespace stage_marche_devient.Controllers
             try
             {
                 var existingRandonnee = await _repository.GetById(id);
-                if (existingRandonnee == null)
+                if (existingRandonnee == null)                                      //Si on n'a pas trouvé d'ID ça renvoit FALSE + message d'erreur
                 {
                     return NotFound($"Aucune randonnée trouvée avec l'ID {id}.");
                 }
 
-                await _repository.Delete(id);
+                await _repository.Delete(id);                                       //Si la randonnée existe via son ID on applique la methode DELETE du Randonneerepository
                 if (await _repository.GetById(id) == null)
                 {
                     return Ok($"Suppression réussie de la randonnée avec l'ID {id}.");

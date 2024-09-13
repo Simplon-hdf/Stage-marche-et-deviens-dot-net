@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ConceptComponent } from './concept/concept.component';
 import { DetailOffreComponent } from './detail-offre/detail-offre.component';
+import { PageDevisComponent } from './page-devis/page-devis.component';
 
 
 export const routes: Routes = [
+  { path: 'page-devis', component : PageDevisComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: AppComponent },
   { path: 'concept', component: ConceptComponent },

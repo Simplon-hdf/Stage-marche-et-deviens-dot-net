@@ -1,1 +1,31 @@
-<p>page-devis works!</p>
+<app-navbar class="navbar"></app-navbar>
+<h1>Demande de Devis pour votre groupe <br>
+    (entreprises ou particuliers)</h1>
+
+<section>
+    <form class="formulaireUn" action="http://localhost:4200/page-devis"  method="post" >
+        <label for="nom">Nom/Prénom</label>
+        <input type="text" name="Nom" id="nom" placeholder="Nom/Prénom">
+
+        <label for="mail">E-mail</label>
+        <input type="email" name="E-mail" id="mail">
+
+        <label for="telephone">Téléphone</label>
+        <input type="tel" name="telephone" id="telephone">
+
+        <label for="typeDeGroupe">Type de groupe</label>
+        <select name="typeDeGroupe" id="typeDeGroupe" aria-placeholder="Type de Groupe">
+            <option value="Une entreprise">Une entreprise</option>
+            <option value="Un organisme Public">Un organisme Public</option>
+            <option value="Association">Association</option>
+            <option value="Groupe de particuliers">Groupe de particuliers</option>
+        </select>
+    </form>
+    <form>
+        <label for="PlusdInformation">Veuillez préciser votre demande</label>
+        <textarea name="Informations" id="PlusdInformation" maxlength="250"></textarea>
+    </form>
+    
+        
+    
+</section>  

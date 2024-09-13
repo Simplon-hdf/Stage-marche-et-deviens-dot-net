@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from "../Components/navbar/navbar.component";
 
 @Component({
   selector: 'app-page-devis',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './page-devis.component.html',
-  styleUrl: './page-devis.component.scss'
+  styleUrls: ['./page-devis.component.scss']
 })
 export class PageDevisComponent {
 

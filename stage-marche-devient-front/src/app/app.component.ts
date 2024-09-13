@@ -5,11 +5,12 @@ import { SejourComponent } from './Components/sejour/sejour.component';
 import { ConceptComponent } from './concept/concept.component'; 
 import { CommonModule } from '@angular/common';
 import { CsrfService } from './Services/api/csrf.service';
+import { PageDevisComponent } from './page-devis/page-devis.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-    imports: [CommonModule, RouterModule, RouterOutlet, NavbarComponent, SejourComponent, ConceptComponent],
+    imports: [CommonModule, RouterModule, RouterOutlet, NavbarComponent, SejourComponent, ConceptComponent,PageDevisComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
