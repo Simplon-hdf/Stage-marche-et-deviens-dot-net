@@ -129,23 +129,27 @@ namespace stage_marche_devient.Controllers
 
                 if (utilisateur == null)
                 {
-                    return BadRequest("Mail ou mot de passe incorrect");
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : mail incorrect");
+                    return BadRequest("Mail incorrect");
                 }
 
                 string Salt = DeriveSalt(requete.mailUtilisateur);
                 if (CreerMdpHash(requete.motDePasse, Salt, Pepper) == utilisateur.MdpUtilisateur)
                 {
                     string token = CreationToken(utilisateur);
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Connexion réussi par l'utilisateur");
                     return Ok(new { Utilisateur = utilisateur, Token = token });
                 }
                 else
                 {
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : mot de passe incorrect");
                     return BadRequest("Mot de passe erroné");
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erreur lors de la connexion.");
+                await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : délai expiré");
                 return StatusCode(500, "Une erreur est survenue lors de la connexion. Veuillez réessayer plus tard.");
             }
         }
