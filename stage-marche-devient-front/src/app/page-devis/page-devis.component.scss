@@ -19,41 +19,144 @@ z-index: 1000;
 
 h1
 {
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
-    margin-top: 150px;
+    margin-top: 100px;
     color: #3d4d32;
 }
 
-.formulaireUn 
+form
 {
     display: flex;
-    width: 630px;
-    margin: auto;
-    
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    //background-color: aqua;
+    margin: 60px;
+    height: auto;
 
 }
 
-input, select
+::placeholder
 {
-    background-color: #deb260;
+    color: #3d4d32;
+    font-size: 23px;
+}
+
+.contact
+{
+    //background-color: brown;
+    padding: 3px;
+    margin: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    height: 250px;
+    width: 750px;
+}
+.legend
+{
+    font-size: 28px;
+}
+
+.Message .legend
+{
+    text-align: center;
+}
+
+#nom
+{
+    //background-color: red;
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+}
+
+#mail
+{
+    //background-color: rgb(149, 0, 255);
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+}
+
+#telephone
+{
+   // background-color: green;
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+}
+
+#typeDeGroupe
+{
+   // background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    height: 45px;
+
+}
+
+#projet
+{
+    //background-color: #cdacb8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 170px;
+    width: 400px;
+}
+
+#projet label
+{
+    align-self: center;
+    font-size: 30px;
+
+}
+
+#projet #typeProjet
+{
+    width: 400px;
+    margin: 10px 0 ;
+}
+
+
+
+.Message
+{
+    //background-color: rgb(32, 94, 113);
+    padding: 3px;
+    margin: 40px auto 30px;
+    display: flex;
+    flex-direction: column;
+    width: 630px;
+    
+}
+
+input, select,option
+{
+    //background-color: #deb260;
     border-radius: 5px;
     border: 2px solid #3d4d32;
     color: black;
     width: 250px;
     height: 50px;
+    font-size: 20px;
 
 }
 
 textarea
 {
-    background-color: #deb260;
+    //background-color: #deb260;
     border-radius: 5px;
     border: 2px solid #3d4d32;
     color: black;
-    width: 400px;
-    height: 150px;
+    width: 600px;
+    height: 200px;
+    margin-top: 10px;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
     
 }
 

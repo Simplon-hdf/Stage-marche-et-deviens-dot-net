@@ -1,30 +1,67 @@
 <app-navbar class="navbar"></app-navbar>
 <h1>Demande de Devis pour votre groupe <br>
-    (entreprises ou particuliers)</h1>
+    (entreprise ou particulier)</h1>
 
 <section>
-    <form class="formulaireUn" action="http://localhost:4200/page-devis"  method="post" >
-        <label for="nom">Nom/Prénom</label>
-        <input type="text" name="Nom" id="nom" placeholder="Nom/Prénom">
-
-        <label for="mail">E-mail</label>
-        <input type="email" name="E-mail" id="mail">
-
-        <label for="telephone">Téléphone</label>
-        <input type="tel" name="telephone" id="telephone">
-
-        <label for="typeDeGroupe">Type de groupe</label>
-        <select name="typeDeGroupe" id="typeDeGroupe" aria-placeholder="Type de Groupe">
-            <option value="Une entreprise">Une entreprise</option>
-            <option value="Un organisme Public">Un organisme Public</option>
-            <option value="Association">Association</option>
-            <option value="Groupe de particuliers">Groupe de particuliers</option>
-        </select>
+    <form action="http://localhost:4200/page-devis"  method="post" 
+        (ngSubmit)="onSubmit()"
+        #devisForm="ngForm"    >
+        <legend class="legend">Vos coordonnées</legend>
+        <div class="contact">
+            <div id="nom">
+                <label for="nom"></label>
+                <input type="text" name="Nom" id="nom" autofocus required placeholder="Nom/Prénom">
+            </div> 
+            <div id="mail">
+                <label for="mail"></label>
+                <input type="email" name="E-mail" id="mail" required placeholder="E-mail">
+            </div>
+            <div id="telephone">
+                <label for="telephone"></label>
+                <input type="tel" name="telephone" id="telephone" placeholder="Téléphone">
+            </div> 
+            <div id="typeDeGroupe">
+                <label for="typeDeGroupe"></label>
+                <select name="typeDeGroupe" id="typeDeGroupe" 
+                  [(ngModel)]="typeGroupeValue"
+                  (focus)="onTypeGroupeOpen()" 
+                  (mouseleave)="onTypeGroupeClose()"
+                  (change)="onTypeGroupeChange($event)"
+                  [class.open]="isTypeGroupeOpen"
+                  [class.has-value]="typeGroupeValue !== ''">
+                    <option value="" hidden>Type de groupe</option>
+                    <option value="UneEntreprise">Une entreprise</option>
+                    <option value="UnOrganisme Public">Un organisme Public</option>
+                    <option value="Association">Association</option>
+                    <option value="GroupeDeParticuliers">Groupe de particuliers</option>
+                </select>
+            </div>    
+        </div>
+        <div id="projet">
+            <label for="projet" class="legend">Votre projet</label>
+            <select name="typeProjet" id="typeProjet"
+              [(ngModel)]="typeProjetValue"
+              (focus)="onTypeProjetOpen()" 
+              (mouseleave)="onTypeProjetClose()"
+              (change)="onTypeProjetChange($event)"
+              [class.open]="isTypeProjetOpen"
+              [class.has-value]="typeProjetValue !== ''">
+                <option value="" disabled selected hidden>Évenement Souhaité</option>
+                <option value="Randonnee">Randonnée QTV</option>
+                <option value="Séminaire">Séminaire Nature</option>
+                <option value="Cohésion">Cohésion d'Équipe</option>
+                <option value="GestionEmotions">Gestion des Émotions </option>
+                <option value="objectifs">Fixation d'Objectifs</option>
+                <option value="Ateliers">Atelier Introspection</option>
+            </select>
+        </div>
+        <div class="Message">
+            <label class="legend" for="PlusdInformation">Veuillez préciser votre demande</label>
+            <textarea name="Informations" id="PlusdInformation" maxlength="250" placeholder="Votre message..."></textarea>
+        </div>    
+    <input type="submit" value="Envoyer">
     </form>
-    <form>
-        <label for="PlusdInformation">Veuillez préciser votre demande</label>
-        <textarea name="Informations" id="PlusdInformation" maxlength="250"></textarea>
-    </form>
+
     
         
     
