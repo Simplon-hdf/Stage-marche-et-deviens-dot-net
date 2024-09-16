@@ -11,16 +11,22 @@ using System.Text;//implementation de mon IAR
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configuration des services, y compris CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalHost",
-builder => {
-    builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
+    options.AddPolicy("DevelopmentCorsPolicy", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:4200") // Remplacer par le port utilisé par votre application Angular
+            .WithMethods("GET", "POST", "DELETE") // Limiter aux méthodes nécessaires
+            .AllowAnyHeader(); // Vous pouvez restreindre aux en-têtes nécessaires
+    });
 });
+
+// Configurer le serveur pour utiliser HTTPS
+builder.WebHost.UseKestrel(options =>
+{
+    options.AddServerHeader = false; // Optionnel : masquer l'en-tête serveur
 });
 
 builder.Services.AddControllers();
@@ -142,14 +148,21 @@ app.Use(async (context, next) =>
     await next();
 });
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts(); // Active HSTS en production
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("DevelopmentCorsPolicy");
 }
 
-app.UseCors("AllowLocalHost");
+// Utiliser la politique CORS
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
