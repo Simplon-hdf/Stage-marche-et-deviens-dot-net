@@ -11,12 +11,14 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _contexteBdd; // Contexte de la base de données
         private readonly PossederRepository _repository; // Repository pour les opérations sur Posseder
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
         // Constructeur du contrôleur
-        public PossederController(ApiDbContext context)
+        public PossederController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository,)
         {
             _contexteBdd = context;
             _repository = new PossederRepository(context);
+            _auditRepository = auditRepository;
         }
 
         #region Récupération liste
@@ -61,6 +63,7 @@ namespace stage_marche_devient.Controllers
         {
             bool result = await _repository.Add(posseder);
             if (result) { return Created("possetion defini", posseder); } // Retourne 201 Created si réussi
+            await _auditRepository.CreationLog(posseder.IdPosseder.ToString(), "Ajout", "Posseder", "Nouvel lien ajouté.");
             return BadRequest(); // Retourne 400 Bad Request si échec
         }
         #endregion
@@ -74,6 +77,7 @@ namespace stage_marche_devient.Controllers
             else
             {
                 bool aEteMisAJour = await _repository.Update(posseder, idPosseder);
+                await _auditRepository.CreationLog(posseder.IdPosseder.ToString(), "Mise à jour", "Posseder", "Mise à jour d'un lien.");
                 if (!aEteMisAJour) { return BadRequest("Erreur : Mise à jour impossible"); } // Retourne 400 si échec
                 else { return Ok(); } // Retourne 200 OK si réussi
             }
@@ -89,6 +93,7 @@ namespace stage_marche_devient.Controllers
             else
             {
                 bool aEteSupprime = await _repository.Delete(idPosseder);
+                await _auditRepository.CreationLog(idPosseder.ToString(), "Suppression", "Posseder", "Suppression d'un lien.");
                 if (!aEteSupprime) { return BadRequest("Erreur : Suppression impossible"); } // Retourne 400 si échec
                 else { return Ok(); } // Retourne 200 OK si réussi
             }
