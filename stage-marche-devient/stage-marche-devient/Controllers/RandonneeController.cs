@@ -19,11 +19,6 @@ namespace stage_marche_devient.Controllers
             _repository = new RandonneeRepository(_context, randonneeLogger);
             _logger = logger;
         }
-```
-        {
-            _context = context;
-            _repository = new RandonneeRepository(_context);
-        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Randonnee>>> GetAllRandonnee()
