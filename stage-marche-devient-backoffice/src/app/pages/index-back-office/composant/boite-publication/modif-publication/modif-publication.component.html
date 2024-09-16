@@ -1,32 +1,32 @@
 
 <form (ngSubmit)="EnvoieModif()">
-    <section class="conteneur_principale_modif_randonnee">
+    <section class="conteneur_principale_modif_publication">
         <h3 class="titre_boite_modif">modif de la publication</h3>
         <section class="conteneur nom">
             <p>nom</p>
             <input type="text" name="nomPublication" [(ngModel)]="nomPublication"/>
         </section>
 
-        <section class="conteneur description">
+        <section class="conteneur date">
             <p>date de publication</p>
             <input type="text" name="datePublication" [(ngModel)]="datePublication"/>
         </section>
 
-        <section class="conteneur lieu">
+        <section class="conteneur lien">
             <p>lien media</p>
             <input type="text" name="lienMedia" [(ngModel)]="lienMedia"/>
         </section>
 
-        <section class="conteneur image">
+        <section class="conteneur contenu">
             <p>contenu textuel</p>
             <input type="text" name="contenuTexte" [(ngModel)]="contenuTexte"/>
         </section>
 
-        <section class="conteneur prix">
+        <section class="conteneur session">
             <p>session</p>
             <input type="number" name="idSession" [(ngModel)]="idSession"/>
         </section>
-        <button class="button_envoi_modif_randonnee" type="submit">Modification</button>
+        <button class="button_envoi_modif_publication" type="submit">Modification</button>
     </section>
     
 </form>

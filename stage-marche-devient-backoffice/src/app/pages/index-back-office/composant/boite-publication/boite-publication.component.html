@@ -2,7 +2,12 @@
 
   <section class="conteneur_filtre">
     <button class="button_filtre">Lieu</button>
-    <input class="input_filtre" type="text" />
+    <input class="input_filtre"
+    type="text" 
+    placeholder="Rechercher une publication" 
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    >  
   </section>
   <h2 class="titre_boite_publication">Tableau des Randonnée</h2>
 
@@ -14,7 +19,7 @@
         <p class="titre_4">Contenu Textuel</p>
         <p class="titre_5">Action</p>
     </section>
-    <ul *ngIf="listPublication$ | async as publications" class="Conteneur_list_publication">
+    <ul *ngIf="publicationsFiltres$ | async as publications" class="Conteneur_list_publication">
       <li *ngFor="let publication of publications" class="item_list_publication">
 
         <!--Nom-->

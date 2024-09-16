@@ -1,30 +1,37 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Publication } from '../../../../intefaces/publication';
 import { ApiFetcherPublicationService } from '../../../../services/api-fetcher-publication.service';
-import { map, Observable ,of} from 'rxjs';
-import { NgFor } from '@angular/common';
+import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AjoutPublicationComponent } from './ajout-publication/ajout-publication.component';
 import { ModifPublicationComponent } from './modif-publication/modif-publication.component';
 import { ViewChild } from '@angular/core';
 
+
 @Component({
   selector: 'app-boite-publication',
   standalone: true,
-  imports: [CommonModule,AjoutPublicationComponent, ModifPublicationComponent],
+  imports: [CommonModule,AjoutPublicationComponent, ModifPublicationComponent, FormsModule],
   templateUrl: './boite-publication.component.html',
   styleUrl: './boite-publication.component.scss'
 })
-export class BoitePublicationComponent {
+export class BoitePublicationComponent implements OnInit {
 
   @ViewChild(ModifPublicationComponent)composantModif!: ModifPublicationComponent;
   afficherComposant : boolean = true;
   afficherAjout : boolean = false;
   afficherModif : boolean = false;
-
+  
   appeleAPI = inject(ApiFetcherPublicationService);
   public listPublication$:Observable<Publication[]> = this.appeleAPI.recupererPublicationList();
+
+  publicationsFiltres$!: Observable<Publication[]>;
+  searchTerm: string = '';
+
   ngOnInit(){
+    this.publicationsFiltres$ = this.listPublication$;
+
   }
 
   suppression(id:number, nomRandonnee: string){
@@ -32,13 +39,15 @@ export class BoitePublicationComponent {
       this.appeleAPI.SupressionPublication(id).subscribe({
         next: (resultat) =>{
           alert("" + resultat)
+          this.rechargerComposant();
         }
       }); 
     }
-    this.rechargerComposant()
   }
+  
   rechargerComposant() {
     this.listPublication$ = this.appeleAPI.recupererPublicationList();
+    this.publicationsFiltres$ = this.listPublication$;
   }
 
   switchAfficherAjout(){
@@ -67,4 +76,14 @@ export class BoitePublicationComponent {
     }
   }
   
+  filtrerPublicationsParNom(nomRecherche: string): Observable<Publication[]> {
+    return this.listPublication$.pipe(
+      map(publications => publications.filter(publication => 
+        publication.nomPublication.toLowerCase().includes(nomRecherche.toLowerCase())))
+    );
+  }
+
+  onSearchChange() {
+    this.publicationsFiltres$ = this.filtrerPublicationsParNom(this.searchTerm);
+  }
 }
