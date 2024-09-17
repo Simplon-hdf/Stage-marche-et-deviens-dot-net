@@ -79,6 +79,7 @@ namespace stage_marche_devient.Controllers
             
             if (!ModelState.IsValid)
             {
+                await _auditRepository.CreationLog(requete.Mail, "Inscription", "Utilisateur", "Tentative d'inscription d'un utilisateur.");
                 return BadRequest(ModelState);
             }
 
