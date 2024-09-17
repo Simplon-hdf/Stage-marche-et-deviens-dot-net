@@ -24,6 +24,7 @@ namespace stage_marche_devient.Controllers
         private readonly IAuthentificationRepository _authRepository;
         private readonly ApiDbContext _dataContext;
         private readonly IConfiguration _configuration;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
         private readonly IAntiforgery _antiforgery;
         private readonly ILogger<AuthentificationController> _logger;
         private static readonly string Pepper = "Tl*KnfIaz&!bMlV$6z3hJ$i-mwfaE^BO+Hg%6kn0eyc5n%nl$kJEzT7Sw1Nn+XHs";
@@ -32,6 +33,7 @@ namespace stage_marche_devient.Controllers
             ApiDbContext dataContext,
             IAuthentificationRepository authconfig,
             IConfiguration configuration,
+            IAuditRepository<AuditLog> auditRepository,
             IAntiforgery antiforgery,
             ILogger<AuthentificationController> logger)
         {
@@ -40,6 +42,7 @@ namespace stage_marche_devient.Controllers
             _configuration = configuration;
             _antiforgery = antiforgery;
             _logger = logger;
+            _auditRepository = auditRepository;
         }
 
         private string DeriveSalt(string email)
@@ -97,12 +100,17 @@ namespace stage_marche_devient.Controllers
                 _dataContext.Utilisateur.Add(utilisateur);
                 await _dataContext.SaveChangesAsync();
 
+                // Log d'audit pour l'inscription réussie
+                await _auditRepository.CreationLog(requete.Mail, "Inscription", "Utilisateur", "Nouvel utilisateur inscrit.");
+
                 _logger.LogInformation("Inscription réussie.");
                 return Ok(utilisateur);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erreur lors de l'inscription.");
+                // Log d'audit pour l'échec de l'inscription
+                await _auditRepository.CreationLog(requete.Mail, "Inscription", "Utilisateur", $"Erreur lors de l'inscription : {ex.Message}");
                 return StatusCode(500, "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard.");
             }
         }
@@ -121,23 +129,27 @@ namespace stage_marche_devient.Controllers
 
                 if (utilisateur == null)
                 {
-                    return BadRequest("Mail ou mot de passe incorrect");
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : mail incorrect");
+                    return BadRequest("Mail incorrect");
                 }
 
                 string Salt = DeriveSalt(requete.mailUtilisateur);
                 if (CreerMdpHash(requete.motDePasse, Salt, Pepper) == utilisateur.MdpUtilisateur)
                 {
                     string token = CreationToken(utilisateur);
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Connexion réussi par l'utilisateur");
                     return Ok(new { Utilisateur = utilisateur, Token = token });
                 }
                 else
                 {
+                    await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : mot de passe incorrect");
                     return BadRequest("Mot de passe erroné");
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erreur lors de la connexion.");
+                await _auditRepository.CreationLog(requete.mailUtilisateur, "Connexion", "Utilisateur", "Erreur lors de la connexion : délai expiré");
                 return StatusCode(500, "Une erreur est survenue lors de la connexion. Veuillez réessayer plus tard.");
             }
         }

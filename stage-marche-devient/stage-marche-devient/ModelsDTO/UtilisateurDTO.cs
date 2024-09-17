@@ -19,7 +19,7 @@ namespace stage_marche_devient.ModelsDTO
         public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Le mot de passe est requis")]
-        [MinLength(8, ErrorMessage = "Le mot de passe doit contenir au moins 8 caractères")]
+        [MinLength(12, ErrorMessage = "Le mot de passe doit contenir au moins 8 caractères")]
         public string Mdp { get; set; }
     }
 }
