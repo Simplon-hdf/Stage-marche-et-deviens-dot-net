@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using stage_marche_devient.Data;
+using stage_marche_devient.Models;
 using stage_marche_devient.Repositories;
 using System.Text;//implementation de mon IAR
 
@@ -18,7 +19,7 @@ builder.Services.AddCors(options =>
     {
         builder
             .WithOrigins("http://localhost:4200") // Remplacer par le port utilisé par votre application Angular
-            .WithMethods("GET", "POST", "DELETE") // Limiter aux méthodes nécessaires
+            .WithMethods("GET", "POST", "DELETE", "PUT") // Limiter aux méthodes nécessaires
             .AllowAnyHeader(); // Vous pouvez restreindre aux en-têtes nécessaires
     });
 });

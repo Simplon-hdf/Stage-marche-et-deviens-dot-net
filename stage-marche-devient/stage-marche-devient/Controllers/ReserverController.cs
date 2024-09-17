@@ -71,7 +71,7 @@ namespace stage_marche_devient.Controllers
         #region Création reservation
         // Endpoint POST pour créer une nouvelle réservation
         [HttpPost]
-        public async Task<ActionResult<ReserverModel>> CreationReservation([FromBody] ReserverModel reservation)
+        public async Task<ActionResult<ReserverModel>> CreationReservation(ReserverModel reservation)
         {
             if (reservation == null)
             {

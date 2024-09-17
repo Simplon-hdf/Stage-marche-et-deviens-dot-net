@@ -80,6 +80,10 @@ namespace stage_marche_devient.Controllers
             {
                 return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
             }
+            if(_repository.GetById(id) != null)
+            {
+                return Ok("Supression reussie");
+            }
 
             _logger.LogError("Erreur lors de la suppression du thème avec ID {Id}", id);
 

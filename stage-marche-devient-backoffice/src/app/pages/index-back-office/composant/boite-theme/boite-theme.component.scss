@@ -1,0 +1,234 @@
+
+:host {
+    /* Réinitialisation des marges et des rembourrages */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+    /* Réinitialisation de la police */
+    font-family: "JetBrains Mono", monospace;
+  
+    /* Réinitialisation des couleurs */
+    color: #333;
+    background-color: transparent;
+  
+    /* Réinitialisation des bordures */
+    border: none;
+  
+    /* Réinitialisation des listes */
+    list-style: none;
+  
+    /* Réinitialisation des liens */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  
+    /* Réinitialisation des images */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  
+    /* Réinitialisation des tableaux */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  
+    /* Réinitialisation des formulaires */
+    input, button, textarea, select {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+  
+    /* Réinitialisation des éléments de bloc */
+    h1, h2, h3, h4, h5, h6, p {
+      margin: 0;
+      font-weight: normal;
+    }
+  }
+
+.conteneur_boite_theme {
+    height: 100vh;
+    background-color: rgba(229, 236, 255, 0.998);
+    /*parrametre de grid*/
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(7, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
+
+    .button_choix_composant {
+        grid-area: 1 / 1 / 2 / 2;
+        justify-self: center;
+        align-self: center;
+        .button_theme{
+            margin-right: 1vw;
+            width: 5vw;
+        }
+        .button_randonnee{
+            width: 5vw;
+        }
+    }
+
+    .titre_boite_theme {
+        grid-area: 2 / 1 / 3 / 2;
+    }
+
+    .Tableau_theme {
+        grid-area: 3 / 1 / 8 / 2;
+    }
+
+    .tableau_theme {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-content: center;
+        align-content: flex-start;
+
+        .titre_liste_themes {
+            grid-area: 1 / 1 / 2 / 3;
+            border-bottom: 4px green solid;
+        }
+
+        .liste_themes {
+            grid-area: 2 / 1 / 5 / 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+
+            .item_theme {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-content: center;
+                *{
+                    align-self: center;
+                }
+            }
+            .modifier_theme{
+                background-image: radial-gradient(100% 100% at 100% 0, #e9ff5a 0, #ffe254 100%);
+                    color: black;
+            }
+            .supprimer_theme{
+                background-image: radial-gradient(100% 100% at 100% 0, #ffafaf 0, #ff5454 100%);
+            }
+        }
+
+        .titre_panel_themes {
+            grid-area: 1 / 3 / 2 / 5;
+            border-bottom: 4px green solid;
+        }
+
+        .panel_commande_themes {
+            grid-area: 2 / 3 / 5 / 5;
+        }
+    }
+
+    button {
+        background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+        border: 0;
+        border-radius: 6px;
+        box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+        border: 0;
+        border-radius: 6px;
+        box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+        color: #fff;
+        cursor: pointer;
+        transition: box-shadow .15s, transform .15s;
+        touch-action: manipulation;
+        height: fit-content;
+        width: fit-content;
+        padding: 0.5vh 0.10vw;
+    }
+
+    button:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    }
+
+    button:hover {
+        box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        transform: translateY(2px);
+    }
+
+    button:disabled {
+        background-image: radial-gradient(100% 100% at 100% 0, #b8b8b8 0, #8a8a8a 100%);
+        color: #666;
+        cursor: not-allowed;
+        box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+        transform: translateY(2px);
+        opacity: 0.7;
+    }
+}
+.view_screen_shadow_background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    z-index: 2;
+    background-color: rgba(62, 62, 62, 0.849);
+    
+}
+.container_ajout_theme{
+    width: 40vw;
+    height: 40vh;
+    position: absolute;
+    top:35%;
+    left: 35%;
+    z-index: 3;
+    background-color: rgb(216, 216, 216);
+    border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    justify-content: center;
+    align-content: center;
+    button.fermer{
+        grid-area: 1 / 5 / 2 / 6;
+        width: 30%;
+        height: 50%;
+        justify-self: center;
+        align-self: center;
+    }
+    .form_ajout_theme{
+        grid-area: 2 / 1 / 5 / 6;
+        justify-self: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-content: center;
+        align-content: center;
+
+        p{
+            grid-area: 1 / 1 / 2 / 4;
+        }
+        input{
+            height: fit-content;
+            grid-area: 2 / 1 / 3 / 4;
+        }
+        button{
+            height: fit-content;
+            grid-area: 2 / 4 / 3 / 5;
+        }
+    }
+}

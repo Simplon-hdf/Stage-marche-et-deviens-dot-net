@@ -48,37 +48,14 @@ namespace stage_marche_devient.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<Session>> CreateSession([FromBody] Session model)
+        public async Task<ActionResult<Session>> CreateSession(Session model)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    bool result = await _repository.Add(model);
-                    if (result)
-                    {
-                        return Ok(model);
-                    }
-                    else
-                    {
-                        return BadRequest("Erreur lors de l'ajout de la session.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-
-            }
-
-                return BadRequest(ModelState);
-
-                /*var result = await _repository.Add(session);                                                      //envoie vers le repo l'objet et stock le boolean de retour
+                var result = await _repository.Add(model);                                                      //envoie vers le repo l'objet et stock le boolean de retour
                 if (result)                                                                                         //si le boolean de retour est true
                 {
-                    return CreatedAtAction(nameof(GetSession), new { id = session.IdSession }, session);    // renvoi vers le endpoint l'objet qui vient d'être crée
+                    return CreatedAtAction(nameof(GetSession), new { id = model.IdSession }, model);    // renvoi vers le endpoint l'objet qui vient d'être crée
                 }
-                return BadRequest();   */                                                                           // envoi un badresquest (code 400)
+                return BadRequest();                                                                      // envoi un badresquest (code 400)
         }
 
         [HttpPut("{id}")]
