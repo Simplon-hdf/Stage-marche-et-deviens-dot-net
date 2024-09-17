@@ -14,7 +14,7 @@ namespace stage_marche_devient.Controllers
         private readonly IAuditRepository<AuditLog> _auditRepository;
 
         // Constructeur du contrôleur
-        public PossederController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository,)
+        public PossederController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository)
         {
             _contexteBdd = context;
             _repository = new PossederRepository(context);
