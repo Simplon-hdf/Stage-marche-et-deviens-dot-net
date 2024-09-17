@@ -20,23 +20,11 @@ namespace stage_marche_devient.Models
         [Column("date_fin_session")]
         public string DateFin { get; set; }
 
-        [Column("id_randonnee"), ForeignKey(nameof(Randonnee))]
+        [Column("id_randonnee"), ForeignKey("randonnee")]
         public int RandonneeId { get; set; }
 
-        [Column("id_theme"), ForeignKey(nameof(Theme))]
+        [Column("id_theme"), ForeignKey("theme")]
         public int ThemeId { get; set; }
-        #endregion
-
-        #region Propriétés de navigation
-        /// <summary>
-        /// Randonnée associée à la session.
-        /// </summary>
-        public virtual Randonnee Randonnee { get; set; }
-
-        /// <summary>
-        /// Thème associé à la session.
-        /// </summary>
-        public virtual Theme Theme { get; set; }
         #endregion
     }
 }

@@ -75,19 +75,20 @@ export class ApiFetcherSessionService {
   // Méthode pour ajouter un nouveau session.
   ajoutSession(session : Session ): Observable<any> 
   {
+    console.log(session)
     return this.httpClient.post(`${this.endPointUrl}`, { 
       "lieu": session.lieu,
       "dateDebut": session.dateDebut,
       "dateFin": session.dateFin,
       "randonneeId": session.randonneeId,
       "themeId": session.themeId 
-    }, { observe: 'response' ,responseType: 'text'}) // Requête POST pour ajouter un session.
+    }, { observe: 'response' , responseType: 'text'}) // Requête POST pour ajouter un session.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -108,7 +109,7 @@ export class ApiFetcherSessionService {
           console.log('Body:', response.body);
 
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
