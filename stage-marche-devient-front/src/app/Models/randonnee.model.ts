@@ -11,4 +11,10 @@ export class Randonnee {
   maximumParticipant?: number;
   estVisible: boolean = true;
   distanceKmRandonnee?: number;
+  theme?: Theme; // je dois inclure cette propriété dans Randonnee pour représenter la relation entre une randonnée et un thème.
+}
+
+export class Theme {
+  idTheme?: number;
+  nomTheme?: string;
 }

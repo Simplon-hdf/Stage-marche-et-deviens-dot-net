@@ -1,20 +1,24 @@
 <div class="main-content">
     <!-- Title Section -->
     <section class="title-section">
-        <h1>{{ randonnee.idRandonnee }}</h1>
-        <h2 class="theme">Thématique : {{ randonnee.nomRandonnee }}</h2> <!--correction sur l'erreur programData.theme car programdata n'existe pas sur le type detail offre -->
-        <p  class="prix"> Prix : {{ randonnee.prixRandonnee }}</p>
+        <h1>{{ randonnee.nomRandonnee }}</h1>
+        <h2 class="theme">Thématique : {{ theme?.nomTheme }}</h2> <!--correction sur l'erreur programData.theme car programdata n'existe pas sur le type detail offre -->
     </section>
 
     <!-- Image Section -->
     <section class="image-section">
-        <div class="main-image" *ngIf="randonnee.imageRandonnee">
-            <img [src]="randonnee.imageRandonnee" alt="Main Image" />
+        <div class="main-image" *ngIf="randonnee.imageRandonnee"> <!--Si randonnee.imageRandonnee est défini (c'est-à-dire qu'une URL d'image a été récupérée de la base de données), le bloc est rendu.-->
+            <img [src]="randonnee.imageRandonnee" alt="Main Image" /> <!--L'URL de l'image est passée dynamiquement comme source pour l'image, affichant ainsi l'image correspondante.-->
+        </div>
+        <div class="info-section">
+            <span>Prix : {{ randonnee.prixRandonnee }} €</span>
+            <span>Groupe de {{ randonnee.maximumParticipant }}</span>
+            <span> {{ randonnee.nbrNuitRandonnee }} nuits </span>
         </div>
         <div class="thumbnail-images">
-            <img src="path/to/thumbnail1.jpg" alt="Thumbnail 1" />
-            <img src="path/to/thumbnail2.jpg" alt="Thumbnail 2" />
-            <img src="path/to/thumbnail3.jpg" alt="Thumbnail 3" />
+            <img src="assets/Asset/detailoffre2.jpg" alt="photo séjour 2" />
+            <img src="assets/Asset/detailoffre3.jpg" alt="photo séjour 3" />
+            <img src="assets/Asset/detailoffre4.png" alt="photo séjour 4" />
         </div>
     </section>
 
@@ -25,8 +29,8 @@
     </section>
     <section>
     <p>
-        Pour cette session la thématique proposée, sera la suivante : la notion d'identité et de rapport à celle-ci
-        avec une question principale : Comment prendre des décisions alignées ?
+        Pour cette session la thématique proposée, sera la suivante : 
+        <span> {{ randonnee.theme?.nomTheme }} </span> // 
     </p>
     </section>
 
@@ -35,19 +39,19 @@
         <div class="info-panel">
             <h4>Préparation physique</h4>
             <p>
-                Pour cet effort pleinement vécu, nous vous invitons à une préparation...
+                Pour profiter pleinement de votre voyage, n'oubliez pas d'entretenir votre forme, restez en mouvement régulièrement, soyez mobiles et souples. Mangez sainement, hydratez-vous convenablement et régulièrement.
             </p>
         </div>
         <div class="info-panel">
             <h4>Matériel à ne pas oublier</h4>
             <p>
-                Chaussures (toutes conditions), vêtements...
+                Chaussures adaptées, Pantalon/short/legging adapté, (prevoir un second si besoin), T-shirt + 1 veste imperméable/coupe-vent, Un vêtement chaud (pour les arrêts), Une gourde (min 2L),
             </p>
         </div>
         <div class="info-panel">
             <h4>Hébergement</h4>
             <p>
-                Hébergement situé au gîte de... Maximum 2/4 personnes
+                Hebergement situé dans les Ardennes à quelques kilomètres à pieds du départ de la randonnée. Vous serez logés dans un tipi de  2/4 personnes
             </p>
         </div>
     </section>
@@ -56,10 +60,10 @@
     <section class="last-advice">
         <h4>Derniers conseils</h4>
         <p>
-            La réussite de tout voyage...
+            1. La réussite de tout voyage est un délicat mélange de bonne humeur, de sentiments d'entraide, de convivialité, d'esprit de découverte, de bonne volonté, ainsi que le respect des traditions locales. N'oubliez pas, des imprévus sont toujours possibles et font partie de l’aventure, dans ces moments, adoptez une attitude sage : patience et tolérance.
         </p>
         <p>
-            L'objectif de ce séjour...
+            2. L’objectif de ce séjour, même s’il sera éprouvant, n’est pas la prouesse physique extrême. Le but principal est d’apprécier l’activité de la marche, dans la lenteur et la contemplation qu’elle permet. De se poser des questions, et de prendre le temps nécessaire pour y répondre. Pour profiter au maximum de l’expérience, détachez-vous des pensées superflues et focalisez-vous sur l’essentiel : Ici et maintenant.
         </p>
     </section>
 

@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'randonnee/:id', component : DetailOffreComponent},
   { path: 'connexion', component: ConnexionComponent },
   { path: 'inscription', component: InscriptionComponent }
+  
 ];
 
 
