@@ -12,15 +12,14 @@ namespace stage_marche_devient.Controllers
         private readonly ApiDbContext _context;
         private readonly ThemeRepository _repository;
         private readonly ILogger<ThemeController> _logger;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
-        public ThemeController(ApiDbContext context, ILogger<ThemeController> logger, ILogger<ThemeRepository> themeLogger)
+        public ThemeController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository, ILogger<ThemeController> logger, ILogger<ThemeRepository> themeLogger)
         {
             _context = context;
             _repository = new ThemeRepository(_context, themeLogger);
             _logger = logger;
-
-
-
+            _auditRepository = auditRepository;
         }
 
         [HttpGet]
@@ -48,6 +47,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Add(theme);                                                      //envoie vers le repo l'objet et stock le boolean de retour
             if (result)                                                                                         //si le boolean de retour est true
             {
+                await _auditRepository.CreationLog(theme.IdTheme.ToString(), "Ajout", "Thème", "Nouveau thème ajouté.");
                 return CreatedAtAction(nameof(GetTheme), new { id = theme.IdTheme }, theme);    // renvoi vers le endpoint l'objet qui vient d'être crée
             }
             return BadRequest();                                                                                // envoi un badresquest (code 400)
@@ -65,6 +65,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Update(theme, id);                                               // envoi vers le repository l'objet a update et son id
             if (result)
             {
+                await _auditRepository.CreationLog(theme.IdTheme.ToString(), "Mise à jour", "Thème", "Thème mis à jour.");
                 return Ok("Modificaton réussie");                                                               // renvoi un ok(code 200)
             }
 
@@ -78,6 +79,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Delete(id);                                                          // envoi un requete de deletion vers le repository et stock le retour
             if (result)                                                                                         // si le retour est positive
             {
+                await _auditRepository.CreationLog(id.ToString(), "Supprimer", "Thème", "Le thème a été supprimé.");
                 return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
             }
             if(_repository.GetById(id) != null)

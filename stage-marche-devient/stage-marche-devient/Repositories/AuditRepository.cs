@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
 
@@ -28,6 +29,7 @@ namespace stage_marche_devient.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        [HttpGet]
         public async Task<IEnumerable<AuditLog>> GetAll()                             /* Je déclare une méthode publique asynchrone qui retourne 
                                                                                        * une liste de tous les logs.*/
         {

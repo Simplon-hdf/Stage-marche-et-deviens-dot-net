@@ -23,14 +23,17 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
 
         private readonly UtilisateurRepository _repository; /*Champ privé pour stocker une instance de UtilisateurRepository
                                                             * utilisée pour effectuer les opérations CRUD sur les utilisateurs*/
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
-        public UtilisateurController(ApiDbContext context) /*Constructeur de la classe UtilisateursController
+        public UtilisateurController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository) /*Constructeur de la classe UtilisateursController
                                                              * Il prend une instance de ApiDBContext en paramètre*/
         {
             _context = context;                                /*Initialise le champ _context avec l'instance de ApiDBContext passée en paramètre*/
             _repository = new UtilisateurRepository(_context);  /*Initialise le champ _repository avec une nouvelle instance de UtilisateurRepository
                                                                  * en passant le contexte de la base de données
                                                                  * Cela permet d'utiliser les méthodes du repository dans le contrôleur*/
+            _auditRepository = auditRepository;
+
         }
 
         [HttpGet]                                              /*Indique que cette méthode répondra aux requêtes HTTP GET à l'URL définie 
@@ -68,6 +71,7 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
             var result = await _repository.Add(utilisateur);    /*Appelle la méthode Add du repository pour ajouter le nouvel utilisateur à la BDD*/
             if (result)                                         /*Vérifie si l'ajout a réussi*/
             {
+                await _auditRepository.CreationLog(utilisateur.MailUtilisateur, "Ajout", "Utilisateur", "Nouvel utilisateur ajouté.");
                 return CreatedAtAction(nameof(GetUtilisateur), new { id = utilisateur.IdUtilisateur }, utilisateur);    /* Si l'ajout a réussi, 
                                                                                                                          * retourne un code de réponse HTTP 201 Created 
                                                                                                                          * avec l'URL de la nouvelle ressource créée 
@@ -93,6 +97,7 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
 
             if (result)                                          /* Vérifie si la mise à jour a réussi*/
             {
+                await _auditRepository.CreationLog(utilisateur.IdUtilisateur.ToString(), "Mise à jour", "Utilisateur", "Un utilisateur a été mis à jour.");
                 return Ok("Modification réussie");              /*Si la mise à jour a réussi, 
                                                                  * retourne un code de réponse HTTP 200 OK avec un message de confirmation*/
             }
@@ -113,6 +118,7 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
 
             if (result)                                             /*Vérifie si la suppression a réussi*/
             {
+                await _auditRepository.CreationLog(id.ToString(), "Supprimer", "Utilisateur", "L'utilisateur a été supprimé.");
                 return Ok("Suppression réussie");                   /*Si la suppression a réussi, 
                                                                     * retourne un code de réponse HTTP 200 OK 
                                                                     * avec un message de confirmation*/

@@ -12,12 +12,14 @@ namespace stage_marche_devient.Controllers
         private readonly ApiDbContext _context;
         private readonly SessionRepository _repository;
         private readonly ILogger<SessionController> _logger;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
-        public SessionController(ApiDbContext context, ILogger<SessionController> logger, ILogger<SessionRepository> sessionLogger)
+        public SessionController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository, ILogger<SessionController> logger, ILogger<SessionRepository> sessionLogger)
         {
             _context = context;
             _repository = new SessionRepository(_context, sessionLogger);
             _logger = logger;
+            _auditRepository = auditRepository;
         }
 
         [HttpGet]
@@ -53,6 +55,7 @@ namespace stage_marche_devient.Controllers
                 var result = await _repository.Add(model);                                                      //envoie vers le repo l'objet et stock le boolean de retour
                 if (result)                                                                                         //si le boolean de retour est true
                 {
+                    await _auditRepository.CreationLog(model.IdSession.ToString(), "Ajout", "Session", "Nouvelle session ajoutée.");
                     return CreatedAtAction(nameof(GetSession), new { id = model.IdSession }, model);    // renvoi vers le endpoint l'objet qui vient d'être crée
                 }
                 return BadRequest();                                                                      // envoi un badresquest (code 400)
@@ -70,6 +73,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Update(session, id);                                               // envoi vers le repository l'objet a update et son id
             if (result)
             {
+                await _auditRepository.CreationLog(id.ToString(), "Mise à jour", "Session", "Mise à jour d'une session.");
                 return Ok("Modificaton réussie");                                                               // renvoi un ok(code 200)
             }
 
@@ -84,6 +88,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Delete(id);                                                          // envoi un requete de deletion vers le repository et stock le retour
             if (result)                                                                                         // si le retour est positive
             {
+                await _auditRepository.CreationLog(id.ToString(), "Suppression", "Session", "Session supprimée.");
                 return Ok("Supression reussie");                                                                // revoi un ok (code ~200) 
             }
 
