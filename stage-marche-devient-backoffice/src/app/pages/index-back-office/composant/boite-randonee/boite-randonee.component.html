@@ -1,10 +1,23 @@
 <section class="conteneur_principale_randonnee" *ngIf="afficherComposant">
 
-  <section class="conteneur_filtre">
-    <button class="button_filtre">Lieu</button>
-    <input class="input_filtre" type="text" />
+  <section class="conteneur_titre_randonnee">
+
+    <section class="button_choix_composant">
+      
+      <button class="button_theme" (click)="allerABoiteTheme()">Theme</button>
+      <button class="button_randonnee" disabled>Randonnee</button>
+    </section>
+
+    <h2 class="titre_boite_randonnee">Tableau des Randonnée</h2>
+
   </section>
-  <h2 class="titre_boite_randonnee">Tableau des Randonnée</h2>
+
+  <section class="conteneur_filtre">
+    
+    <input class="input_filtre" type="text" />
+    <button class="button_filtre">Lieu</button>
+    
+  </section>
 
   <section class="boite_listing_randonnee">
     <section class="titre_colonne">

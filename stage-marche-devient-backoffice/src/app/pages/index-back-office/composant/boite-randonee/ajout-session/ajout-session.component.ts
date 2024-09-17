@@ -20,7 +20,7 @@ export class AjoutSessionComponent {
   lieuSession?:string;
   dateDebutSession?:string;
   dateFinSession?:string;
-  themeSession?:number
+  themeSession:number = 0;
 
   public themes$ = this.appelleAPITheme.recupererThemeList();
 

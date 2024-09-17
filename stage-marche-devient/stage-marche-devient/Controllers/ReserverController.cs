@@ -12,12 +12,14 @@ namespace stage_marche_devient.Controllers
         // Déclaration des champs privés pour le contexte de base de données et le repository
         private readonly ApiDbContext _contexteBdd;
         private readonly ReserverRepository _repository;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
         // Constructeur du contrôleur
-        public ReserverController(ApiDbContext context)
+        public ReserverController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository)
         {
             _contexteBdd = context;
             _repository = new ReserverRepository(context);
+            _auditRepository = auditRepository;
         }
 
         #region Récupération liste
@@ -71,7 +73,7 @@ namespace stage_marche_devient.Controllers
         #region Création reservation
         // Endpoint POST pour créer une nouvelle réservation
         [HttpPost]
-        public async Task<ActionResult<ReserverModel>> CreationReservation([FromBody] ReserverModel reservation)
+        public async Task<ActionResult<ReserverModel>> CreationReservation(ReserverModel reservation)
         {
             if (reservation == null)
             {
@@ -81,6 +83,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Add(reservation);
             if (result)
             {
+                await _auditRepository.CreationLog(reservation.idReserver.ToString(), "Ajout", "Reservation", "Une réservation a été faite.");
                 return Created("reservation créée", reservation); // Retourne 201 si la création réussit
             }
             return BadRequest("Erreur lors de la création de la réservation.");
@@ -103,6 +106,7 @@ namespace stage_marche_devient.Controllers
             {
                 return BadRequest("Erreur : Mise à jour impossible");
             }
+            await _auditRepository.CreationLog(reservation.idReserver.ToString(), "Mise à jour", "Reservation", "Une réservation a été mise à jour.");
             return Ok();
         }
         #endregion
@@ -123,6 +127,7 @@ namespace stage_marche_devient.Controllers
             {
                 return BadRequest("Erreur : Suppression impossible");
             }
+            await _auditRepository.CreationLog(idUtilisateur.ToString(), "Suppression", "Reservation", "Une réservation a été supprimé.");
             return Ok();
         }
         #endregion
