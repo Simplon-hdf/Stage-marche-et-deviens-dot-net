@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using stage_marche_devient.Data;
 using stage_marche_devient.Models;
+using stage_marche_devient.ModelsDTO;
 using stage_marche_devient.Repositories;
 
 namespace stage_marche_devient.Controllers
@@ -131,5 +133,32 @@ namespace stage_marche_devient.Controllers
             return Ok();
         }
         #endregion
+
+        [HttpPost("reserver")]
+        public IActionResult ReserverRandonnee([FromBody] ReservationDto reservation)
+        {
+            var rsrvtn = _contexteBdd.Reserver.Find(reservation.RandonneeId);
+
+            if (rsrvtn == null)
+            {
+                return NotFound("Randonnee non trouvée");
+            }
+
+            // Ajouter le nombre de places réservées au nombre de participants
+            rsrvtn.NbrParticipantsInscrits += reservation.Places;
+
+            // Enregistrer la réservation
+            _contexteBdd.Reserver.Add(new ReserverModel
+            {
+                IdUtilisateur = reservation.UserId,
+                IdSession = reservation.RandonneeId,
+                NbrParticipantsInscrits = reservation.Places
+            });
+
+            _contexteBdd.SaveChanges();
+
+            return Ok(new { message = "Réservation réussie" });
+        }
+
     }
 }
