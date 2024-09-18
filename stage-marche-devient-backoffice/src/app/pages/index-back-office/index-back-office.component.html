@@ -3,10 +3,11 @@
 <section class="boite_commande">
     <ng-container *ngIf="boiteSelectionnee$ | async as moduleSelectioner">
         <app-boite-general *ngIf="moduleSelectioner === 'general'"></app-boite-general>
-        <app-boite-randonee *ngIf="moduleSelectioner === 'randonee'"></app-boite-randonee>
+        <app-boite-randonee *ngIf="moduleSelectioner === 'randonnee'"></app-boite-randonee>
         <app-boite-utilisateur *ngIf="moduleSelectioner === 'utilisateur'"></app-boite-utilisateur>
         <app-boite-publication *ngIf="moduleSelectioner === 'publication'"></app-boite-publication>
         <app-boite-tag-publication *ngIf="moduleSelectioner === 'tag-publication'"></app-boite-tag-publication>
+        <app-boite-theme *ngIf="moduleSelectioner === 'theme' "></app-boite-theme>
       </ng-container>
 </section>
 

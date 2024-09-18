@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using stage_marche_devient.Data;
+using stage_marche_devient.Models;
 using stage_marche_devient.Repositories;
-using System.Text;//implementation de mon IAR
+using System.Text;
+using System.Threading.RateLimiting;//implementation de mon IAR
 
 
 
@@ -18,7 +20,7 @@ builder.Services.AddCors(options =>
     {
         builder
             .WithOrigins("http://localhost:4200") // Remplacer par le port utilisé par votre application Angular
-            .WithMethods("GET", "POST", "DELETE") // Limiter aux méthodes nécessaires
+            .WithMethods("GET", "POST", "DELETE", "PUT") // Limiter aux méthodes nécessaires
             .AllowAnyHeader(); // Vous pouvez restreindre aux en-têtes nécessaires
     });
 });
@@ -48,11 +50,51 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 // Enregistrer le service IAuthentificationRepository
 builder.Services.AddScoped<IAuthentificationRepository, AuthentificationRepository>();
 builder.Services.AddScoped<SessionRepository>();
+builder.Services.AddScoped<IAuditRepository<AuditLog>, AuditRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
 
+// Ajouter Rate Limiting avec Fixed Window
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    {
+        var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
+        return RateLimitPartition.GetFixedWindowLimiter(ipAddress!, partition => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 5, // Nombre maximum de requêtes
+            Window = TimeSpan.FromMinutes(1), // Fenêtre de temps de 1 minute
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst, // Ordre de la file d'attente
+            QueueLimit = 0 // Pas de file d'attente
+        });
+    });
+});
 
+// Ajouter Rate Limiting avec Sliding Window
+builder.Services.AddRateLimiter(options =>
+{
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+    {
+        var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
+        return RateLimitPartition.GetSlidingWindowLimiter(ipAddress!, partition => new SlidingWindowRateLimiterOptions
+        {
+            PermitLimit = 5, // Nombre maximum de requêtes
+            Window = TimeSpan.FromMinutes(1), // Durée de la fenêtre
+            SegmentsPerWindow = 4, // Divise la fenêtre en 4 segments
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0
+        });
+    });
+});
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.OnRejected = async (context, cancellationToken) =>
+    {
+        context.HttpContext.Response.StatusCode = 429; // Code 429 Too Many Requests
+        await context.HttpContext.Response.WriteAsync("Trop de requêtes. Réessayez plus tard.", cancellationToken);
+    };
+});
 
 // Ajouter les services de logging
 builder.Services.AddLogging();
@@ -163,7 +205,7 @@ if (app.Environment.IsDevelopment())
 // Utiliser la politique CORS
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
-
+app.UseRateLimiter();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();

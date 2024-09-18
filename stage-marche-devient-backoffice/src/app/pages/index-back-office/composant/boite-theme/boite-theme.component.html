@@ -1,0 +1,45 @@
+<section class="conteneur_boite_theme">
+    <section class="button_choix_composant">
+        <button class="button_theme" disabled>Theme</button>
+        <button class="button_randonnee" (click)="allerABoiteRandonnee()">Randonnee</button>
+    </section>
+
+    <section class="titre_boite_theme">
+        <h3>TABLEAU DES THEMES</h3>
+    </section>
+    <section class="tableau_theme">
+
+        <h3 class="titre_liste_themes">Liste des themes</h3>
+
+        <ng-container *ngIf="listTheme$ as themes" class="liste_des_themes_containeur">
+            <ul class="liste_themes">
+                <li *ngFor="let theme of themes | async" ngClass="item_theme">
+                    <p>Id du Theme: {{theme.idTheme}}</p>
+                    <p>Denomination du theme:</p>
+                    <input type="text" [(ngModel)]="theme.nomTheme">
+                    <button class="modifier_theme" (click)="ModificationTheme(theme)">Modifier</button>
+                    <button class="supprimer_theme" (click)="suppressiontTheme(theme)">Supprimer</button>
+                </li>
+            </ul>
+        </ng-container>
+
+        <h3 class="titre_panel_themes">Panel de commande</h3>
+        <section class="panel_commande_themes">
+            <button (click)="afficherAjoutTheme()">Ajout d'un theme</button>
+        </section>
+    </section>
+</section>
+
+<ng-container *ngIf="estAfficherAjoutTheme">
+    <div class="view_screen_shadow_background">
+        <section class="container_ajout_theme">
+            <button (click)="fermerAjoutTheme()" class="fermer">X</button>
+            <section class="form_ajout_theme">
+                <p>Qu'elle est le nom du theme :</p>
+                <input type="text" [(ngModel)]="nomThemeAjout" placeholder="Entrer le theme"/>
+                <button (click)="creationTheme()">Confirmer</button>
+            </section> 
+        </section>
+    </div>
+
+</ng-container>

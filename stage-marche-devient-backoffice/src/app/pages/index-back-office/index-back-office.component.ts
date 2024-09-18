@@ -11,11 +11,12 @@ import { BoiteUtilisateurComponent } from "./composant/boite-utilisateur/boite-u
 import { BoitePublicationComponent } from './composant/boite-publication/boite-publication.component';
 import { BoiteTagPublicationComponent } from './composant/boite-tag-publication/boite-tag-publication.component';
 
+import { BoiteThemeComponent } from "./composant/boite-theme/boite-theme.component";
 
 @Component({
   selector: 'app-index-back-office',
   standalone: true,
-  imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent, BoiteUtilisateurComponent, BoitePublicationComponent, BoiteTagPublicationComponent],
+  imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent, BoiteUtilisateurComponent, BoiteThemeComponent, BoitePublicationComponent, BoiteTagPublicationComponent],
   templateUrl: './index-back-office.component.html',
   styleUrls: ['./index-back-office.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

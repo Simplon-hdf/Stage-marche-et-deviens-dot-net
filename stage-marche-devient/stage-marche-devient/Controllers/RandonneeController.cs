@@ -11,11 +11,16 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly RandonneeRepository _repository;
+        private readonly ILogger<RandonneeController> _logger;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
-        public RandonneeController(ApiDbContext context)
+
+        public RandonneeController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository, ILogger<RandonneeController> logger, ILogger<RandonneeRepository> randonneeLogger)
         {
             _context = context;
-            _repository = new RandonneeRepository(_context);
+            _repository = new RandonneeRepository(_context, randonneeLogger);
+            _logger = logger;
+            _auditRepository = auditRepository;
         }
 
         [HttpGet]
@@ -43,6 +48,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Add(randonnee);                                                      //envoie vers le repo l'objet et stock le boolean de retour
             if (result)                                                                                         //si le boolean de retour est true
             {
+                await _auditRepository.CreationLog(randonnee.IdRandonnee.ToString(), "Ajout", "Randonnee", "Nouvelle randonnee ajoutée.");
                 return CreatedAtAction(nameof(GetRandonnee), new { id = randonnee.IdRandonnee }, randonnee);    // renvoi vers le endpoint l'objet qui vient d'être crée
             }
             return BadRequest();                                                                                // envoi un badresquest (code 400)
@@ -60,6 +66,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Update(randonnee, id);                                               // envoi vers le repository l'objet a update et son id
             if (result)
             {
+                await _auditRepository.CreationLog(randonnee.IdRandonnee.ToString(), "Mise à jour", "Randonnee", "Randonnée mise à jour.");
                 return Ok("Modificaton réussie");                                                               // renvoi un ok(code 200)
             }
 
@@ -87,6 +94,7 @@ namespace stage_marche_devient.Controllers
 
                 if (await _repository.GetById(id) == null)
                 {
+                    await _auditRepository.CreationLog(id.ToString(), "Suppression", "Randonnee", "Suppression de Randonnée.");
                     return Ok($"Suppression réussie de la randonnée avec l'ID {id}.");
                 }
                 else
