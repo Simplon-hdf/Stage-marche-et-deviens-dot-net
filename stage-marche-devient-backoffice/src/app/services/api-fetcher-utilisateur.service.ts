@@ -88,7 +88,7 @@ export class ApiFetcherUtilisateurService {
         })
       );
   }
-
+  // Méthode metre a jour un utilisateur
   MiseAJourUtilisitateur(idUtilisateur: number, utilisateurModif: Utilisateur): Observable<any> {
     return this.httpClient.put(this.endPointUrl + "/" + idUtilisateur, { 
       "idUtilisateur": idUtilisateur, 

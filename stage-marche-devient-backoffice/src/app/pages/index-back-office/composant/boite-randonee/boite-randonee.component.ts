@@ -22,21 +22,23 @@ import { SelecteurBoiteCommandeAdminService } from '../../service/selecteur-boit
   styleUrl: './boite-randonee.component.scss'
 })
 export class BoiteRandoneeComponent implements OnInit {
+  // Référence au composant de modification de randonnée
   @ViewChild(ModifRandonneeComponent) composantModif!: ModifRandonneeComponent;
 
-  afficherAjoutSession : boolean = false;
-  idRandonneSessionAAjouter : number = 0;
-
+  // Variables pour contrôler l'affichage des différents composants
+  afficherAjoutSession: boolean = false;
+  idRandonneSessionAAjouter: number = 0;
   afficherComposant: boolean = true;
   afficherAjout: boolean = false;
   afficherModif: boolean = false;
-  
 
+  // Injection des services nécessaires
   private appeleAPI = inject(ApiFetcherRandoneeService);
   private appeleAPISession = inject(ApiFetcherSessionService);
   private appeleAPITheme = inject(ApiFetcherThemeService);
   private selecteurBoiteCommande = inject(SelecteurBoiteCommandeAdminService);
   
+  // Observables pour stocker les listes de données
   public listRandonnee$!: Observable<Randonnee[]>;
   public sessions$!: Observable<Session[]>;
   public themes$!: Observable<Theme[]>;
@@ -46,7 +48,7 @@ export class BoiteRandoneeComponent implements OnInit {
   }
 
   private initializeObservables() {
-    //recupere la liste des rendonnee
+    // Récupération de la liste des randonnées
     this.listRandonnee$ = this.appeleAPI.RecupererListeRandonee().pipe(
       catchError(error => {
         console.error('Erreur lors de la récupération des randonnées:', error);
@@ -55,7 +57,7 @@ export class BoiteRandoneeComponent implements OnInit {
       shareReplay(1)
     );
 
-    //recupere la liste des session
+    // Récupération de la liste des sessions
     this.sessions$ = this.appeleAPISession.recupererSessionList().pipe(
       catchError(error => {
         console.error('Erreur lors de la récupération des sessions:', error);
@@ -64,7 +66,7 @@ export class BoiteRandoneeComponent implements OnInit {
       shareReplay(1)
     );
 
-    //recupere la liste des theme
+    // Récupération de la liste des thèmes
     this.themes$ = this.appeleAPITheme.recupererThemeList().pipe(
       catchError(error => {
         console.error('Erreur lors de la récupération des sessions:', error);
@@ -74,6 +76,7 @@ export class BoiteRandoneeComponent implements OnInit {
     );
   }
 
+  // Méthode pour supprimer une randonnée
   suppressiont(id: number, nomRandonnee: string) {
     if (confirm(`Es-tu sûr de vouloir supprimer la randonnée du nom de : ${nomRandonnee}`)) {
       this.appeleAPI.SupressionRandonnee(id).subscribe({
@@ -89,28 +92,30 @@ export class BoiteRandoneeComponent implements OnInit {
     }
   }
 
+  // Méthode pour recharger les données du composant
   rechargerComposant() {
     this.initializeObservables();
   }
 
-  switchAfficherAjoutRandonnee(etat:boolean) {
+  // Méthodes pour gérer l'affichage des formulaires d'ajout
+  switchAfficherAjoutRandonnee(etat: boolean) {
     this.afficherAjout = etat;
     if (etat = false) {
       this.rechargerComposant();
     }
   }
-  switchAfficherAjoutSession(idRandonnee?:number){
-    if(idRandonnee === undefined){
+
+  switchAfficherAjoutSession(idRandonnee?: number) {
+    if (idRandonnee === undefined) {
       this.afficherAjoutSession = false;
       this.rechargerComposant();
-    }
-    else{
+    } else {
       this.idRandonneSessionAAjouter = idRandonnee;
       this.afficherAjoutSession = true;
     }
-
   }
 
+  // Méthode pour afficher le formulaire de modification d'une randonnée
   switchAfficherModif(randoneeAModif: Randonnee | null) {
     if (randoneeAModif !== null) {
       this.afficherModif = true;
@@ -127,32 +132,38 @@ export class BoiteRandoneeComponent implements OnInit {
     }
   }
 
+  // Méthode pour filtrer les sessions d'une randonnée spécifique
   afficherSession(idRandonnee: number): Observable<Session[]> {
     return this.sessions$.pipe(
       map(sessions => sessions.filter(session => session.randonneeId === idRandonnee))
     );
   }
 
-  miseAJourThemeSession(sessionAMetreAJour : Session) : void{
-    this.appeleAPISession.MiseAJourSession(sessionAMetreAJour.idSession!,sessionAMetreAJour).subscribe(response => {
-      if(response >= 200 && response <300){
+  // Méthode pour mettre à jour le thème d'une session
+  miseAJourThemeSession(sessionAMetreAJour: Session): void {
+    this.appeleAPISession.MiseAJourSession(sessionAMetreAJour.idSession!, sessionAMetreAJour).subscribe(response => {
+      if (response >= 200 && response < 300) {
         alert("La session a bien été modifier")
+      } else { 
+        alert('Erreur de mise a jour :' + response)
       }
-      else{ alert('Erreur de mise a jour :' + response)}
     });
-
   }
-  supressionSession(idSession: number) : void{
+
+  // Méthode pour supprimer une session
+  supressionSession(idSession: number): void {
     this.appeleAPISession.SupressionSession(idSession).subscribe(response => {
       console.log('Resultat mise a jour:', response);
-      if(response >= 200 && response <300){
+      if (response >= 200 && response < 300) {
         alert("La session a bien été suprimmer")
+      } else { 
+        alert('Erreur de supression :' + response)
       }
-      else{ alert('Erreur de supression :' + response)}
     });
   }
 
-  allerABoiteTheme(){
+  // Méthode pour naviguer vers la boîte de thème
+  allerABoiteTheme() {
     this.selecteurBoiteCommande.choixPanelCommande('theme');
   }
 }
