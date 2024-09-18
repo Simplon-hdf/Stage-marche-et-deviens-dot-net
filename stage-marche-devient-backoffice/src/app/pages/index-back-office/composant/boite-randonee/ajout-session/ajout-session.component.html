@@ -20,7 +20,7 @@
         <select name="theme" id="theme" [(ngModel)]="themeSession" class="selecteur_theme">
             <option value="null">Sans theme</option>
             <ng-container *ngIf="themes$ | async as themes;">
-              <option [value]="themeSession" *ngFor="let theme of themes">{{theme.nomTheme}}</option>
+              <option [value]="theme.idTheme" *ngFor="let theme of themes">{{theme.nomTheme}}</option>
             </ng-container>
           </select>
     </section>

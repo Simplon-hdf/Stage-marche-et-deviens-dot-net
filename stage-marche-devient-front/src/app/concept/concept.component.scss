@@ -1,35 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* concept.component.scss */
-
-
-
 .concept-container {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.concept-head {
+  position: relative;
+  width: 100%;
+  height: 70vh; /* augmenté à 70% de la hauteur de la fenêtre */
+  overflow: hidden; /* Changé de hidden à visible */
+}
+
+.head-image {
+  width: 100%;
+  height: 100%; 
+  object-fit: cover; 
+  display: block; /* Ajouté pour éviter l'espace sous l'image */
+}
+
+
+.head-text {
+  position: absolute;
+  top: 40%; /* Centrer verticalement */
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  color: white;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 100%;
+  padding: 10px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Ajout d'un media query pour les écrans plus petits */
+@media (max-width: 768px) {
   .concept-head {
-    position: relative;
-    width: 100%;
-    height: 400px; 
-    overflow: hidden;
+    height: 30vh; /* Réduire la hauteur sur les petits écrans */
   }
-  
-  .head-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+
   .head-text {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-size: 1.8rem; /* Réduire la taille de la police sur les petits écrans */
   }
+}
+
+
+  .concept-contenu {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .concept-contenu h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  .concept-contenu p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+  }
+
+  .concept-video {
+    display: flex;
+    justify-content: center;
+    max-width: 100px;
+    margin: 40px auto;
+  }
+
+  .concept-video video {
+    max-width: 600%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  /* Section points forts */
+
+  .points-forts-section {
+    background-color: #d4d4d1;
+    width: 100%;
+    padding: 40px 0;
+  }
+
+  .points-forts-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+
+
+  .liste-points-forts {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+  }
+  
+  .point-fort {
+    flex: 0 1 calc(33.333% - 20px);
+  max-width: 300px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .point-fort img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .point-fort h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Section Comment ça marche */
+.section-comment-marche {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.section-comment-marche h2 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.etapes {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.etape {
+  width: 200px;
+  margin: 20px;
+  text-align: center;
+}
+
+.etape i {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.etape h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.etape p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+
+/* Boutons CTA */
+.boutons-CTA {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  margin: 50px 0;
+}
+
+.boutons-CTA .btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  max-width: 200px;
+
+}
+
+.bouton-primaire {
+  background-color: #2B7D3B;
+  color: white;
+  
+}
+
+.bouton-secondaire {
+  background-color: #2B7D3B;
+  color: white;
+ 
+}
+
+.bouton-primaire:hover, .bouton-secondaire:hover {
+  opacity: 0.9;
+}
+
+/*Elevage Section */
+
+.elevage-section {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #d4d4d1;
+}
+
+.elevage-section h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.elevage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.elevage-photo {
+  width: 500px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.elevage-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.elevage-content p {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  max-width: 500px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.cta-btn {
+  background-color: #2B7D3B;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-align: center;
+  display: flex;
+}
+
+.cta-btn:hover {
+  opacity: 0.9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
   

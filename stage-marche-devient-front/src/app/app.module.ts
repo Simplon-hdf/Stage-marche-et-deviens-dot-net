@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutesModule } from './app.routes';
+//import { AppRoutesModule } from './app.routes'; // configuration avec des composants autonomes (standalone) et bootstrapApplication donc plus besoin d'importer AppRoutesModule 
 import { AppComponent } from './app.component'; 
 import { ConceptComponent } from './concept/concept.component';
 import { provideHttpClient } from '@angular/common/http';
@@ -27,9 +27,9 @@ import { CsrfInterceptor } from './Services/csrf-interceptor';
     DetailOffreComponent,
     SejourComponent,
     BrowserModule,
-    AppRoutesModule // Importation du module de routage
+    
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }, provideHttpClient(), { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true }],
-  bootstrap: [AppComponent] // Définir le composant racine
+  
 })
 export class AppModule { }
