@@ -12,6 +12,7 @@ import { ApiFetcherThemeService } from '../../../../services/api-fetcher-theme.s
 import { Theme } from '../../../../intefaces/theme';
 import { FormsModule } from '@angular/forms';
 import { AjoutSessionComponent } from "./ajout-session/ajout-session.component";
+import { SelecteurBoiteCommandeAdminService } from '../../service/selecteur-boite-commande-admin.service';
 
 @Component({
   selector: 'app-boite-randonee',
@@ -34,6 +35,7 @@ export class BoiteRandoneeComponent implements OnInit {
   private appeleAPI = inject(ApiFetcherRandoneeService);
   private appeleAPISession = inject(ApiFetcherSessionService);
   private appeleAPITheme = inject(ApiFetcherThemeService);
+  private selecteurBoiteCommande = inject(SelecteurBoiteCommandeAdminService);
   
   public listRandonnee$!: Observable<Randonnee[]>;
   public sessions$!: Observable<Session[]>;
@@ -133,7 +135,6 @@ export class BoiteRandoneeComponent implements OnInit {
 
   miseAJourThemeSession(sessionAMetreAJour : Session) : void{
     this.appeleAPISession.MiseAJourSession(sessionAMetreAJour.idSession!,sessionAMetreAJour).subscribe(response => {
-      console.log('Resultat mise a jour:', response);
       if(response >= 200 && response <300){
         alert("La session a bien été modifier")
       }
@@ -149,5 +150,9 @@ export class BoiteRandoneeComponent implements OnInit {
       }
       else{ alert('Erreur de supression :' + response)}
     });
+  }
+
+  allerABoiteTheme(){
+    this.selecteurBoiteCommande.choixPanelCommande('theme');
   }
 }

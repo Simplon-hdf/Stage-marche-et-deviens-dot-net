@@ -14,7 +14,7 @@ export class ApiFetcherThemeService {
 
   // Méthode pour récupérer la liste des thèmes.
   recupererThemeList(): Observable<any> {
-    return this.httpClient.get(`${this.endPointUrl}`, { observe: 'response' }) // Effectue une requête GET et observe la réponse complète.
+    return this.httpClient.get<Theme[]>(`${this.endPointUrl}`, { observe: 'response' }) // Effectue une requête GET et observe la réponse complète.
       .pipe(
         map(response => {
           console.log('Status:', response.status); // Affiche le statut HTTP dans la console.
@@ -35,7 +35,7 @@ export class ApiFetcherThemeService {
 
   // Méthode pour récupérer un thème par son ID.
   recupererThemeParId(id: number): Observable<any> {
-    return this.httpClient.get(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête GET pour un thème spécifique.
+    return this.httpClient.get(`${this.endPointUrl}/${id}`, { observe: 'response' ,responseType: 'text'}) // Requête GET pour un thème spécifique.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
@@ -54,14 +54,14 @@ export class ApiFetcherThemeService {
   }
 
   // Méthode pour ajouter un nouveau thème.
-  async ajoutTheme(theme: Theme): Promise<Observable<any>> {
-    return this.httpClient.post(`${this.endPointUrl}`, { "nomTheme": theme.nomTheme }, { observe: 'response' }) // Requête POST pour ajouter un thème.
+  ajoutTheme(theme: Theme): Observable<any> {
+    return this.httpClient.post(`${this.endPointUrl}`, { "nomTheme": theme.nomTheme }, { observe: 'response' ,responseType: 'text'}) // Requête POST pour ajouter un thème.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -74,14 +74,14 @@ export class ApiFetcherThemeService {
   }
 
   // Méthode pour supprimer un thème par son ID.
-  async supprimerTheme(id: number): Promise<Observable<any>> {
-    return this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête DELETE pour supprimer un thème.
+  supprimerTheme(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' ,responseType: 'text'}) // Requête DELETE pour supprimer un thème.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -95,13 +95,13 @@ export class ApiFetcherThemeService {
 
   // Méthode pour mettre à jour un thème par son ID.
   majTheme(id: number, theme: Theme): Observable<any> {
-    return this.httpClient.put(`${this.endPointUrl}/${id}`, { "idTheme": id, "nomTheme": theme.nomTheme }, { observe: 'response' }) // Requête PUT pour mettre à jour un thème.
+    return this.httpClient.put(`${this.endPointUrl}/${id}`, { "idTheme": id, "nomTheme": theme.nomTheme }, { observe: 'response' ,responseType: 'text'}) // Requête PUT pour mettre à jour un thème.
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
           if (response.status >= 200 && response.status < 300) {
-            return response.body;
+            return response.status;
           } else {
             throw new Error(`HTTP error! status: ${response.status}`);
           }

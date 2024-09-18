@@ -11,11 +11,13 @@ namespace stage_marche_devient.Controllers
     {
         private readonly ApiDbContext _context;
         private readonly TagPublicationRepository _repository;
+        private readonly IAuditRepository<AuditLog> _auditRepository;
 
-        public TagPublicationController(ApiDbContext context)
+        public TagPublicationController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository)
         {
             _context = context;
             _repository = new TagPublicationRepository(_context);
+            _auditRepository = auditRepository;
         }
 
         [HttpGet]
@@ -42,6 +44,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Add(tagPublication);
             if (result)
             {
+                await _auditRepository.CreationLog(tagPublication.IdTagPublication.ToString(), "Ajout", "Tag Publication", "Nouveau tag de publication ajouté.");
                 return CreatedAtAction(nameof(GetTagPublication), new { id = tagPublication.IdTagPublication }, tagPublication);
             }
             return BadRequest();
@@ -58,6 +61,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Update(tagPublication, id);
             if (result)
             {
+                await _auditRepository.CreationLog(tagPublication.IdTagPublication.ToString(), "Mise à jour", "Tag Publication", "Mise à jour d'un tag de publication.");
                 return Ok("Modification réussie");
             }
 
@@ -70,6 +74,7 @@ namespace stage_marche_devient.Controllers
             var result = await _repository.Delete(id);
             if (result)
             {
+                await _auditRepository.CreationLog(id.ToString(), "Supprimer", "Tag Publication", "Tag de publication supprimé.");
                 return Ok("Suppression réussie");
             }
             return NotFound();

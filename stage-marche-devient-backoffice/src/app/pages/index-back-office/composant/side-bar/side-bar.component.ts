@@ -16,7 +16,7 @@ export class SideBarComponent {
   }
   
   SelectionBoiteRandonee(){
-    this.selecteurBoite.choixPanelCommande("randonee");
+    this.selecteurBoite.choixPanelCommande("randonnee");
   }
 
   SelectionBoiteUtilisateur(){

@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+/*import { NgModule } from '@angular/core';*/ //suppression NgModule et RouterModule car utilisation de composants standalone
+// et de bootstrapplication avec provideRouter.
+import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ConceptComponent } from './concept/concept.component';
 import { DetailOffreComponent } from './detail-offre/detail-offre.component';
@@ -14,10 +15,9 @@ export const routes: Routes = [
   { path: 'randonnee/:id', component : DetailOffreComponent},
   { path: 'connexion', component: ConnexionComponent },
   { path: 'inscription', component: InscriptionComponent }
+  
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
+
+
 export class AppRoutesModule { }
