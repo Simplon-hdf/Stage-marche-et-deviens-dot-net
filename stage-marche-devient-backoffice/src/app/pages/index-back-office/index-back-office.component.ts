@@ -9,11 +9,13 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { ApiFetcherUtilisateurService } from '../../services/api-fetcher-utilisateur.service';
 import { BoiteUtilisateurComponent } from "./composant/boite-utilisateur/boite-utilisateur.component";
 import { BoitePublicationComponent } from './composant/boite-publication/boite-publication.component';
+import { BoiteTagPublicationComponent } from './composant/boite-tag-publication/boite-tag-publication.component';
+
 
 @Component({
   selector: 'app-index-back-office',
   standalone: true,
-  imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent, BoiteUtilisateurComponent, BoitePublicationComponent],
+  imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent, BoiteUtilisateurComponent, BoitePublicationComponent, BoiteTagPublicationComponent],
   templateUrl: './index-back-office.component.html',
   styleUrls: ['./index-back-office.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

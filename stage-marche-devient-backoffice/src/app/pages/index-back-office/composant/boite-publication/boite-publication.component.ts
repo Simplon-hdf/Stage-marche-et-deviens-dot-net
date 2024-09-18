@@ -8,6 +8,8 @@ import { AjoutPublicationComponent } from './ajout-publication/ajout-publication
 import { ModifPublicationComponent } from './modif-publication/modif-publication.component';
 import { ViewChild } from '@angular/core';
 
+import { SelecteurBoiteCommandeAdminService } from '../../service/selecteur-boite-commande-admin.service';
+
 
 @Component({
   selector: 'app-boite-publication',
@@ -85,5 +87,11 @@ export class BoitePublicationComponent implements OnInit {
 
   onSearchChange() {
     this.publicationsFiltres$ = this.filtrerPublicationsParNom(this.searchTerm);
+  }
+
+  selecteurBoite = inject(SelecteurBoiteCommandeAdminService);
+
+  SelectionBoiteTag(){
+    this.selecteurBoite.choixPanelCommande("tag-publication");
   }
 }

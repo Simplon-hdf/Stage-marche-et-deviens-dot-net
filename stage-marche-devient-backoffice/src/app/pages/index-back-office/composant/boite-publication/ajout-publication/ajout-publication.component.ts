@@ -27,8 +27,8 @@ export class AjoutPublicationComponent {
   EnvoieAjout(){
     let publicationAAJouter: Publication = {
       idPublication: this.idPublication,
-      datePublication: this.datePublication,
       nomPublication: this.nomPublication,
+      datePublication: this.datePublication,
       lienMedia: this.lienMedia,
       contenuTexte: this.contenuTexte,
       idSession: this.idSession  

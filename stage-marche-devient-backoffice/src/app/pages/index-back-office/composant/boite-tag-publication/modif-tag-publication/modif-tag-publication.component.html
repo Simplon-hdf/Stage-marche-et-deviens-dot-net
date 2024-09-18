@@ -1,0 +1,19 @@
+
+<form (ngSubmit)="EnvoieModif()">
+    <section class="conteneur_principale_modif_tag_publication">
+        <h3 class="titre_boite_modif">modification du tag</h3>
+        <section class="conteneur nom">
+            <p>nom</p>
+            <input type="text" name="nom" [(ngModel)]="nom"/>
+        </section>
+
+        <section class="conteneur couleur">
+            <p>couleur</p>
+            <input type="text" name="couleur" [(ngModel)]="couleur"/>
+        </section>
+
+
+        <button class="button_envoi_modif_tag_publication" type="submit">Modification</button>
+    </section>
+    
+</form>

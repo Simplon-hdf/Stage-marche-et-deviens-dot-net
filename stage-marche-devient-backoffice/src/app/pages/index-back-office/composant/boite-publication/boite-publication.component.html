@@ -1,7 +1,7 @@
 <section class="conteneur_principale_publication" *ngIf="afficherComposant">
 
   <section class="conteneur_filtre">
-    <button class="button_filtre">Lieu</button>
+    <button class="button_filtre" (click)="SelectionBoiteTag()">Tags</button>
     <input class="input_filtre"
     type="text" 
     placeholder="Rechercher une publication" 
