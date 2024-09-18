@@ -1,15 +1,27 @@
 <section class="conteneur_principale_publication" *ngIf="afficherComposant">
 
+  <section class="conteneur_titre_publication">
+
+    <section class="button_choix_composant">
+      
+      <button class="button_tag" (click)="allerATag()">Tag</button>
+      <button class="button_publication" disabled>Publication</button>
+    </section>
+
+    <h2 class="titre_boite_publication">Tableau des Publications</h2>
+
+  </section>
+
   <section class="conteneur_filtre">
-    <button class="button_filtre" (click)="SelectionBoiteTag()">Tags</button>
+    
     <input class="input_filtre"
     type="text" 
     placeholder="Rechercher une publication" 
     [(ngModel)]="searchTerm"
     (ngModelChange)="onSearchChange()"
-    >  
+    >
+    
   </section>
-  <h2 class="titre_boite_publication">Tableau des Randonnée</h2>
 
   <section class="boite_listing_publication">
     <section class="titre_colonne">

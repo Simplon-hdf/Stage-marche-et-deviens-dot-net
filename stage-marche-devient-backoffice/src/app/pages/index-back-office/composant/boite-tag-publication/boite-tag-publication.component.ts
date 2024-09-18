@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AjoutTagPublicationComponent } from './ajout-tag-publication/ajout-tag-publication.component';
 import { ModifTagPublicationComponent } from './modif-tag-publication/modif-tag-publication.component';
 import { ViewChild } from '@angular/core';
+import { SelecteurBoiteCommandeAdminService } from '../../service/selecteur-boite-commande-admin.service';
 
 
 
@@ -89,9 +90,9 @@ export class BoiteTagPublicationComponent {
     this.tagPublicationsFiltres$ = this.filtrerPublicationsParNom(this.searchTerm);
   }
 
-  // selecteurBoite = inject(SelecteurBoiteCommandeAdminService);
+  selecteurBoite = inject(SelecteurBoiteCommandeAdminService);
 
-  // SelectionBoiteTag(){
-  //   this.selecteurBoite.choixPanelCommande("tag-publication");
-  // }
+  allerAPublication(){
+    this.selecteurBoite.choixPanelCommande("publication");
+  }
 }

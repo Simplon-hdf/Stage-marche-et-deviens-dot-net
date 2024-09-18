@@ -91,7 +91,7 @@ export class BoitePublicationComponent implements OnInit {
 
   selecteurBoite = inject(SelecteurBoiteCommandeAdminService);
 
-  SelectionBoiteTag(){
+  allerATag(){
     this.selecteurBoite.choixPanelCommande("tag-publication");
   }
 }

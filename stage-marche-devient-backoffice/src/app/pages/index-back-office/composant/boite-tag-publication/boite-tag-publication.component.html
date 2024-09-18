@@ -1,15 +1,27 @@
 <section class="conteneur_principale_tag_publication" *ngIf="afficherComposant">
 
+  <section class="conteneur_titre_publication">
+
+    <section class="button_choix_composant">
+      
+      <button class="button_tag" disabled>Tag</button>
+      <button class="button_publication" (click)="allerAPublication()">Publication</button>
+    </section>
+
+    <h2 class="titre_boite_publication">Tableau des Publications</h2>
+
+  </section>
+
   <section class="conteneur_filtre">
-    <!-- <button class="button_filtre" (click)="SelectionBoiteTag()">Tags</button> -->
+    
     <input class="input_filtre"
     type="text" 
     placeholder="Rechercher un tag" 
     [(ngModel)]="searchTerm"
     (ngModelChange)="onSearchChange()"
-    >  
+    >
+    
   </section>
-  <h2 class="titre_boite_tag_publication">Tableau des Tags</h2>
 
   <section class="boite_listing_tag_publication">
     <section class="titre_colonne">
@@ -38,7 +50,7 @@
   </section>
 </section>
 
-<button class="button_ajout_tag_publication" (click)="switchAfficherAjout()">Ajout publication</button>
+<button class="button_ajout_tag_publication" (click)="switchAfficherAjout()">Ajout tag</button>
 <button class="quitter_ajout_tag_publication" (click)=" switchAfficherAjout()" *ngIf="afficherAjout">X</button>
 
 <button class="quitter_modif_tag_publication" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
