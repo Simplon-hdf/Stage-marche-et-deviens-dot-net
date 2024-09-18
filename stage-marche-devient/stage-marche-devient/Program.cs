@@ -53,6 +53,7 @@ builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<IAuditRepository<AuditLog>, AuditRepository>();
 builder.Services.AddScoped<ThemeRepository>();
 builder.Services.AddScoped<PublicationRepository>();
+builder.Services.AddScoped<RandonneeRepository>();
 
 // Ajouter Rate Limiting avec Fixed Window
 builder.Services.AddRateLimiter(options =>

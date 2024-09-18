@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
+*{
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Pathway Gothic One", sans-serif;
+
+}
+.navbar
+{
+position: fixed;
+top: 0;
+width: 100%;
+margin: 0;
+z-index: 1000;
+}
+
+/* Animation pour le titre */
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+h1
+{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 100px;
+    color: #3d4d32;
+    animation: slideDown 1s ease-out;
+}
+
+/* Animation pour glisser de la gauche */
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation pour glisser de la droite */
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation pour rebondir en descendant */
+@keyframes bounceDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(30px);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 1s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease-out;
+}
+
+.slide-down-bounce {
+    animation: bounceDown 1s ease-out 1s; /* Délai pour commencer après les autres animations */
+}
+
+form
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    //background-color: aqua;
+    margin: 60px;
+    height: auto;
+
+}
+
+::placeholder
+{
+    color: #3d4d32;
+    font-size: 23px;
+}
+
+.contact
+{
+    //background-color: brown;
+    padding: 3px;
+    margin: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    height: 250px;
+    width: 750px;
+}
+.legend
+{
+    font-size: 28px;
+}
+
+.Message .legend
+{
+    text-align: center;
+}
+
+#nom
+{
+    //background-color: red;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+}
+
+#mail
+{
+    //background-color: rgb(149, 0, 255);
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+}
+
+#telephone
+{
+   // background-color: green;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+}
+
+#typeDeGroupe
+{
+   // background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+
+}
+
+#projet
+{
+    //background-color: #cdacb8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 170px;
+    width: 400px;
+    margin: 30px 0 20px;
+}
+
+#projet label
+{
+    align-self: center;
+    font-size: 30px;
+
+}
+
+#projet #typeProjet
+{
+    width: 400px;
+    margin: 10px 0 ;
+}
+
+
+
+.Message
+{
+    //background-color: rgb(32, 94, 113);
+    padding: 3px;
+    margin: 25px auto 30px;
+    display: flex;
+    flex-direction: column;
+    width: 630px;
+    
+    
+}
+
+input, select,option
+{
+    //background-color: #deb260;
+    border-radius: 5px;
+    border: 2px solid #3d4d32;
+    color: black;
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+
+}
+
+textarea
+{
+    //background-color: #deb260;
+    border-radius: 5px;
+    border: 2px solid #3d4d32;
+    color: black;
+    width: 600px;
+    height: 200px;
+    margin: 10px auto;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+
+/* Styles pour le bouton de soumission */
+#boutonDevis {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#boutonDevis:hover {
+    background-color: darkgreen;
+}
+
