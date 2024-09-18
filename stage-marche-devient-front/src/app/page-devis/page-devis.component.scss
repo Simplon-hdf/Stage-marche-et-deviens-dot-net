@@ -17,12 +17,79 @@ margin: 0;
 z-index: 1000;
 }
 
+/* Animation pour le titre */
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 h1
 {
     font-size: 40px;
     text-align: center;
     margin-top: 100px;
     color: #3d4d32;
+    animation: slideDown 1s ease-out;
+}
+
+/* Animation pour glisser de la gauche */
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation pour glisser de la droite */
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animation pour rebondir en descendant */
+@keyframes bounceDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(30px);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 1s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease-out;
+}
+
+.slide-down-bounce {
+    animation: bounceDown 1s ease-out 1s; /* Délai pour commencer après les autres animations */
 }
 
 form
@@ -70,7 +137,7 @@ form
     //background-color: red;
     display: flex;
     flex-direction: column;
-    height: 45px;
+    height: 60px;
 }
 
 #mail
@@ -78,7 +145,7 @@ form
     //background-color: rgb(149, 0, 255);
     display: flex;
     flex-direction: column;
-    height: 45px;
+    height: 60px;
 }
 
 #telephone
@@ -86,7 +153,7 @@ form
    // background-color: green;
     display: flex;
     flex-direction: column;
-    height: 45px;
+    height: 60px;
 }
 
 #typeDeGroupe
@@ -94,7 +161,7 @@ form
    // background-color: yellow;
     display: flex;
     flex-direction: column;
-    height: 45px;
+    height: 60px;
 
 }
 
@@ -106,6 +173,7 @@ form
     justify-content: center;
     height: 170px;
     width: 400px;
+    margin: 30px 0 20px;
 }
 
 #projet label
@@ -127,10 +195,11 @@ form
 {
     //background-color: rgb(32, 94, 113);
     padding: 3px;
-    margin: 40px auto 30px;
+    margin: 25px auto 30px;
     display: flex;
     flex-direction: column;
     width: 630px;
+    
     
 }
 
@@ -154,9 +223,23 @@ textarea
     color: black;
     width: 600px;
     height: 200px;
-    margin-top: 10px;
+    margin: 10px auto;
     font-size: 15px;
     font-family: 'Times New Roman', Times, serif;
     
+}
+
+/* Styles pour le bouton de soumission */
+#boutonDevis {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#boutonDevis:hover {
+    background-color: darkgreen;
 }
 
