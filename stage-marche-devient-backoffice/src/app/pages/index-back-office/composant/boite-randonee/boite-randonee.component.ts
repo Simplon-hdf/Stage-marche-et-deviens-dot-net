@@ -41,8 +41,13 @@ export class BoiteRandoneeComponent implements OnInit {
   public sessions$!: Observable<Session[]>;
   public themes$!: Observable<Theme[]>;
 
+  randonneeFiltres$!: Observable<Randonnee[]>;
+  searchTerm: string = '';
+
   ngOnInit() {
     this.initializeObservables();
+    this.randonneeFiltres$ = this.listRandonnee$;
+
   }
 
   private initializeObservables() {
@@ -91,6 +96,8 @@ export class BoiteRandoneeComponent implements OnInit {
 
   rechargerComposant() {
     this.initializeObservables();
+    this.randonneeFiltres$ = this.listRandonnee$;
+
   }
 
   switchAfficherAjoutRandonnee(etat:boolean) {
@@ -150,6 +157,17 @@ export class BoiteRandoneeComponent implements OnInit {
       }
       else{ alert('Erreur de supression :' + response)}
     });
+  }
+
+  filtrerRandonneParNom(nomRecherche: string): Observable<Randonnee[]> {
+    return this.listRandonnee$.pipe(
+      map(randonnee => randonnee.filter(randonnee => 
+        randonnee.nomRandonnee.toLowerCase().includes(nomRecherche.toLowerCase())))
+    );
+  }
+
+  onSearchChange() {
+    this.randonneeFiltres$ = this.filtrerRandonneParNom(this.searchTerm);
   }
 
   allerABoiteTheme(){

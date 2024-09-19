@@ -14,8 +14,12 @@
 
   <section class="conteneur_filtre">
     
-    <input class="input_filtre" type="text" />
-    <button class="button_filtre">Lieu</button>
+    <input class="input_filtre"
+    type="text" 
+    placeholder="Rechercher un tag" 
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    >
     
   </section>
 
@@ -30,7 +34,7 @@
       <p class="titre_7">Action</p>
 
     </section>
-    <ul *ngIf="listRandonnee$ | async as randonnees" class="Conteneur_list_randonnee">
+    <ul *ngIf="randonneeFiltres$ | async as randonnees" class="Conteneur_list_randonnee">
       <li *ngFor="let randonnee of randonnees" class="item_list_randonnee"
         style="display: grid; grid-template-columns: repeat(4, 1fr) 0.15fr 0.5fr 1fr; grid-template-rows: 1fr; grid-column-gap: 0px; grid-row-gap: 0px;">
 

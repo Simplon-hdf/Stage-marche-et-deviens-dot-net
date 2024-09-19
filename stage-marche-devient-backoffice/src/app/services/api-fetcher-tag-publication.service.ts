@@ -54,13 +54,18 @@ export class ApiFetcherTagPublicationService {
       );
   }
 
-  // Méthode pour ajouter un nouveau tag.
-  async ajoutTagPublication(tagPublication: TagPublication): Promise<Observable<any>> {
-    return this.httpClient.post(`${this.endPointUrl}`, { "nom": tagPublication.nom, "couleur": tagPublication.couleur }, { observe: 'response' }) // Requête POST pour ajouter un tag.
+  // Méthode pour ajouter un Tag
+  AjouterTagPublication(tagAAjouter : TagPublication): Observable<any> {
+    return this.httpClient.post(this.endPointUrl, { 
+      "nom": tagAAjouter.nom,
+      "couleur": tagAAjouter.couleur, 
+    },
+       { observe: 'response' , responseType: 'text' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
+
           if (response.status >= 200 && response.status < 300) {
             return response.body;
           } else {
@@ -74,13 +79,14 @@ export class ApiFetcherTagPublicationService {
       );
   }
 
-  // Méthode pour supprimer un tag par son ID.
-  async supprimerTagPublication(id: number): Promise<Observable<any>> {
-    return this.httpClient.delete(`${this.endPointUrl}/${id}`, { observe: 'response' }) // Requête DELETE pour supprimer un tag.
+  // Méthode pour supprimer un Publication
+  SupressionTegPublication(idTagPublication: number): Observable<any> {
+    return this.httpClient.delete(this.endPointUrl + `/${idTagPublication}`, { observe: 'response' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
+
           if (response.status >= 200 && response.status < 300) {
             return response.body;
           } else {
@@ -95,12 +101,17 @@ export class ApiFetcherTagPublicationService {
   }
 
   // Méthode pour mettre à jour un tag par son ID.
-  majTagPublication(id: number, tagPublication: TagPublication): Observable<any> {
-    return this.httpClient.put(`${this.endPointUrl}/${id}`, tagPublication, { observe: 'response' })
+  MiseAJourTagPublication(idPublication: number, publicationModif: TagPublication): Observable<any> {
+    return this.httpClient.put(this.endPointUrl + "/" + idPublication, { 
+      "idTagPublication": publicationModif.idTagPublication, 
+      "nom": publicationModif.nom, 
+      "couleur": publicationModif.couleur 
+    }, { observe: 'response' })
       .pipe(
         map(response => {
           console.log('Status:', response.status);
           console.log('Body:', response.body);
+
           if (response.status >= 200 && response.status < 300) {
             return response.body;
           } else {

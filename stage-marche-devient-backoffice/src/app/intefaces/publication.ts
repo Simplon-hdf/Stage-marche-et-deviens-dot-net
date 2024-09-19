@@ -4,5 +4,5 @@ export interface Publication {
     datePublication: string;
     lienMedia: string;
     contenuTexte: string;
-    idSession: number;
+    idSession: number | null;
 }
