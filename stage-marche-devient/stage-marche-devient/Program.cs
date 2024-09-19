@@ -63,7 +63,7 @@ builder.Services.AddRateLimiter(options =>
         var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
         return RateLimitPartition.GetFixedWindowLimiter(ipAddress!, partition => new FixedWindowRateLimiterOptions
         {
-            PermitLimit = 5, // Nombre maximum de requêtes
+            PermitLimit = 100, // Nombre maximum de requêtes
             Window = TimeSpan.FromMinutes(1), // Fenêtre de temps de 1 minute
             QueueProcessingOrder = QueueProcessingOrder.OldestFirst, // Ordre de la file d'attente
             QueueLimit = 0 // Pas de file d'attente
@@ -79,7 +79,7 @@ builder.Services.AddRateLimiter(options =>
         var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
         return RateLimitPartition.GetSlidingWindowLimiter(ipAddress!, partition => new SlidingWindowRateLimiterOptions
         {
-            PermitLimit = 5, // Nombre maximum de requêtes
+            PermitLimit = 100, // Nombre maximum de requêtes
             Window = TimeSpan.FromMinutes(1), // Durée de la fenêtre
             SegmentsPerWindow = 4, // Divise la fenêtre en 4 segments
             QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
