@@ -19,14 +19,18 @@ import { BoiteThemeComponent } from "./composant/boite-theme/boite-theme.compone
   imports: [SideBarComponent, AsyncPipe, BoiteGeneralComponent, CommonModule, BoiteRandoneeComponent, BoiteUtilisateurComponent, BoiteThemeComponent, BoitePublicationComponent, BoiteTagPublicationComponent],
   templateUrl: './index-back-office.component.html',
   styleUrls: ['./index-back-office.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush // Utilisation de la stratégie OnPush pour optimiser les performances
 })
 export class IndexBackOfficeComponent implements OnInit {
+  // Injection des services nécessaires
   private apiFetcher = inject(ApiFetcherUtilisateurService);
   private boiteDeCommande = inject(SelecteurBoiteCommandeAdminService);
+
+  // Observable pour suivre la boîte de commande sélectionnée
   boiteSelectionnee$: Observable<string> = this.boiteDeCommande.boiteSelectioner$;
 
   ngOnInit() {
+    // Initialisation de la boîte de commande à "general" au démarrage du composant
     this.boiteDeCommande.choixPanelCommande("general");
   }
 }

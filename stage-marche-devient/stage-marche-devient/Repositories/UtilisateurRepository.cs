@@ -103,5 +103,13 @@ namespace stage_marche_devient.Repositories     /*je declare mon namespace et ma
                    dbVerifAction.MailUtilisateur == model.MailUtilisateur;       /*verification de la modification*/
           
         }
+        public async Task<int> GetTotalUtilisateur()      /* Je déclare une méthode publique asynchrone qui retourne 
+                                                                                     * le total des utilisateur.*/
+        {
+            IEnumerable<UtilisateurModel> utilisateurs = await _context.Utilisateur.ToArrayAsync();   /*Récupère tous les utilisateurs de la base de données 
+                                                                                                        * sous forme de tableau.*/
+            int totalUtilisateur = utilisateurs.Count();
+            return totalUtilisateur;             /*     Retourne la liste des utilisateurs*/
+        }
     }
 }

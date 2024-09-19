@@ -26,7 +26,7 @@ export class AjoutRandonneeComponent {
   maximumParticipan = 0;
   estVisibl = true;
   distanceKmRandonne = 0;
-  
+  // envoie la nouvelle randonnee
   EnvoieAjout(){
     let randonneeAAJouter: Randonnee = {
       idRandonnee: this.idRandonne,

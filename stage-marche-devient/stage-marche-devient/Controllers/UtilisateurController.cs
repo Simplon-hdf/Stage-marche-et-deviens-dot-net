@@ -126,6 +126,28 @@ namespace MarcheEtDevient.Server.Controllers                /*Définit le namesp
             return NotFound();                                      /*Si l'utilisateur n'a pas été trouvé (et donc pas supprimé)
                                                                     * retourne un code de réponse HTTP 404 Not Found*/
         }
+        [HttpGet("total")]
+        public async Task<IActionResult> totalUtilisateur()
+        {
+            return Ok( await _repository.GetTotalUtilisateur());
+        }
+        [HttpGet("totalKms")]
+        public async Task<ActionResult<int>> totalKmsUtilisateur()
+        {
+            IEnumerable<UtilisateurModel> utilisateurs = await _repository.GetAll();
+            if(utilisateurs == null)
+            {
+                return NotFound("aucun utilisateur dans la banque de données");
+            }
+            int totalkms = 0;
+            foreach(UtilisateurModel utilisateur in utilisateurs)
+            {
+                totalkms += utilisateur.TotalDistanceParcourueUtilisateur;
+            }
+            return Ok(totalkms);                            
+                                                                
+        }
+
     }
 }
 

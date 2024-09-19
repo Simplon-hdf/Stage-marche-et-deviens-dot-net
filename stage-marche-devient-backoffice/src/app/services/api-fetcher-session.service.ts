@@ -53,6 +53,7 @@ export class ApiFetcherSessionService {
         })
       );
    }
+   // Méthode pour récupérer un session par son ID de randonnee.
    recupererSessionParRandonnee(idRandonnee: number): Observable<any> {
     return this.httpClient.get(`${this.endPointUrl}/idRandonnee:${idRandonnee}`, { observe: 'response' ,responseType: 'text'}) // Requête GET pour un session spécifique.
       .pipe(
