@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component'; 
 import { ConceptComponent } from './concept/concept.component';
 import { provideHttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './Services/jwt.interceptor';
@@ -13,11 +12,9 @@ import { DetailOffreComponent } from './detail-offre/detail-offre.component';
 import { CsrfInterceptor } from './Services/csrf-interceptor';
 
 
+
 @NgModule({
   declarations: [
-     
-     
-     
   
      
   

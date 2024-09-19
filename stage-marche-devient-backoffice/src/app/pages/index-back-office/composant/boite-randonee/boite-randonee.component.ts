@@ -43,8 +43,13 @@ export class BoiteRandoneeComponent implements OnInit {
   public sessions$!: Observable<Session[]>;
   public themes$!: Observable<Theme[]>;
 
+  randonneeFiltres$!: Observable<Randonnee[]>;
+  searchTerm: string = '';
+
   ngOnInit() {
     this.initializeObservables();
+    this.randonneeFiltres$ = this.listRandonnee$;
+
   }
 
   private initializeObservables() {
@@ -95,6 +100,8 @@ export class BoiteRandoneeComponent implements OnInit {
   // Méthode pour recharger les données du composant
   rechargerComposant() {
     this.initializeObservables();
+    this.randonneeFiltres$ = this.listRandonnee$;
+
   }
 
   // Méthodes pour gérer l'affichage des formulaires d'ajout
@@ -156,10 +163,30 @@ export class BoiteRandoneeComponent implements OnInit {
       console.log('Resultat mise a jour:', response);
       if (response >= 200 && response < 300) {
         alert("La session a bien été suprimmer")
-      } else { 
-        alert('Erreur de supression :' + response)
       }
     });
+  }
+
+  filtrerRandonneParNom(nomRecherche: string): Observable<Randonnee[]> {
+    return this.listRandonnee$.pipe(
+      map(randonnee => randonnee.filter(randonnee => 
+        randonnee.nomRandonnee.toLowerCase().includes(nomRecherche.toLowerCase())))
+    );
+  }
+
+  onSearchChange() {
+    this.randonneeFiltres$ = this.filtrerRandonneParNom(this.searchTerm);
+  }
+
+  filtrerRandonneParNom(nomRecherche: string): Observable<Randonnee[]> {
+    return this.listRandonnee$.pipe(
+      map(randonnee => randonnee.filter(randonnee => 
+        randonnee.nomRandonnee.toLowerCase().includes(nomRecherche.toLowerCase())))
+    );
+  }
+
+  onSearchChange() {
+    this.randonneeFiltres$ = this.filtrerRandonneParNom(this.searchTerm);
   }
 
   // Méthode pour naviguer vers la boîte de thème

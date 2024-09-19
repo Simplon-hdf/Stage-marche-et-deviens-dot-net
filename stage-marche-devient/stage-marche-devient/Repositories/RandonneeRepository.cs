@@ -7,9 +7,11 @@ namespace stage_marche_devient.Repositories
     public class RandonneeRepository : IRepository<Randonnee, int>
     {
         private readonly ApiDbContext _context;
-        public RandonneeRepository(ApiDbContext context)
+        private readonly ILogger<RandonneeRepository> _logger;
+        public RandonneeRepository(ApiDbContext context,ILogger<RandonneeRepository>logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Randonnee>> GetAll()                                  //Fonction permettant le listing des randonnées

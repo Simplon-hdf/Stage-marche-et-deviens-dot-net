@@ -1,0 +1,30 @@
+
+<section class="conteneur_principale_ajout_publication">
+    <h3 class="titre_boite_ajout">Ajout de publication</h3>
+    <section class="conteneur nom">
+        <p>nom</p>
+        <input type="text" [(ngModel)]="nomPublication" />
+    </section>
+
+    <section class="conteneur date">
+        <p>date de publication</p>
+        <input type="text" [(ngModel)]="datePublication" />
+    </section>
+
+    <section class="conteneur lien">
+        <p>lien media</p>
+        <input type="text" [(ngModel)]="lienMedia" />
+    </section>
+
+    <section class="conteneur contenu">
+        <p>contenu textuel</p>
+        <input type="text" [(ngModel)]="contenuTexte" />
+    </section>
+
+    <section class="conteneur session">
+        <p>session</p>
+        <input type="number" [(ngModel)]="idSession" />
+    </section>
+
+    <button class="button_envoi_ajout_publication" (click)="EnvoieAjout()">Ajout</button>
+</section>

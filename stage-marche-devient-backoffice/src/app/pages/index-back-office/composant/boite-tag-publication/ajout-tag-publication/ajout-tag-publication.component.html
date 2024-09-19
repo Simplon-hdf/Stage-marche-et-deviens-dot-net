@@ -1,0 +1,15 @@
+
+<section class="conteneur_principale_ajout_tag_publication">
+    <h3 class="titre_boite_ajout">Ajout de tag</h3>
+    <section class="conteneur nom">
+        <p>nom</p>
+        <input type="text" [(ngModel)]="nom" />
+    </section>
+
+    <section class="conteneur couleur">
+        <p>couleur</p>
+        <input type="text" [(ngModel)]="couleur" />
+    </section>
+
+    <button class="button_envoi_ajout_tag_publication" (click)="EnvoieAjout()">Ajout</button>
+</section>

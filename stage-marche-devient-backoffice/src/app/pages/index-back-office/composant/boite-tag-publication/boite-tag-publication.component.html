@@ -1,0 +1,67 @@
+<section class="conteneur_principale_tag_publication" *ngIf="afficherComposant">
+
+  <section class="conteneur_titre_publication">
+
+    <section class="button_choix_composant">
+      
+      <button class="button_tag" disabled>Tag</button>
+      <button class="button_publication" (click)="allerAPublication()">Publication</button>
+    </section>
+
+    <h2 class="titre_boite_publication">Tableau des Publications</h2>
+
+  </section>
+
+  <section class="conteneur_filtre">
+    
+    <input class="input_filtre"
+    type="text" 
+    placeholder="Rechercher un tag" 
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+    >
+    
+  </section>
+
+  <section class="boite_listing_tag_publication">
+    <section class="titre_colonne">
+        <p class="titre_1">Nom</p>
+        <p class="titre_2">Couleur</p>
+
+        <p class="titre_3">Action</p>
+    </section>
+    <ul *ngIf="tagPublicationsFiltres$ | async as tagPublications" class="Conteneur_list_tag_publication">
+      <li *ngFor="let tagPublication of tagPublications" class="item_list_tag_publication">
+
+        <!--Nom-->
+        <p class="nom_tag_publication section_1">{{tagPublication?.nom}}</p>
+        <!--couleur-->
+        <p class="description-publication section_2">{{tagPublication?.couleur}}</p>
+
+
+        <!--action-->
+        <section class="conteneur_button section_3">
+          <button class="modif_tag_publication" (click)="switchAfficherModif(tagPublication)">Modif</button>
+          <button class="supression_tag_publication"
+            (click)="suppression(tagPublication.idTagPublication!,tagPublication.nom)">Supprimer</button>
+        </section>
+      </li>
+    </ul>
+  </section>
+</section>
+
+<button class="button_ajout_tag_publication" (click)="switchAfficherAjout()">Ajout tag</button>
+<button class="quitter_ajout_tag_publication" (click)=" switchAfficherAjout()" *ngIf="afficherAjout">X</button>
+
+<button class="quitter_modif_tag_publication" (click)=" switchAfficherModif(null)" *ngIf="afficherModif">X</button>
+
+<ng-container *ngIf="afficherAjout == true">
+  <div class="view_screen_shadow_background">
+    <app-ajout-tag-publication class="boite_ajout_tag_publication"></app-ajout-tag-publication>
+  </div>
+</ng-container>
+<ng-container *ngIf="afficherModif == true">
+  <div class="view_screen_shadow_background">
+    <app-modif-tag-publication class="boite_modif_tag_publication"></app-modif-tag-publication>
+  </div>
+</ng-container>
