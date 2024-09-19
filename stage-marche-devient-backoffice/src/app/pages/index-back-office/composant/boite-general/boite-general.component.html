@@ -1,1 +1,26 @@
-<p>boite-general works!</p>
+<section class="conteneur_boite_generale">
+    <h3 class="titre_boite_generale">Panel generale de commande</h3>
+    <section class="conteneur_total_utilisateur">
+        <p>{{totalUtilisateur$ | async}}</p>
+        <p>Personnes Sont inscrit sur le site</p> 
+    </section>
+
+    <section class="conteneur_list_session_active">
+        <h3>Liste des session a venir</h3>
+        <ng-container *ngIf="listeSessionActive$ | async as sessions">
+            <ul class="tableau_session_active">
+                <li class="item_tableau" *ngFor="let session of sessions | sessionActive">
+                    {{ session.lieu }} - Du {{ session.dateDebut }} au {{ session.dateFin }}
+                </li>
+            </ul>
+        </ng-container>
+    </section>
+
+    <section class="conteneur_total_kms">
+
+        <h3>Total Km parcourue</h3>
+        <p>{{totalKmUtilisateurs$ | async}} KM</p>
+
+    </section>
+
+</section>
