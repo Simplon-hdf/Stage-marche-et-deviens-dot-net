@@ -134,25 +134,37 @@ namespace stage_marche_devient.Controllers
         }
         #endregion
 
+        #region Generateur de chaine de texte aléatoire (RefReservation)
+        public static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        #endregion
+
         [HttpPost("reserver")]
         public IActionResult ReserverRandonnee([FromBody] ReservationDto reservation)
         {
+            var session = _contexteBdd.Session.Find(reservation.RandonneeId);
             var rsrvtn = _contexteBdd.Reserver.Find(reservation.RandonneeId);
 
-            if (rsrvtn == null)
+            if (session == null)
             {
                 return NotFound("Randonnee non trouvée");
             }
-
-            // Ajouter le nombre de places réservées au nombre de participants
-            rsrvtn.NbrParticipantsInscrits += reservation.Places;
 
             // Enregistrer la réservation
             _contexteBdd.Reserver.Add(new ReserverModel
             {
                 IdUtilisateur = reservation.UserId,
                 IdSession = reservation.RandonneeId,
-                NbrParticipantsInscrits = reservation.Places
+                NbrParticipantsInscrits = reservation.Places,
+                RefReservation = GenerateRandomString(6),
+                DatePaiement = DateOnly.FromDateTime(DateTime.Now.AddDays(7)).ToString(),
+                ValidationReservation = true,
+                NbrActuelParticipant = +reservation.Places,
             });
 
             _contexteBdd.SaveChanges();

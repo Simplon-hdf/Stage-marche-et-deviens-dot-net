@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace stage_marche_devient.Models
 {
-    [Keyless]
+    //[Keyless]
     public class ReserverModel
     {
         [Column("Id_reserver") ,Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
