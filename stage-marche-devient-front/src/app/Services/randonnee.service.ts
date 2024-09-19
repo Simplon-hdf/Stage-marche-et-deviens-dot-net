@@ -9,7 +9,7 @@ import { environment } from "../Environments/environment";
 })
 export class RandonneeService {
   private readonly RANDONNEE_ENDPOINT = '/api/Randonnee'; // Initialisation de la route de l'api.
-
+  private currentRandonneeId: number | null = null;
   constructor(private api: ApiService) { } // Import de ApiService.
 
   // Fonction qui permet de récupérer les données des randonnées.
@@ -34,5 +34,15 @@ export class RandonneeService {
         return throwError(() => new Error(`Échec de la récupération de la randonnée: ${error.message}`));
       })  //Si  erreur =elle est capturée et un message est retourné via throwError.
     );
+  }
+
+  // Fonction pour définir l'ID de la randonnée actuelle
+  setCurrentRandonneeId(id: number): void {
+    this.currentRandonneeId = id;
+  }
+
+  // Fonction pour obtenir l'ID de la randonnée actuelle
+  getRandonneeId(): number | null {
+    return this.currentRandonneeId;
   }
 }

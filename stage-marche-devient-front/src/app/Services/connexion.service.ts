@@ -54,4 +54,12 @@ export class ConnexionService {
     localStorage.removeItem("token");
     this.user.set(undefined);
   }
+
+  getUserId(): number | null {
+    const decodedToken = this.decodedToken();
+    if (decodedToken && decodedToken.nameid) {
+      return Number(decodedToken.nameid); // Assurez-vous que nameid est un nombre
+    }
+    return null;
+  }
 }
