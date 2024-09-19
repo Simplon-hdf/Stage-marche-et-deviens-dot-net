@@ -18,8 +18,8 @@ namespace stage_marche_devient.Controllers
         public RandonneeController(ApiDbContext context, IAuditRepository<AuditLog> auditRepository, ILogger<RandonneeController> logger, ILogger<RandonneeRepository> randonneeLogger)
         {
             _context = context;
-            _repository = new RandonneeRepository(_context);
             _logger = logger;
+            _repository = new RandonneeRepository(_context, randonneeLogger);
             _auditRepository = auditRepository;
 
         }
