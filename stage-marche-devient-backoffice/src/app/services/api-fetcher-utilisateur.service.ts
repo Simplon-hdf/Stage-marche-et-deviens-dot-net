@@ -88,7 +88,7 @@ export class ApiFetcherUtilisateurService {
         })
       );
   }
-
+  // Méthode metre a jour un utilisateur
   MiseAJourUtilisitateur(idUtilisateur: number, utilisateurModif: Utilisateur): Observable<any> {
     return this.httpClient.put(this.endPointUrl + "/" + idUtilisateur, { 
       "idUtilisateur": idUtilisateur, 
@@ -110,6 +110,48 @@ export class ApiFetcherUtilisateurService {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
         }),
+        catchError(error => {
+          console.error('Error:', error);
+          return of(null);
+        })
+      );
+  }
+
+  RecupererTotalUtilisateur(): Observable<any> {
+    return this.httpClient.get(this.endPointUrl + "/total", { observe: 'response' , responseType: 'text' })
+      .pipe(
+        // Traitement de la réponse
+        map(response => {
+          // Vérification du statut de la réponse
+          if (response.status >= 200 && response.status < 300) {
+            
+            return response.body;
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        }),
+        // Gestion des erreurs
+        catchError(error => {
+          console.error('Error:', error);
+          return of(null);
+        })
+      );
+  }
+  RecupererTotalKms(): Observable<any>
+  {
+    return this.httpClient.get(this.endPointUrl + "/totalKms", { observe: 'response' , responseType: 'text' })
+      .pipe(
+        // Traitement de la réponse
+        map(response => {
+          // Vérification du statut de la réponse
+          if (response.status >= 200 && response.status < 300) {
+            
+            return response.body;
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        }),
+        // Gestion des erreurs
         catchError(error => {
           console.error('Error:', error);
           return of(null);
