@@ -178,17 +178,6 @@ export class BoiteRandoneeComponent implements OnInit {
     this.randonneeFiltres$ = this.filtrerRandonneParNom(this.searchTerm);
   }
 
-  filtrerRandonneParNom(nomRecherche: string): Observable<Randonnee[]> {
-    return this.listRandonnee$.pipe(
-      map(randonnee => randonnee.filter(randonnee => 
-        randonnee.nomRandonnee.toLowerCase().includes(nomRecherche.toLowerCase())))
-    );
-  }
-
-  onSearchChange() {
-    this.randonneeFiltres$ = this.filtrerRandonneParNom(this.searchTerm);
-  }
-
   // Méthode pour naviguer vers la boîte de thème
   allerABoiteTheme() {
     this.selecteurBoiteCommande.choixPanelCommande('theme');
