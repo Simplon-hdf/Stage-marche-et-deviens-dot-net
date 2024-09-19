@@ -1,1 +1,65 @@
-<p>page-devis works!</p>
+<app-navbar class="navbar"></app-navbar>
+<h1>Demande de Devis pour votre groupe <br>
+    (entreprise ou particulier)</h1>
+
+<section>
+    <form #devisForm="ngForm" (ngSubmit)="onSubmit()">
+        <legend class="legend">Vos coordonnées</legend>
+        <div class="contact">
+            <div id="nom" class="slide-in-left">
+                <label for="nom">Nom</label>
+                <input type="text" name="Nom" id="nom" ngModel required placeholder="Nom/Prénom">
+                <div *ngIf="devisForm.submitted && !devisForm.controls['Nom'].valid">
+                    <small>Le nom est requis.</small>
+                </div>
+            </div> 
+            <div id="mail" class="slide-in-right">
+                <label for="mail">E-mail</label>
+                <input type="email" name="E-mail" id="mail" ngModel required placeholder="E-mail">
+                <div *ngIf="devisForm.submitted && !devisForm.controls['E-mail'].valid">
+                    <small>L'email est requis.</small>
+                </div>
+            </div>
+            <div id="telephone" class="slide-in-left">
+                <label for="telephone">Téléphone</label>
+                <input type="tel" name="telephone" id="telephone" ngModel placeholder="Téléphone">
+            </div> 
+            <div id="typeDeGroupe" class="slide-in-right">
+                <label for="typeDeGroupe">Type de groupe</label>
+                <select name="typeDeGroupe" id="typeDeGroupe" ngModel
+                  [(ngModel)]="typeGroupeValue"
+                  (focus)="openTypeGroupe()" 
+                  (mouseleave)="closeTypeGroupe()" 
+                  (change)="changeTypeGroupe($event)">
+                    <option value="" hidden>Type de groupe</option>
+                    <option value="UneEntreprise">Une entreprise</option>
+                    <option value="UnOrganisme Public">Un organisme Public</option>
+                    <option value="Association">Association</option>
+                    <option value="GroupeDeParticuliers">Groupe de particuliers</option>
+                </select>
+            </div>    
+        </div>
+        <div id="projet" class="slide-down-bounce">
+            <label for="projet" class="legend">Votre projet</label>
+            <select name="typeProjet" id="typeProjet" ngModel
+              [(ngModel)]="typeProjetValue"
+              (focus)="openTypeProjet()" 
+              (mouseleave)="closeTypeProjet()" 
+              (change)="changeTypeProjet($event)">
+                <option value="" hidden>Évenement Souhaité</option>
+                <option value="Randonnee">Randonnée QTV</option>
+                <option value="Séminaire">Séminaire Nature</option>
+                <option value="Cohésion">Cohésion d'Équipe</option>
+                <option value="GestionEmotions">Gestion des Émotions </option>
+                <option value="objectifs">Fixation d'Objectifs</option>
+                <option value="Ateliers">Atelier Introspection</option>
+            </select>
+        </div>
+        <div class="Message slide-down-bounce">
+            <label class="legend" for="PlusdInformation">Veuillez préciser votre demande</label>
+            <textarea name="Informations" id="PlusdInformation" ngModel maxlength="250" placeholder="Votre message..."></textarea>
+        </div>    
+        <input id="boutonDevis" type="submit" value="Envoyer">
+    </form>
+    <button (click)="getCsrfToken()">Tester CSRF Token</button>
+</section>
